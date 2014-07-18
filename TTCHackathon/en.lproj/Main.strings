@@ -1,0 +1,27 @@
+
+/* Class = "IBUITableViewController"; title = "Data Services"; ObjectID = "4Nf-dA-qhs"; */
+"4Nf-dA-qhs.title" = "Data Services";
+
+/* Class = "IBUINavigationItem"; title = "Pivotal Sign In"; ObjectID = "9tm-hA-WMc"; */
+"9tm-hA-WMc.title" = "Pivotal Sign In";
+
+/* Class = "IBUILabel"; text = "Collection"; ObjectID = "A8S-IA-S5b"; */
+"A8S-IA-S5b.text" = "Collection";
+
+/* Class = "IBUILabel"; text = "Key"; ObjectID = "CEn-Qd-bYR"; */
+"CEn-Qd-bYR.text" = "Key";
+
+/* Class = "IBUIButton"; normalTitle = "Sign In Now"; ObjectID = "L4K-1z-nQT"; */
+"L4K-1z-nQT.normalTitle" = "Sign In Now";
+
+/* Class = "IBUIButton"; normalTitle = "Log Out"; ObjectID = "Sq9-yf-g7j"; */
+"Sq9-yf-g7j.normalTitle" = "Log Out";
+
+/* Class = "IBUITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "Xjy-JP-vfp"; */
+"Xjy-JP-vfp.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
+
+/* Class = "IBUILabel"; text = "Value"; ObjectID = "aVX-Lb-cka"; */
+"aVX-Lb-cka.text" = "Value";
+
+/* Class = "IBUILabel"; text = "Object ID"; ObjectID = "azP-j2-dsk"; */
+"azP-j2-dsk.text" = "Object ID";
