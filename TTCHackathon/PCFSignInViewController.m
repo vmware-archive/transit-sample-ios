@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Pivotal. All rights reserved.
 //
 
-#import <PCFDataServices/PCFDataSignIn.h>
+#import <MSSData/MSSDataSignIn.h>
 
 #import "PCFSignInViewController.h"
 
@@ -16,7 +16,7 @@ static NSString *const kDataServiceURL = @"http://data-service.one.pepsi.cf-app.
 static NSString *const kClientID = @"PushSDKDemoApp";
 static NSString *const kClientSecret = @"secret";
 
-@interface PCFSignInViewController () <PCFSignInDelegate>
+@interface PCFSignInViewController () <MSSSignInDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *signInButton;
 
@@ -28,7 +28,7 @@ static NSString *const kClientSecret = @"secret";
 {
     [super viewDidLoad];
     
-    PCFDataSignIn *instance = [PCFDataSignIn sharedInstance];
+    MSSDataSignIn *instance = [MSSDataSignIn sharedInstance];
     instance.clientID = kClientID;
     instance.clientSecret = kClientSecret;
     instance.openIDConnectURL = kOAuthServerURL;
@@ -43,11 +43,11 @@ static NSString *const kClientSecret = @"secret";
 }
 
 - (IBAction)signInClick:(id)sender {
-    [[PCFDataSignIn sharedInstance] authenticate];
+    [[MSSDataSignIn sharedInstance] authenticate];
 }
 
 - (IBAction)signOutClicked:(id)sender {
-    [[PCFDataSignIn sharedInstance] signOut];
+    [[MSSDataSignIn sharedInstance] signOut];
 }
 
 - (void)finishedWithAuth:(AFOAuthCredential *)auth

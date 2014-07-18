@@ -8,7 +8,7 @@
 
 #import "TTCAppDelegate.h"
 
-#import "PCFDataSignIn.h"
+#import <MSSData/MSSDataSignIn.h>
 
 @implementation TTCAppDelegate
 
@@ -49,7 +49,7 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    return [[PCFDataSignIn sharedInstance] handleURL:url
+    return [[MSSDataSignIn sharedInstance] handleURL:url
                                    sourceApplication:sourceApplication
                                           annotation:annotation];
 }

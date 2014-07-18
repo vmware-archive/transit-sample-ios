@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 Pivotal. All rights reserved.
 //
 
-#import <PCFDataServices/PCFDataServices.h>
-#import <AFNetworking/AFNetworking.h>
+#import <MSSData/MSSData.h>
+#import <MSSData/AFNetworking.h>
 
 #import "PCFDataTableViewController.h"
 #import "TTCClient.h"
 
-#import <PCFPush/PCFPushClient.h>
-#import <PCFPush/PCFParameters.h>
-#import <PCFPush/PCFPushSDK.h>
+#import <MSSPush/MSSPushClient.h>
+#import <MSSPush/MSSParameters.h>
+#import <MSSPush/MSSPush.h>
 
 static NSString *const kRoutePath = @"http://nextbus.one.pepsi.cf-app.com/ttc/routes";
 static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/routes/%@";
@@ -22,7 +22,7 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 @interface PCFDataTableViewController ()
 
 @property NSArray *transitValues;
-@property PCFObject *ttcObject;
+@property MSSDataObject *ttcObject;
 
 @end
 
@@ -41,7 +41,7 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
     [self refreshTable:refreshControl];
     
     if (!self.ttcObject) {
-        self.ttcObject = [PCFObject objectWithClassName:@"TTCObject"];
+        self.ttcObject = [MSSDataObject objectWithClassName:@"TTCObject"];
         [self.ttcObject setObjectID:@"TTCObjectID"];
     }
 }
@@ -82,16 +82,18 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 {
     NSString *value = [self transitValueForIndex:indexPath];
     
-    if (self.ttcObject[@"route"] && value) {
-        self.ttcObject[@"stop"] = value;
+    if (value) {
+        if (self.ttcObject[@"route"] && value) {
+            self.ttcObject[@"stop"] = value;
         
-    } else {
-        self.ttcObject[@"route"] = value;
-    }
+        } else {
+            self.ttcObject[@"route"] = value;
+        }
     
-    if (self.ttcObject[@"route"] && self.ttcObject[@"stop"]) {
-        [self initializeSDK];
-        [self.ttcObject saveOnSuccess:nil failure:nil];
+        if (self.ttcObject[@"route"] && self.ttcObject[@"stop"]) {
+            [self initializeSDK];
+            [self.ttcObject saveOnSuccess:nil failure:nil];
+        }
     }
 }
 
@@ -128,18 +130,18 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    PCFParameters *parameters;
-    parameters = [PCFParameters defaultParameters];
+    MSSParameters *parameters;
+    parameters = [MSSParameters defaultParameters];
     [parameters setTags:@[[NSString stringWithFormat:@"14_%@_%@", self.ttcObject[@"route"], self.ttcObject[@"stop"]]]];
     
-    [PCFPushSDK setRegistrationParameters:parameters];
-    [PCFPushSDK setCompletionBlockWithSuccess:^{
+    [MSSPush setRegistrationParameters:parameters];
+    [MSSPush setCompletionBlockWithSuccess:^{
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
     } failure:^(NSError *error) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }];
-    [PCFPushSDK registerForPushNotifications];
+    [MSSPush registerForPushNotifications];
 }
 
 @end

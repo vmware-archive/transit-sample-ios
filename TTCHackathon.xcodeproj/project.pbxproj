@@ -18,13 +18,13 @@
 		57F633361954A64800446130 /* PCFSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F633331954A64800446130 /* PCFSignInViewController.m */; };
 		57F6333E1954A87F00446130 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57F6333C1954A87F00446130 /* Main.storyboard */; };
 		57F633411954ACF800446130 /* TTCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F633401954ACF800446130 /* TTCClient.m */; };
-		57F633461954BDCD00446130 /* PCFParameters.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57F633451954BDCD00446130 /* PCFParameters.plist */; };
-		F8F7A2E61A9343CFA7C7C5DA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D980789308C4421A379D1F1 /* libPods.a */; };
+		57F633461954BDCD00446130 /* MSSParameters.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57F633451954BDCD00446130 /* MSSParameters.plist */; };
+		E76B950A1979A080003F37FA /* MSSData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95091979A080003F37FA /* MSSData.framework */; };
+		E76B95121979AF64003F37FA /* MSSPush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95111979AF64003F37FA /* MSSPush.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0B670D1781B0476687C4F409 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		0D980789308C4421A379D1F1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5746E58B195497C000CAADE9 /* TTCHackathon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TTCHackathon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5746E58C195497C000CAADE9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5746E58E195497C000CAADE9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -44,8 +44,9 @@
 		57F6333D1954A87F00446130 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		57F6333F1954ACF800446130 /* TTCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCClient.h; sourceTree = "<group>"; };
 		57F633401954ACF800446130 /* TTCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCClient.m; sourceTree = "<group>"; };
-		57F633451954BDCD00446130 /* PCFParameters.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PCFParameters.plist; sourceTree = "<group>"; };
-		DAE95FB68F0640759F313BE6 /* libPods-PCFDataServices Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PCFDataServices Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		57F633451954BDCD00446130 /* MSSParameters.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MSSParameters.plist; sourceTree = "<group>"; };
+		E76B95091979A080003F37FA /* MSSData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSData.framework; sourceTree = "<group>"; };
+		E76B95111979AF64003F37FA /* MSSPush.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSPush.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,10 +54,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E76B95121979AF64003F37FA /* MSSPush.framework in Frameworks */,
 				5746E58F195497C000CAADE9 /* CoreGraphics.framework in Frameworks */,
 				5746E591195497C000CAADE9 /* UIKit.framework in Frameworks */,
 				5746E58D195497C000CAADE9 /* Foundation.framework in Frameworks */,
-				F8F7A2E61A9343CFA7C7C5DA /* libPods.a in Frameworks */,
+				E76B950A1979A080003F37FA /* MSSData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,12 +68,10 @@
 		3DFBFBA335484D039ADA1160 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DAE95FB68F0640759F313BE6 /* libPods-PCFDataServices Example.a */,
 				5746E58C195497C000CAADE9 /* Foundation.framework */,
 				5746E58E195497C000CAADE9 /* CoreGraphics.framework */,
 				5746E590195497C000CAADE9 /* UIKit.framework */,
 				5746E5A5195497C000CAADE9 /* XCTest.framework */,
-				0D980789308C4421A379D1F1 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -97,7 +97,7 @@
 		5746E593195497C000CAADE9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				57F633451954BDCD00446130 /* PCFParameters.plist */,
+				57F633451954BDCD00446130 /* MSSParameters.plist */,
 				5746E594195497C000CAADE9 /* TTCHackathon-Info.plist */,
 				5746E595195497C000CAADE9 /* InfoPlist.strings */,
 				5746E598195497C000CAADE9 /* main.m */,
@@ -109,6 +109,8 @@
 		F1B601AE1925257200B65371 = {
 			isa = PBXGroup;
 			children = (
+				E76B95111979AF64003F37FA /* MSSPush.framework */,
+				E76B95091979A080003F37FA /* MSSData.framework */,
 				5746E592195497C000CAADE9 /* TTCHackathon */,
 				F1B601B81925257200B65371 /* Products */,
 				3DFBFBA335484D039ADA1160 /* Frameworks */,
@@ -181,7 +183,7 @@
 			files = (
 				57F6333E1954A87F00446130 /* Main.storyboard in Resources */,
 				5746E597195497C000CAADE9 /* InfoPlist.strings in Resources */,
-				57F633461954BDCD00446130 /* PCFParameters.plist in Resources */,
+				57F633461954BDCD00446130 /* MSSParameters.plist in Resources */,
 				5746E59F195497C000CAADE9 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,6 +265,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Robert Szumlakowski (TAAP59C578)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TTCHackathon/TTCHackathon-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -284,6 +290,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Robert Szumlakowski (TAAP59C578)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TTCHackathon/TTCHackathon-Prefix.pch";
 				INFOPLIST_FILE = "TTCHackathon/TTCHackathon-Info.plist";

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Pivotal. All rights reserved.
 //
 
-#import "AFHTTPClient.h"
+#import <MSSData/AFHTTPClient.h>
 
 @interface TTCClient : AFHTTPClient
 
