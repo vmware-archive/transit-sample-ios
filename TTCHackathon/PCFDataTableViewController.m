@@ -1,17 +1,12 @@
 //
-//  PCFDataTableViewController.m
-//  PCFDataServices Example
+//  Copyright (C) 2014 Pivotal Software, Inc. All rights reserved.
 //
-//  Created by Elliott Garcea on 2014-06-06.
-//  Copyright (c) 2014 Pivotal. All rights reserved.
-//
-
-#import <MSSData/MSSData.h>
-#import <MSSData/AFNetworking.h>
 
 #import "PCFDataTableViewController.h"
 #import "TTCClient.h"
 
+#import <MSSData/MSSData.h>
+#import <MSSData/AFNetworking.h>
 #import <MSSPush/MSSPushClient.h>
 #import <MSSPush/MSSParameters.h>
 #import <MSSPush/MSSPush.h>

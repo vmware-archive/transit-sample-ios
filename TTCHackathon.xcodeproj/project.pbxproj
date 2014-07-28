@@ -19,8 +19,8 @@
 		57F6333E1954A87F00446130 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57F6333C1954A87F00446130 /* Main.storyboard */; };
 		57F633411954ACF800446130 /* TTCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F633401954ACF800446130 /* TTCClient.m */; };
 		57F633461954BDCD00446130 /* MSSParameters.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57F633451954BDCD00446130 /* MSSParameters.plist */; };
-		E76B950A1979A080003F37FA /* MSSData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95091979A080003F37FA /* MSSData.framework */; };
 		E76B95121979AF64003F37FA /* MSSPush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95111979AF64003F37FA /* MSSPush.framework */; };
+		E76B95141979D02E003F37FA /* MSSData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95131979D02E003F37FA /* MSSData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,8 +45,8 @@
 		57F6333F1954ACF800446130 /* TTCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCClient.h; sourceTree = "<group>"; };
 		57F633401954ACF800446130 /* TTCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCClient.m; sourceTree = "<group>"; };
 		57F633451954BDCD00446130 /* MSSParameters.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MSSParameters.plist; sourceTree = "<group>"; };
-		E76B95091979A080003F37FA /* MSSData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSData.framework; sourceTree = "<group>"; };
 		E76B95111979AF64003F37FA /* MSSPush.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSPush.framework; sourceTree = "<group>"; };
+		E76B95131979D02E003F37FA /* MSSData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSData.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +58,7 @@
 				5746E58F195497C000CAADE9 /* CoreGraphics.framework in Frameworks */,
 				5746E591195497C000CAADE9 /* UIKit.framework in Frameworks */,
 				5746E58D195497C000CAADE9 /* Foundation.framework in Frameworks */,
-				E76B950A1979A080003F37FA /* MSSData.framework in Frameworks */,
+				E76B95141979D02E003F37FA /* MSSData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,8 +109,8 @@
 		F1B601AE1925257200B65371 = {
 			isa = PBXGroup;
 			children = (
+				E76B95131979D02E003F37FA /* MSSData.framework */,
 				E76B95111979AF64003F37FA /* MSSPush.framework */,
-				E76B95091979A080003F37FA /* MSSData.framework */,
 				5746E592195497C000CAADE9 /* TTCHackathon */,
 				F1B601B81925257200B65371 /* Products */,
 				3DFBFBA335484D039ADA1160 /* Frameworks */,
@@ -157,6 +157,11 @@
 				CLASSPREFIX = PCF;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Pivotal;
+				TargetAttributes = {
+					5746E58A195497C000CAADE9 = {
+						DevelopmentTeam = DB2ELL349P;
+					};
+				};
 			};
 			buildConfigurationList = F1B601B21925257200B65371 /* Build configuration list for PBXProject "TTCHackathon" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -264,11 +269,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Robert Szumlakowski (TAAP59C578)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TTCHackathon/TTCHackathon-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -278,7 +286,7 @@
 				INFOPLIST_FILE = "TTCHackathon/TTCHackathon-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F26EF27A-76C8-41BF-A159-877E6356C1C5";
+				PROVISIONING_PROFILE = "DDCB47EE-5445-45A0-89BC-69E48D829587";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -289,17 +297,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Robert Szumlakowski (TAAP59C578)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Robert Szumlakowski (DB2ELL349P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Robert Szumlakowski (DB2ELL349P)";
+				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TTCHackathon/TTCHackathon-Prefix.pch";
 				INFOPLIST_FILE = "TTCHackathon/TTCHackathon-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F26EF27A-76C8-41BF-A159-877E6356C1C5";
+				PROVISIONING_PROFILE = "DDCB47EE-5445-45A0-89BC-69E48D829587";
+				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

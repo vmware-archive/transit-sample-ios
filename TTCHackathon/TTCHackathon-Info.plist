@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>io.pivotal.ios.hackathon.ttc</string>
+	<string>org.omnia.pushsdk.DemoApp</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -26,10 +26,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>io.pivotal.ios.hackathon.ttc</string>
+			<string>org.omnia.pushsdk.DemoApp</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>io.pivotal.ios.hackathon.ttc</string>
+				<string>org.omnia.pushsdk.DemoApp</string>
 			</array>
 		</dict>
 	</array>
