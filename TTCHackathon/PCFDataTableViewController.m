@@ -110,7 +110,8 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"keyValueCell" forIndexPath:indexPath];
     UILabel *label = (UILabel *)[cell viewWithTag:1];
-    [label setText:[self transitValueForIndex:indexPath]];
+//    [label setText:[self transitValueForIndex:indexPath]];
+    [label setText:self.transitValues[indexPath.row][@"title"]];
     return cell;
 }
 

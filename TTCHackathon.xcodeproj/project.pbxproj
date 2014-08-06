@@ -19,6 +19,7 @@
 		57F6333E1954A87F00446130 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57F6333C1954A87F00446130 /* Main.storyboard */; };
 		57F633411954ACF800446130 /* TTCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F633401954ACF800446130 /* TTCClient.m */; };
 		57F633461954BDCD00446130 /* MSSParameters.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57F633451954BDCD00446130 /* MSSParameters.plist */; };
+		916215F319926A010019EF2B /* PCFTimeAndStopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916215F219926A010019EF2B /* PCFTimeAndStopViewController.m */; };
 		E76B95121979AF64003F37FA /* MSSPush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95111979AF64003F37FA /* MSSPush.framework */; };
 		E76B95141979D02E003F37FA /* MSSData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95131979D02E003F37FA /* MSSData.framework */; };
 /* End PBXBuildFile section */
@@ -45,6 +46,8 @@
 		57F6333F1954ACF800446130 /* TTCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCClient.h; sourceTree = "<group>"; };
 		57F633401954ACF800446130 /* TTCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCClient.m; sourceTree = "<group>"; };
 		57F633451954BDCD00446130 /* MSSParameters.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MSSParameters.plist; sourceTree = "<group>"; };
+		916215F119926A010019EF2B /* PCFTimeAndStopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFTimeAndStopViewController.h; sourceTree = "<group>"; };
+		916215F219926A010019EF2B /* PCFTimeAndStopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFTimeAndStopViewController.m; sourceTree = "<group>"; };
 		E76B95111979AF64003F37FA /* MSSPush.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSPush.framework; sourceTree = "<group>"; };
 		E76B95131979D02E003F37FA /* MSSData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSData.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,10 +83,12 @@
 			isa = PBXGroup;
 			children = (
 				57F6333C1954A87F00446130 /* Main.storyboard */,
-				57F6332E1954A64800446130 /* PCFDataTableViewController.h */,
-				57F6332F1954A64800446130 /* PCFDataTableViewController.m */,
 				57F633321954A64800446130 /* PCFSignInViewController.h */,
 				57F633331954A64800446130 /* PCFSignInViewController.m */,
+				57F6332E1954A64800446130 /* PCFDataTableViewController.h */,
+				57F6332F1954A64800446130 /* PCFDataTableViewController.m */,
+				916215F119926A010019EF2B /* PCFTimeAndStopViewController.h */,
+				916215F219926A010019EF2B /* PCFTimeAndStopViewController.m */,
 				5746E59B195497C000CAADE9 /* TTCAppDelegate.h */,
 				5746E59C195497C000CAADE9 /* TTCAppDelegate.m */,
 				5746E59E195497C000CAADE9 /* Images.xcassets */,
@@ -201,6 +206,7 @@
 				57F633341954A64800446130 /* PCFDataTableViewController.m in Sources */,
 				57F633361954A64800446130 /* PCFSignInViewController.m in Sources */,
 				5746E59D195497C000CAADE9 /* TTCAppDelegate.m in Sources */,
+				916215F319926A010019EF2B /* PCFTimeAndStopViewController.m in Sources */,
 				57F633411954ACF800446130 /* TTCClient.m in Sources */,
 				5746E599195497C000CAADE9 /* main.m in Sources */,
 			);
