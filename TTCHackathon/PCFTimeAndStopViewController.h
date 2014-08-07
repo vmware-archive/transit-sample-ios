@@ -7,7 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MSSData/MSSData.h>
+#import <MSSData/AFNetworking.h>
+#import <MSSPush/MSSPushClient.h>
+#import <MSSPush/MSSParameters.h>
+#import <MSSPush/MSSPush.h>
+
+
 
 @interface PCFTimeAndStopViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIDatePicker *timePick;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
+@property (weak, nonatomic) IBOutlet UILabel *route;
+@property (weak, nonatomic) IBOutlet UILabel *stop;
+@property MSSDataObject *ttcObject;
+
+- (IBAction)nextButtonPressed:(id)sender;
+- (IBAction)unwindToTimeAndStopView:(UIStoryboardSegue *)sender;
 @end

@@ -18,7 +18,6 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 
 @property NSArray *transitValues;
 @property MSSDataObject *ttcObject;
-
 @end
 
 @implementation PCFDataTableViewController
@@ -78,9 +77,8 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
     NSString *value = [self transitValueForIndex:indexPath];
     
     if (value) {
-        if (self.ttcObject[@"route"] && value) {
+        if (self.ttcObject[@"route"]) {
             self.ttcObject[@"stop"] = value;
-        
         } else {
             self.ttcObject[@"route"] = value;
         }
@@ -88,7 +86,9 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
         if (self.ttcObject[@"route"] && self.ttcObject[@"stop"]) {
             [self initializeSDK];
             [self.ttcObject saveOnSuccess:nil failure:nil];
-        }
+            [self performSegueWithIdentifier:@"unwindToTimeAndStopView" sender:self];
+//            [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex:1] animated:NO];
+        }        
     }
 }
 
@@ -108,7 +108,12 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"keyValueCell" forIndexPath:indexPath];
+    UITableViewCell *cell;
+    if(self.ttcObject[@"route"] && self.ttcObject[@"stop"]){
+        cell = [tableView dequeueReusableCellWithIdentifier:@"stopCell" forIndexPath:indexPath];
+    }else{
+        cell = [tableView dequeueReusableCellWithIdentifier:@"routeCell" forIndexPath:indexPath];
+    }
     UILabel *label = (UILabel *)[cell viewWithTag:1];
 //    [label setText:[self transitValueForIndex:indexPath]];
     [label setText:self.transitValues[indexPath.row][@"title"]];

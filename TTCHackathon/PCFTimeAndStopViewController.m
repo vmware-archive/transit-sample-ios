@@ -9,7 +9,6 @@
 #import "PCFTimeAndStopViewController.h"
 
 @interface PCFTimeAndStopViewController ()
-
 @end
 
 @implementation PCFTimeAndStopViewController
@@ -35,4 +34,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)nextButtonPressed:(id)sender {
+    NSDateFormatter *formate = [[NSDateFormatter alloc] init];
+    [formate setDateFormat:@"HH:mm"];
+    NSTimeZone *zone = [NSTimeZone defaultTimeZone];
+    [formate setTimeZone:zone];
+    NSString* dateStr = [formate stringFromDate:self.timePick.date];
+    NSLog(@"Time - %@",dateStr);
+    [self performSegueWithIdentifier:@"segueToDataTable" sender:self];
+    
+}
+
+
+- (IBAction)unwindToTimeAndStopView:(UIStoryboardSegue *)sender
+{
+    
+}
 @end
