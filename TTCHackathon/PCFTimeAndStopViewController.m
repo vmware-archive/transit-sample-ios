@@ -25,7 +25,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.stopAndRouteInfo = [[PCFStopAndRouteInfo alloc] init];
+    
 	// Do any additional setup after loading the view.
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,12 +50,21 @@
     NSString* dateStr = [formate stringFromDate:self.timePick.date];
     NSLog(@"Time - %@",dateStr);
     [self performSegueWithIdentifier:@"segueToDataTable" sender:self];
-    
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    [[segue destinationViewController] setStopAndRouteInfo:self.stopAndRouteInfo];
 }
 
 
 - (IBAction)unwindToTimeAndStopView:(UIStoryboardSegue *)sender
 {
+    self.route.text = self.stopAndRouteInfo.routeTitle;
+    self.stop.text = self.stopAndRouteInfo.stopID;
+    NSLog(@"%@", self.stopAndRouteInfo.routeTitle);
+    NSLog(@"%@", self.stopAndRouteInfo.routeTag);
+    NSLog(@"%@", self.stopAndRouteInfo.stopID);
     
 }
 @end

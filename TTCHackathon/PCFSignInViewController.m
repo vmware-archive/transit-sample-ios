@@ -24,12 +24,24 @@ static NSString *const kClientSecret = @"secret";
 {
     [super viewDidLoad];
     
+    self.signInButton.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.signInButton.layer.shadowOffset = CGSizeMake(2.0f,2.0f);
+    self.signInButton.layer.masksToBounds = NO;
+    self.signInButton.layer.shadowRadius = 5.0f;
+    self.signInButton.layer.shadowOpacity = 0.7;
+    
     MSSDataSignIn *instance = [MSSDataSignIn sharedInstance];
     instance.clientID = kClientID;
     instance.clientSecret = kClientSecret;
     instance.openIDConnectURL = kOAuthServerURL;
     instance.dataServiceURL = kDataServiceURL;
     instance.delegate = self;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)didReceiveMemoryWarning

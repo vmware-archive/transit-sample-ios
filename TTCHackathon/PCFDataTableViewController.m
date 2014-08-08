@@ -40,6 +40,12 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (void)refreshTable:(UIRefreshControl *)sender
 {
     NSString *path = (self.ttcObject[@"route"] ? [NSString stringWithFormat:kStopsPath, self.ttcObject[@"route"]]  : kRoutePath);
@@ -79,15 +85,22 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
     if (value) {
         if (self.ttcObject[@"route"]) {
             self.ttcObject[@"stop"] = value;
+            
+            // stop and route object setting
+            [self.stopAndRouteInfo setStopID:value];
+           
         } else {
             self.ttcObject[@"route"] = value;
+            
+            // stop and route object setting
+            [self.stopAndRouteInfo setRouteTitle:self.transitValues[indexPath.row][@"title"]];
+            [self.stopAndRouteInfo setRouteTag:value];
         }
-    
+        
         if (self.ttcObject[@"route"] && self.ttcObject[@"stop"]) {
             [self initializeSDK];
             [self.ttcObject saveOnSuccess:nil failure:nil];
             [self performSegueWithIdentifier:@"unwindToTimeAndStopView" sender:self];
-//            [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex:1] animated:NO];
         }        
     }
 }
@@ -108,15 +121,8 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell;
-    if(self.ttcObject[@"route"] && self.ttcObject[@"stop"]){
-        cell = [tableView dequeueReusableCellWithIdentifier:@"stopCell" forIndexPath:indexPath];
-    }else{
-        cell = [tableView dequeueReusableCellWithIdentifier:@"routeCell" forIndexPath:indexPath];
-    }
-    UILabel *label = (UILabel *)[cell viewWithTag:1];
-//    [label setText:[self transitValueForIndex:indexPath]];
-    [label setText:self.transitValues[indexPath.row][@"title"]];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    cell.textLabel.text = self.transitValues[indexPath.row][@"title"];
     return cell;
 }
 
@@ -125,6 +131,7 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     [[segue destinationViewController] setTtcObject:self.ttcObject];
+    [[segue destinationViewController] setStopAndRouteInfo:self.stopAndRouteInfo];
 }
 
 - (void)initializeSDK

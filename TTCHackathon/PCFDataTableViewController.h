@@ -3,7 +3,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PCFStopAndRouteInfo.h"
 
 @interface PCFDataTableViewController : UITableViewController
+
+@property (strong, nonatomic) PCFStopAndRouteInfo *stopAndRouteInfo;
 
 @end
