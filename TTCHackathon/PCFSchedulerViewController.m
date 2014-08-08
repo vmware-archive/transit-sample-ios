@@ -34,8 +34,8 @@
     self.scheduleButton.titleLabel.textAlignment = NSTextAlignmentCenter; // if you want to
 	// Do any additional setup after loading the view.
 
-    NSLayoutConstraint *con1 = [NSLayoutConstraint constraintWithItem:self.scheduleDatePicker attribute:NSLayoutAttributeHeight relatedBy:0 toItem:self.scheduleView attribute:NSLayoutAttributeHeight multiplier:0.25f constant:0];
-    [self.scheduleView addConstraints:@[con1]];
+//    NSLayoutConstraint *con1 = [NSLayoutConstraint constraintWithItem:self.scheduleDatePicker attribute:NSLayoutAttributeHeight relatedBy:0 toItem:self.scheduleView attribute:NSLayoutAttributeHeight multiplier:0.25f constant:0];
+//    [self.scheduleView addConstraints:@[con1]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -71,7 +71,7 @@
 {
     self.route.text = self.stopAndRouteInfo.routeTitle;
     self.stop.text = self.stopAndRouteInfo.stopID;
-    NSString* str = [NSString stringWithFormat:@"%@\n%@", self.stopAndRouteInfo.routeTitle, self.stopAndRouteInfo.stopID];
+    NSString* str = [NSString stringWithFormat:@"%@\n\n%@", self.stopAndRouteInfo.routeTitle, self.stopAndRouteInfo.stopID];
     NSLog(@"%@", str);
     [self.scheduleButton setTitle:str forState:UIControlStateNormal];
     

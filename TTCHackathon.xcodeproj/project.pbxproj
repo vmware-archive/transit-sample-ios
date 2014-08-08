@@ -24,6 +24,7 @@
 		91621600199507340019EF2B /* PCFStopAndRouteInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 916215FF199507340019EF2B /* PCFStopAndRouteInfo.m */; };
 		91621604199527980019EF2B /* ic_ttc_launcher.png in Resources */ = {isa = PBXBuildFile; fileRef = 91621603199527980019EF2B /* ic_ttc_launcher.png */; };
 		9162160719952A500019EF2B /* ic_ttc_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9162160619952A500019EF2B /* ic_ttc_logo.png */; };
+		9162160A199579C10019EF2B /* NSFerret.m in Sources */ = {isa = PBXBuildFile; fileRef = 91621609199579C10019EF2B /* NSFerret.m */; };
 		E76B95121979AF64003F37FA /* MSSPush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95111979AF64003F37FA /* MSSPush.framework */; };
 		E76B95141979D02E003F37FA /* MSSData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95131979D02E003F37FA /* MSSData.framework */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,8 @@
 		916215FF199507340019EF2B /* PCFStopAndRouteInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFStopAndRouteInfo.m; sourceTree = "<group>"; };
 		91621603199527980019EF2B /* ic_ttc_launcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_ttc_launcher.png; path = TTCHackathon/ic_ttc_launcher.png; sourceTree = "<group>"; };
 		9162160619952A500019EF2B /* ic_ttc_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_ttc_logo.png; sourceTree = "<group>"; };
+		91621608199579C10019EF2B /* NSFerret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFerret.h; sourceTree = "<group>"; };
+		91621609199579C10019EF2B /* NSFerret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFerret.m; sourceTree = "<group>"; };
 		E76B95111979AF64003F37FA /* MSSPush.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSPush.framework; sourceTree = "<group>"; };
 		E76B95131979D02E003F37FA /* MSSData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSData.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,6 +112,8 @@
 				5746E593195497C000CAADE9 /* Supporting Files */,
 				57F6333F1954ACF800446130 /* TTCClient.h */,
 				57F633401954ACF800446130 /* TTCClient.m */,
+				91621608199579C10019EF2B /* NSFerret.h */,
+				91621609199579C10019EF2B /* NSFerret.m */,
 			);
 			path = TTCHackathon;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 				916215F319926A010019EF2B /* PCFSchedulerViewController.m in Sources */,
 				91621600199507340019EF2B /* PCFStopAndRouteInfo.m in Sources */,
 				57F633411954ACF800446130 /* TTCClient.m in Sources */,
+				9162160A199579C10019EF2B /* NSFerret.m in Sources */,
 				5746E599195497C000CAADE9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

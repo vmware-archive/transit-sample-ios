@@ -31,17 +31,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <datePicker contentMode="scaleToFill" horizontalHuggingPriority="240" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="g82-Cz-V02">
-                                <rect key="frame" x="25" y="94" width="270" height="162"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="b1G-3J-fMb"/>
-                                </constraints>
-                                <date key="date" timeIntervalSinceReferenceDate="429027026.21036297">
-                                    <!--2014-08-06 14:10:26 +0000-->
-                                </date>
-                                <timeZone key="timeZone" name="America/Los_Angeles">
-                                    <data key="data">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gg-vY-wvy">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wXY-Ch-FIi">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xqR-pa-tGz">
+                                                <rect key="frame" x="25" y="287" width="270" height="150"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <state key="normal" title="Click to select a stop">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="routeStopContainerPressed:" destination="ySk-zm-Kr5" eventType="touchUpInside" id="wTX-LP-yXH"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="275" translatesAutoresizingMaskIntoConstraints="NO" id="jAz-2Z-krD">
+                                                <rect key="frame" x="25" y="475" width="275" height="73"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <string key="text">Note: You will receive push notifications alerting you about upcoming transit times within a 15 minute window of the time you select.</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <datePicker contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="g82-Cz-V02">
+                                                <rect key="frame" x="25" y="105" width="270" height="162"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="9st-3X-hdR"/>
+                                                </constraints>
+                                                <date key="date" timeIntervalSinceReferenceDate="429027026.21036297">
+                                                    <!--2014-08-06 14:10:26 +0000-->
+                                                </date>
+                                                <timeZone key="timeZone" name="America/Los_Angeles">
+                                                    <data key="data">
 VFppZgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAC5AAAABAAAABCepkign7sVkKCGKqChmveQ
 y4kaoNIj9HDSYSYQ1v50INiArZDa/tGg28CQENzes6DdqayQ3r6VoN+JjpDgnneg4WlwkOJ+WaDjSVKQ
 5F47oOUpNJDmR1gg5xJREOgnOiDo8jMQ6gccIOrSFRDr5v4g7LH3EO3G4CDukdkQ76/8oPBxuxDxj96g
@@ -60,49 +88,51 @@ AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
 AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
 </data>
-                                </timeZone>
-                            </datePicker>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xqR-pa-tGz">
-                                <rect key="frame" x="15" y="272" width="270" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Click to select a stop">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="routeStopContainerPressed:" destination="ySk-zm-Kr5" eventType="touchUpInside" id="wTX-LP-yXH"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="1010" translatesAutoresizingMaskIntoConstraints="NO" id="jAz-2Z-krD">
-                                <rect key="frame" x="35" y="453" width="1010" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </timeZone>
+                                            </datePicker>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="centerX" secondItem="jAz-2Z-krD" secondAttribute="centerX" constant="-0.5" id="5hx-SR-JFQ"/>
+                                            <constraint firstItem="g82-Cz-V02" firstAttribute="height" secondItem="xqR-pa-tGz" secondAttribute="height" id="5sU-0a-hOI"/>
+                                            <constraint firstItem="jAz-2Z-krD" firstAttribute="top" relation="lessThanOrEqual" secondItem="xqR-pa-tGz" secondAttribute="bottom" constant="20" id="82s-y5-4km"/>
+                                            <constraint firstItem="g82-Cz-V02" firstAttribute="leading" secondItem="wXY-Ch-FIi" secondAttribute="leading" constant="25" id="9zT-uO-HPa"/>
+                                            <constraint firstAttribute="height" constant="568" id="CTy-vN-f6U"/>
+                                            <constraint firstItem="g82-Cz-V02" firstAttribute="width" secondItem="xqR-pa-tGz" secondAttribute="width" id="MpA-Lu-Mmf"/>
+                                            <constraint firstItem="xqR-pa-tGz" firstAttribute="top" secondItem="g82-Cz-V02" secondAttribute="bottom" constant="70" id="apq-aF-8TD"/>
+                                            <constraint firstItem="g82-Cz-V02" firstAttribute="top" secondItem="wXY-Ch-FIi" secondAttribute="top" constant="105" id="guQ-Z9-fbX"/>
+                                            <constraint firstItem="xqR-pa-tGz" firstAttribute="leading" secondItem="wXY-Ch-FIi" secondAttribute="leading" constant="25" id="rGH-eJ-JqP"/>
+                                            <constraint firstAttribute="trailing" secondItem="g82-Cz-V02" secondAttribute="trailing" constant="25" id="wKC-mf-PTM"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.64705882349999999" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="7Mw-KI-b2e"/>
+                                    <constraint firstItem="wXY-Ch-FIi" firstAttribute="height" secondItem="8gg-vY-wvy" secondAttribute="height" id="4nz-BH-RjA"/>
+                                    <constraint firstAttribute="centerX" secondItem="wXY-Ch-FIi" secondAttribute="centerX" id="EEh-f6-Bsu"/>
+                                    <constraint firstAttribute="centerY" secondItem="wXY-Ch-FIi" secondAttribute="centerY" id="TuM-eN-RCa"/>
+                                    <constraint firstAttribute="trailing" secondItem="wXY-Ch-FIi" secondAttribute="trailing" id="dMW-jP-vsG"/>
+                                    <constraint firstAttribute="bottom" secondItem="wXY-Ch-FIi" secondAttribute="bottom" id="o67-6p-2rb"/>
+                                    <constraint firstAttribute="centerX" secondItem="wXY-Ch-FIi" secondAttribute="centerX" id="rTm-2c-4vu"/>
+                                    <constraint firstItem="wXY-Ch-FIi" firstAttribute="width" secondItem="8gg-vY-wvy" secondAttribute="width" id="wLY-14-aUC"/>
                                 </constraints>
-                                <string key="text">Note: You will receive push notifications alerting you about upcoming transit times within a 15 minute window of the time you select.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="jAz-2Z-krD" firstAttribute="top" secondItem="xqR-pa-tGz" secondAttribute="bottom" constant="15" id="6M6-WD-JnY"/>
-                            <constraint firstItem="g82-Cz-V02" firstAttribute="top" secondItem="gKH-Cv-Mzi" secondAttribute="bottom" constant="30" id="9Tf-6w-cjX"/>
-                            <constraint firstAttribute="centerX" secondItem="g82-Cz-V02" secondAttribute="centerX" id="UyM-vT-F1e"/>
-                            <constraint firstItem="g82-Cz-V02" firstAttribute="height" secondItem="xqR-pa-tGz" secondAttribute="height" id="buB-FC-jbR"/>
-                            <constraint firstAttribute="centerX" secondItem="xqR-pa-tGz" secondAttribute="centerX" id="oaq-Of-vDS"/>
-                            <constraint firstItem="xqR-pa-tGz" firstAttribute="width" secondItem="jAz-2Z-krD" secondAttribute="width" id="p7D-CO-V6h"/>
-                            <constraint firstAttribute="trailing" secondItem="xqR-pa-tGz" secondAttribute="trailing" constant="35" id="qU3-1x-Eh0"/>
-                            <constraint firstItem="g82-Cz-V02" firstAttribute="width" secondItem="xqR-pa-tGz" secondAttribute="width" id="usb-Fg-G38"/>
-                            <constraint firstItem="xqR-pa-tGz" firstAttribute="top" secondItem="g82-Cz-V02" secondAttribute="bottom" constant="70" id="xwr-FD-UOz"/>
+                            <constraint firstAttribute="centerX" secondItem="8gg-vY-wvy" secondAttribute="centerX" id="GwB-Sz-yLj"/>
+                            <constraint firstItem="8gg-vY-wvy" firstAttribute="leading" secondItem="4Gg-wk-zs2" secondAttribute="leading" id="O4J-8Q-qkp"/>
+                            <constraint firstAttribute="centerY" secondItem="8gg-vY-wvy" secondAttribute="centerY" id="OBu-pP-kXd"/>
+                            <constraint firstItem="8gg-vY-wvy" firstAttribute="leading" secondItem="4Gg-wk-zs2" secondAttribute="leading" id="ZAI-m7-td2"/>
+                            <constraint firstAttribute="centerX" secondItem="8gg-vY-wvy" secondAttribute="centerX" id="jHC-p0-Acc"/>
+                            <constraint firstAttribute="centerY" secondItem="8gg-vY-wvy" secondAttribute="centerY" id="mq3-Sd-dJ8"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Transit++" id="r5H-Yx-a61">
                         <barButtonItem key="backBarButtonItem" title=" " id="GWy-r1-anF"/>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="E11-U5-Dt3"/>
                     </navigationItem>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="scheduleButton" destination="xqR-pa-tGz" id="fMW-H0-oH3"/>
                         <outlet property="scheduleDatePicker" destination="g82-Cz-V02" id="6SU-Q9-Ffc"/>
