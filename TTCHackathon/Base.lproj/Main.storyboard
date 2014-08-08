@@ -113,7 +113,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4K-1z-nQT">
-                                <rect key="frame" x="60" y="359" width="200" height="30"/>
+                                <rect key="frame" x="60" y="336" width="200" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -127,7 +127,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <action selector="signInClick:" destination="zqa-7g-eAL" eventType="touchUpInside" id="Myj-DX-Ufo"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sq9-yf-g7j">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sq9-yf-g7j">
                                 <rect key="frame" x="132" y="411" width="56" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
@@ -141,15 +141,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <action selector="signOutClicked:" destination="zqa-7g-eAL" eventType="touchUpInside" id="FEm-Uw-6Dc"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Transit++" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iHn-Cp-Gl1">
-                                <rect key="frame" x="94" y="129" width="133" height="27"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Transit++" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iHn-Cp-Gl1">
+                                <rect key="frame" x="94" y="154" width="132" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This application requires that you authenticate before proceeding" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXv-Ja-XFx">
-                                <rect key="frame" x="60" y="251" width="200" height="100"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="This application requires that you authenticate before proceeding" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="NXv-Ja-XFx">
+                                <rect key="frame" x="60" y="273" width="200" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -158,10 +158,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="L4K-1z-nQT" secondAttribute="centerX" id="6i5-Pc-gBM"/>
-                            <constraint firstAttribute="centerY" secondItem="L4K-1z-nQT" secondAttribute="centerY" id="Rpt-by-J9D"/>
-                            <constraint firstItem="Sq9-yf-g7j" firstAttribute="top" secondItem="L4K-1z-nQT" secondAttribute="bottom" constant="22" id="YHG-Vh-6h1"/>
-                            <constraint firstItem="L4K-1z-nQT" firstAttribute="centerX" secondItem="Sq9-yf-g7j" secondAttribute="centerX" id="fI6-7U-A3e"/>
+                            <constraint firstAttribute="centerY" secondItem="NXv-Ja-XFx" secondAttribute="centerY" id="8V0-ma-1TT"/>
+                            <constraint firstItem="iHn-Cp-Gl1" firstAttribute="top" secondItem="Gb6-Oe-Jr9" secondAttribute="bottom" constant="90" id="BKe-hG-0st"/>
+                            <constraint firstAttribute="centerX" secondItem="L4K-1z-nQT" secondAttribute="centerX" id="Jda-qF-xLl"/>
+                            <constraint firstItem="L4K-1z-nQT" firstAttribute="top" secondItem="NXv-Ja-XFx" secondAttribute="bottom" constant="20" id="Kne-Al-Tyd"/>
+                            <constraint firstAttribute="centerX" secondItem="iHn-Cp-Gl1" secondAttribute="centerX" id="Rbn-fa-1g7"/>
+                            <constraint firstAttribute="centerX" secondItem="NXv-Ja-XFx" secondAttribute="centerX" id="ce0-Hw-ExS"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="TTC Sign In" id="9tm-hA-WMc"/>

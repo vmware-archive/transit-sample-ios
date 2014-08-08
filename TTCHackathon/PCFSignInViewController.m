@@ -25,10 +25,10 @@ static NSString *const kClientSecret = @"secret";
     [super viewDidLoad];
     
     self.signInButton.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.signInButton.layer.shadowOffset = CGSizeMake(2.0f,2.0f);
+    self.signInButton.layer.shadowOffset = CGSizeMake(0.0f,5.0f);
     self.signInButton.layer.masksToBounds = NO;
     self.signInButton.layer.shadowRadius = 5.0f;
-    self.signInButton.layer.shadowOpacity = 0.7;
+    self.signInButton.layer.shadowOpacity = 0.5;
     
     MSSDataSignIn *instance = [MSSDataSignIn sharedInstance];
     instance.clientID = kClientID;
