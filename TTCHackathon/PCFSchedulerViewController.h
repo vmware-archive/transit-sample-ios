@@ -15,17 +15,17 @@
 #import "PCFStopAndRouteInfo.h"
 
 
-@interface PCFTimeAndStopViewController : UIViewController
+@interface PCFSchedulerViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *timePick;
-@property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (weak, nonatomic) IBOutlet UILabel *route;
 @property (weak, nonatomic) IBOutlet UILabel *stop;
+@property (weak, nonatomic) IBOutlet UIView *routeStopContainer;
 
 @property (strong, nonatomic) PCFStopAndRouteInfo *stopAndRouteInfo;
 
 @property MSSDataObject *ttcObject;
 
-- (IBAction)nextButtonPressed:(id)sender;
+- (IBAction)routeStopContainerPressed:(id)sender;
 - (IBAction)unwindToTimeAndStopView:(UIStoryboardSegue *)sender;
 @end

@@ -43,9 +43,11 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.navigationController.navigationBarHidden = NO;
+    [self.navigationController.navigationBar setTranslucent:YES];
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

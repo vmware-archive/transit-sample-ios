@@ -38,7 +38,7 @@ static NSString *const kClientSecret = @"secret";
     instance.delegate = self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
     self.navigationController.navigationBarHidden = YES;
