@@ -12,6 +12,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *scheduleButton;
 @property (strong, nonatomic) IBOutlet UIView *scheduleView;
 @property (weak, nonatomic) IBOutlet UIDatePicker *scheduleDatePicker;
+@property (weak, nonatomic) IBOutlet UIView *innerScheduleView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @end
 
 @implementation PCFSchedulerViewController
@@ -28,14 +30,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.stopAndRouteInfo = [[PCFStopAndRouteInfo alloc] init];
     self.scheduleButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     // you probably want to center it
     self.scheduleButton.titleLabel.textAlignment = NSTextAlignmentCenter; // if you want to
 	// Do any additional setup after loading the view.
-
-//    NSLayoutConstraint *con1 = [NSLayoutConstraint constraintWithItem:self.scheduleDatePicker attribute:NSLayoutAttributeHeight relatedBy:0 toItem:self.scheduleView attribute:NSLayoutAttributeHeight multiplier:0.25f constant:0];
-//    [self.scheduleView addConstraints:@[con1]];
+    
+    NSLayoutConstraint *con1 = [NSLayoutConstraint constraintWithItem:self.scheduleDatePicker attribute:NSLayoutAttributeTop relatedBy:0.001f toItem:self.innerScheduleView attribute:NSLayoutAttributeTop multiplier:.01f constant:0];
+    [self.scheduleView addConstraints:@[con1]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateScreen) name:UIDeviceOrientationDidChangeNotification object:nil];
+    
+    // when view loads check orientation.
+    [self didRotateScreen];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -43,6 +51,12 @@
     [super viewDidAppear:YES];
     self.navigationController.navigationBarHidden = NO;
     
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    [self.scrollView setContentSize:CGSizeMake(320, 600)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,16 +84,22 @@
 - (IBAction)unwindToTimeAndStopView:(UIStoryboardSegue *)sender
 {
     self.route.text = self.stopAndRouteInfo.routeTitle;
-    self.stop.text = self.stopAndRouteInfo.stopID;
-    NSString* str = [NSString stringWithFormat:@"%@\n\n%@", self.stopAndRouteInfo.routeTitle, self.stopAndRouteInfo.stopID];
-    NSLog(@"%@", str);
-    [self.scheduleButton setTitle:str forState:UIControlStateNormal];
-    
-    //[self.scheduleButton setTitle: @"Line1\nLine2" forState: UIControlStateNormal];
-    NSLog(@"%@", self.stopAndRouteInfo.routeTitle);
-    NSLog(@"%@", self.stopAndRouteInfo.routeTag);
-    NSLog(@"%@", self.stopAndRouteInfo.stopID);
-    
+    self.stop.text = self.stopAndRouteInfo.stopTitle;
+    NSString* str = [NSString stringWithFormat:@"%@\n\n%@", self.stopAndRouteInfo.routeTitle, self.stopAndRouteInfo.stopTitle];
+    [self.scheduleButton setTitle:str forState:UIControlStateNormal];    
 }
 
+#pragma mark - NOTIFICATIONS
+
+- (void)didRotateScreen
+{
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+
+    if (UIDeviceOrientationIsPortrait(orientation)) {
+        [self.scrollView setScrollEnabled:NO];
+    } else {
+        [self.scrollView setScrollEnabled:YES];
+    }
+    
+}
 @end

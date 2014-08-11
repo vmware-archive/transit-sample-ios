@@ -18,6 +18,9 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 
 @property NSArray *transitValues;
 @property MSSDataObject *ttcObject;
+@property UIActivityIndicatorView *activityIndicatorView;
+@property UIView *loadingOverlayView;
+
 @end
 
 @implementation PCFDataTableViewController
@@ -26,16 +29,28 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 {
     [super viewDidLoad];
     
+    self.tableView.alwaysBounceVertical = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateForOverlay) name:UIDeviceOrientationDidChangeNotification object:nil];
+    
+    
+    [self didRotateForOverlay];
+    
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [self.tableView addSubview:refreshControl];
+    
     [refreshControl addTarget:self action:@selector(refreshTable:) forControlEvents:UIControlEventValueChanged];
     
     [self refreshTable:refreshControl];
+    
+    
     
     if (!self.ttcObject) {
         self.ttcObject = [MSSDataObject objectWithClassName:@"TTCObject"];
         [self.ttcObject setObjectID:@"TTCObjectID"];
     }
+    
+//    [self.tableView addSubview:self.loadingOverlayView];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -60,6 +75,11 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
                                                                                             self.transitValues = JSON;
                                                                                             
                                                                                             [self.tableView reloadData];
+                                                                                            
+                                                                                            // UI changes after the JSON string returns.
+                                                                                            [[NSNotificationCenter defaultCenter] removeObserver:self];
+                                                                                            [self.loadingOverlayView removeFromSuperview];
+                                                                                            self.tableView.alwaysBounceVertical = YES;
                                                                                         }
                                                                                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                                                                                             if (sender) {
@@ -67,6 +87,7 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
                                                                                             }
                                                                                         }];
     [[TTCClient sharedClient] enqueueHTTPRequestOperation:operation];
+    
 }
 
 #pragma mark - Table view data source
@@ -82,10 +103,10 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
     
     if (value) {
         if (self.ttcObject[@"route"]) {
-            self.ttcObject[@"stop"] = value;
             
             // stop and route object setting
-            [self.stopAndRouteInfo setStopID:value];
+            self.ttcObject[@"stop"] = value;
+            [self.stopAndRouteInfo setStopTitle:self.transitValues[indexPath.row][@"title"]];
            
         } else {
             self.ttcObject[@"route"] = value;
@@ -148,6 +169,46 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }];
     [MSSPush registerForPushNotifications];
+}
+
+#pragma mark - Notifications
+
+- (void)didRotateForOverlay
+{
+    // this case is when the user rotates screen while it is loading.
+    if (self.loadingOverlayView != nil) {
+        [self.loadingOverlayView removeFromSuperview];
+        self.loadingOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        NSLog(@"balhahaha");
+        
+    // this case is when the loading screen appears from the previous scheduler screen.
+    } else {
+        UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+        
+        if (UIDeviceOrientationIsPortrait(orientation)) {
+            self.loadingOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+            NSLog(@"isPortrait");
+        } else {
+            self.loadingOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width)];
+            NSLog(@"isLandscape");
+        }
+        
+    }
+  
+    NSLog(@"%f", self.loadingOverlayView.frame.size.width);
+    NSLog(@"%f", self.loadingOverlayView.frame.size.height);
+
+    self.loadingOverlayView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] init];
+    self.activityIndicatorView.center = CGPointMake(self.loadingOverlayView.frame.size.width/2, self.loadingOverlayView.frame.size.height/2.2);
+    [self.loadingOverlayView addSubview:self.activityIndicatorView];
+    
+    [self.activityIndicatorView startAnimating];
+    [self.activityIndicatorView setHidden:NO];
+    
+    [self.tableView addSubview:self.loadingOverlayView];
 }
 
 @end

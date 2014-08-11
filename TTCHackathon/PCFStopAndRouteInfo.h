@@ -10,9 +10,8 @@
 @interface PCFStopAndRouteInfo : NSObject
 @property (nonatomic, strong) NSString* routeTitle;
 @property (nonatomic, strong) NSString* routeTag;
-//@property (nonatomic, strong) NSString* stopTitle;
-//@property (nonatomic, strong) NSString* stopTag;
-@property (nonatomic, strong) NSString* stopID;
+@property (nonatomic, strong) NSString* stopTitle;
+@property (nonatomic, strong) NSString* stopTag;
 
 @end
 
