@@ -6,11 +6,11 @@
 
 #import "PCFSignInViewController.h"
 
-static NSString *const kOAuthServerURL = @"http://ident.one.pepsi.cf-app.com";
-static NSString *const kDataServiceURL = @"http://data-service.one.pepsi.cf-app.com";
+static NSString *const kOAuthServerURL = @"http://datasync-authentication.kona.coffee.cfms-apps.com/";
+static NSString *const kDataServiceURL = @"http://datasync-datastore.kona.coffee.cfms-apps.com/";
 
-static NSString *const kClientID = @"PushSDKDemoApp";
-static NSString *const kClientSecret = @"secret";
+static NSString *const kClientID = @"6006fa24-2757-481d-b894-f79ed8037e1f";
+static NSString *const kClientSecret = @"C8eJhboAHq_h-oP6po5MoRWQsjWATFDZM8dqbKXBZ8RdeMvv_faF88DVBAp6OsAozU9brBqhYt0RTwpZABYRIQ";
 
 @interface PCFSignInViewController () <MSSSignInDelegate>
 
