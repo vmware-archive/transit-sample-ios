@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *scheduleDatePicker;
 @property (weak, nonatomic) IBOutlet UIView *innerScheduleView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
 @end
 
 @implementation PCFSchedulerViewController
@@ -65,27 +66,46 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - click events
+- (IBAction)doneButtonPressed:(id)sender {
+    
+    [self performSegueWithIdentifier:@"unwindToSavedTableView" sender:self];
+}
+
+
 - (IBAction)routeStopContainerPressed:(id)sender {
+    // format the time
     NSDateFormatter *formate = [[NSDateFormatter alloc] init];
     [formate setDateFormat:@"HH:mm"];
     NSTimeZone *zone = [NSTimeZone defaultTimeZone];
     [formate setTimeZone:zone];
     NSString* dateStr = [formate stringFromDate:self.timePick.date];
     NSLog(@"Time - %@",dateStr);
+    [self.stopAndRouteInfo setTime:dateStr];
     [self performSegueWithIdentifier:@"segueToDataTable" sender:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [[segue destinationViewController] setStopAndRouteInfo:self.stopAndRouteInfo];
+    if ([segue.destinationViewController isKindOfClass:[PCFDataTableViewController class]]) {
+        [[segue destinationViewController] setStopAndRouteInfo:self.stopAndRouteInfo];
+    } else if ([segue.destinationViewController isKindOfClass:[PCFSavedTableViewController class]]) {
+        if(self.stopAndRouteInfo.route != nil  && self.stopAndRouteInfo.stop != nil && self.stopAndRouteInfo.tag != nil){
+            self.stopAndRouteInfo.enabled = YES;
+            [[segue destinationViewController] addToStopAndRoute:self.stopAndRouteInfo];
+        }else{
+            //if missing any of the info then send nothing
+        }
+        
+    }
 }
 
 
 - (IBAction)unwindToTimeAndStopView:(UIStoryboardSegue *)sender
 {
-    self.route.text = self.stopAndRouteInfo.routeTitle;
-    self.stop.text = self.stopAndRouteInfo.stopTitle;
-    NSString* str = [NSString stringWithFormat:@"%@\n\n%@", self.stopAndRouteInfo.routeTitle, self.stopAndRouteInfo.stopTitle];
+    self.route.text = self.stopAndRouteInfo.route;
+    self.stop.text = self.stopAndRouteInfo.stop;
+    NSString* str = [NSString stringWithFormat:@"%@\n\n%@", self.stopAndRouteInfo.route, self.stopAndRouteInfo.stop];
     [self.scheduleButton setTitle:str forState:UIControlStateNormal];    
 }
 

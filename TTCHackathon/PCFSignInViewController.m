@@ -19,7 +19,7 @@ static NSString *const textAfterSignInView = @"Waiting to receive access token f
 //static NSString *const kClientSecret = @"secret";
 
 static NSString *const kClientID = @"6006fa24-2757-481d-b894-f79ed8037e1f";
-static NSString *const kClientSecret = @"ANSLX-7mReozzdeF2L3-BBYT-0JnnmpR0bRaAAFwLcpuEJr8XDEqnNqqNJTwgfwwhr8C8-zUw3gInORfrvitkZs";
+static NSString *const kClientSecret = @"C8eJhboAHq_h-oP6po5MoRWQsjWATFDZM8dqbKXBZ8RdeMvv_faF88DVBAp6OsAozU9brBqhYt0RTwpZABYRIQ";
 
 @interface PCFSignInViewController () <MSSSignInDelegate>
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;

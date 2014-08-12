@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PCFStopAndRouteInfo.h"
 
 @interface PCFSavedTableViewController : UITableViewController
 
+@property (strong, nonatomic) NSMutableArray *stopAndRouteArray;
+- (IBAction)unwindToSavedTableView:(UIStoryboardSegue *)sender;
+- (void)addToStopAndRoute:(PCFStopAndRouteInfo *)stopAndRouteObject;
 @end

@@ -106,14 +106,14 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
             
             // stop and route object setting
             self.ttcObject[@"stop"] = value;
-            [self.stopAndRouteInfo setStopTitle:self.transitValues[indexPath.row][@"title"]];
+            [self.stopAndRouteInfo setStop:self.transitValues[indexPath.row][@"title"]];
            
         } else {
             self.ttcObject[@"route"] = value;
             
             // stop and route object setting
-            [self.stopAndRouteInfo setRouteTitle:self.transitValues[indexPath.row][@"title"]];
-            [self.stopAndRouteInfo setRouteTag:value];
+            [self.stopAndRouteInfo setRoute:self.transitValues[indexPath.row][@"title"]];
+            [self.stopAndRouteInfo setTag:value];
         }
         
         if (self.ttcObject[@"route"] && self.ttcObject[@"stop"]) {
@@ -153,6 +153,8 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
     [[segue destinationViewController] setStopAndRouteInfo:self.stopAndRouteInfo];
 }
 
+
+#pragma mark - API backend
 - (void)initializeSDK
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -183,16 +185,15 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
         
     // this case is when the loading screen appears from the previous scheduler screen.
     } else {
-        UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         
-        if (UIDeviceOrientationIsPortrait(orientation)) {
+        if (orientation == UIInterfaceOrientationPortrait) {
             self.loadingOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
             NSLog(@"isPortrait");
-        } else {
+        } else if (orientation == UIInterfaceOrientationLandscapeLeft | orientation == UIInterfaceOrientationLandscapeRight){ // very wierd case where it doesn't take the correct values for landscape mode.
             self.loadingOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width)];
             NSLog(@"isLandscape");
         }
-        
     }
   
     NSLog(@"%f", self.loadingOverlayView.frame.size.width);

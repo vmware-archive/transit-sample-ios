@@ -32,7 +32,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.stopAndRouteArray = [[NSMutableArray alloc] init];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -47,6 +48,14 @@
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setTranslucent:YES];
+    NSLog(@"%@", self.stopAndRouteArray);
+    NSLog(@"%d", self.stopAndRouteArray.count);
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:NO];
+    [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -58,36 +67,62 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.stopAndRouteArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"keyValueCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    PCFStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
+    
+    if(![currentItem isEqual:nil]){
+        
+        UILabel *routeLabel = (UILabel *)[cell viewWithTag:100];
+        [routeLabel setText:currentItem.route];
+        
+        UILabel *stopLabel = (UILabel *)[cell viewWithTag:101];
+        [stopLabel setText:currentItem.stop];
+        
+        UILabel *timeLabel = (UILabel *)[cell viewWithTag:102];
+        [timeLabel setText:currentItem.time];
+        
+        UISwitch *enabledSwitch = (UISwitch *)[cell viewWithTag:104];
+        [enabledSwitch setOn: currentItem.enabled];
+        
+    }
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
+    // Return YES - we will be able to delete all rows
     return YES;
 }
-*/
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Perform the real delete action here. Note: you may need to check editing style
+    //   if you do not perform delete only.
+    [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
+    [self.tableView reloadData];
+    NSLog(@"Deleted row.");
+}
+
 
 /*
 // Override to support editing the table view.
@@ -119,16 +154,25 @@
 }
 */
 
-/*
-#pragma mark - Navigation
 
+#pragma mark - Navigation
+/*
 // In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
+*/
 
- */
+- (IBAction)unwindToSavedTableView:(UIStoryboardSegue *)sender
+{
+    
+}
 
+#pragma mark - adding to the array
+- (void)addToStopAndRoute:(PCFStopAndRouteInfo *)stopAndRouteObject
+{
+    [self.stopAndRouteArray addObject:stopAndRouteObject];
+}
 @end
