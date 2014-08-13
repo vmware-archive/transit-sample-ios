@@ -76,7 +76,7 @@
 - (IBAction)routeStopContainerPressed:(id)sender {
     // format the time
     NSDateFormatter *formate = [[NSDateFormatter alloc] init];
-    [formate setDateFormat:@"HH:mm"];
+    [formate setDateFormat:@"hh:mm a"];
     NSTimeZone *zone = [NSTimeZone defaultTimeZone];
     [formate setTimeZone:zone];
     NSString* dateStr = [formate stringFromDate:self.timePick.date];
