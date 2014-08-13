@@ -16,6 +16,9 @@
 #import <MSSPush/MSSPush.h>
 
 @interface PCFSavedTableViewController ()
+
+@property MSSDataObject *savedStopsAndRouteObject;
+
 @end
 
 @implementation PCFSavedTableViewController
@@ -48,13 +51,12 @@
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setTranslucent:YES];
-    NSLog(@"%@", self.stopAndRouteArray);
-    NSLog(@"%d", self.stopAndRouteArray.count);
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:NO];
+    [self fetchRoutesAndStops];
     [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning
@@ -123,21 +125,6 @@
     NSLog(@"Deleted row.");
 }
 
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
 /*
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
@@ -167,7 +154,29 @@
 
 - (IBAction)unwindToSavedTableView:(UIStoryboardSegue *)sender
 {
+    NSMutableArray *stopAndRouteListJSON = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self.stopAndRouteArray.count; i++) {
+        PCFStopAndRouteInfo *stopAndRouteElement = [self.stopAndRouteArray objectAtIndex:i];
+        NSString *booleanString = (stopAndRouteElement.enabled) ? @"1" : @"0";
+        NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:stopAndRouteElement.route, @"route",
+                                     stopAndRouteElement.stop, @"stop", stopAndRouteElement.time, @"time",
+                                     stopAndRouteElement.tag, @"tag", booleanString, @"enabled", nil];
+        
+        NSData *encodedData = [NSJSONSerialization dataWithJSONObject:jsonDictionary
+                                                              options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *jsonString =[[NSString alloc] initWithData:encodedData encoding:NSUTF8StringEncoding];
+        [stopAndRouteListJSON addObject:jsonString];
+    }
     
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:stopAndRouteListJSON options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    // Checking the format
+    // NSLog(@"%@",[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    
+    self.savedStopsAndRouteObject = [MSSDataObject objectWithClassName:@"savedStopsAndRouteObject"];
+    [self.savedStopsAndRouteObject setObjectID:@"savedStopsAndRouteObjectID"];
+    self.savedStopsAndRouteObject[@"routesAndStops"] = jsonString;
+    [self.savedStopsAndRouteObject saveOnSuccess:nil failure:nil];
 }
 
 #pragma mark - adding to the array
@@ -175,4 +184,21 @@
 {
     [self.stopAndRouteArray addObject:stopAndRouteObject];
 }
+
+#pragma mark - MSSDataObject functions
+- (void)fetchRoutesAndStops
+{
+    [self.savedStopsAndRouteObject objectForKey:@"savedStopsAndRouteObjectID"];
+    [self.savedStopsAndRouteObject fetchOnSuccess:^(MSSDataObject *object) {
+        if(![object isEqual:nil]){
+            NSString *response = object[@"routesAndStops"];
+            NSLog(@"%@", response);
+        }
+        NSLog(@"successssPLZ");
+        
+    } failure:^(NSError *error) {
+        NSLog(@"FAILURE");
+    }];
+}
+
 @end
