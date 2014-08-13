@@ -18,8 +18,9 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 
 @property NSArray *transitValues;
 @property MSSDataObject *ttcObject;
-@property UIActivityIndicatorView *activityIndicatorView;
-@property UIView *loadingOverlayView;
+//@property UIActivityIndicatorView *activityIndicatorView;
+//@property UIView *loadingOverlayView;
+@property PCFLoadingOverlayView *loadingOverlayView;
 
 @end
 
@@ -32,7 +33,6 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
     self.tableView.alwaysBounceVertical = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateForOverlay) name:UIDeviceOrientationDidChangeNotification object:nil];
-    
     
     [self didRotateForOverlay];
     
@@ -49,8 +49,6 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
         self.ttcObject = [MSSDataObject objectWithClassName:@"TTCObject"];
         [self.ttcObject setObjectID:@"TTCObjectID"];
     }
-    
-//    [self.tableView addSubview:self.loadingOverlayView];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -177,38 +175,20 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 
 - (void)didRotateForOverlay
 {
-    // this case is when the user rotates screen while it is loading.
     if (self.loadingOverlayView != nil) {
         [self.loadingOverlayView removeFromSuperview];
-        self.loadingOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-        NSLog(@"balhahaha");
-        
-    // this case is when the loading screen appears from the previous scheduler screen.
+        self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     } else {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         
         if (orientation == UIInterfaceOrientationPortrait) {
-            self.loadingOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-            NSLog(@"isPortrait");
+            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+            NSLog(@"isPortrait - Saved");
         } else if (orientation == UIInterfaceOrientationLandscapeLeft | orientation == UIInterfaceOrientationLandscapeRight){ // very wierd case where it doesn't take the correct values for landscape mode.
-            self.loadingOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width)];
-            NSLog(@"isLandscape");
+            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width)];
+            NSLog(@"isLandscape - Saved");
         }
     }
-  
-    NSLog(@"%f", self.loadingOverlayView.frame.size.width);
-    NSLog(@"%f", self.loadingOverlayView.frame.size.height);
-
-    self.loadingOverlayView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    
-    self.activityIndicatorView = [[UIActivityIndicatorView alloc] init];
-    self.activityIndicatorView.center = CGPointMake(self.loadingOverlayView.frame.size.width/2, self.loadingOverlayView.frame.size.height/2.2);
-    [self.loadingOverlayView addSubview:self.activityIndicatorView];
-    
-    [self.activityIndicatorView startAnimating];
-    [self.activityIndicatorView setHidden:NO];
-    
     [self.tableView addSubview:self.loadingOverlayView];
 }
 

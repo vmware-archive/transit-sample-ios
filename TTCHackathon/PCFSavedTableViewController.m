@@ -18,7 +18,7 @@
 @interface PCFSavedTableViewController ()
 
 @property MSSDataObject *savedStopsAndRouteObject;
-
+@property PCFLoadingOverlayView *loadingOverlayView;
 @end
 
 @implementation PCFSavedTableViewController
@@ -39,11 +39,6 @@
     [self.savedStopsAndRouteObject setObjectID:@"savedStopsAndRouteObjectID"];
     self.stopAndRouteArray = [[NSMutableArray alloc] init];
     [self fetchRoutesAndStops];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -58,7 +53,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:NO];
-    
     [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning
@@ -171,6 +165,8 @@
 #pragma mark - MSSDataObject functions
 - (void)fetchRoutesAndStops
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoadingScreen) name:UIDeviceOrientationDidChangeNotification object:nil];
+    [self showLoadingScreen];
     NSLog(@"fetching...");
     [self.savedStopsAndRouteObject objectForKey:@"savedStopsAndRouteObjectID"];
     [self.savedStopsAndRouteObject fetchOnSuccess:^(MSSDataObject *object) {
@@ -193,6 +189,9 @@
                 [self.stopAndRouteArray addObject:obj];
             }
             
+            [[NSNotificationCenter defaultCenter] removeObserver:self];
+            [self.loadingOverlayView removeFromSuperview];
+            self.tableView.alwaysBounceVertical = YES;
             [self.tableView reloadData];
         }
     } failure:^(NSError *error) {
@@ -215,6 +214,7 @@
 
 /* Everytime we change anything in our array, we have to push it up to the server */
 - (void)pushUpdateToServer {
+    self.tableView.alwaysBounceVertical = NO;
     NSLog(@"Pushing to server here...");
     NSMutableArray *stopAndRouteListJSON = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.stopAndRouteArray.count; i++) {
@@ -235,5 +235,25 @@
     
     self.savedStopsAndRouteObject[@"routesAndStops"] = jsonString;
     [self.savedStopsAndRouteObject saveOnSuccess:nil failure:nil];
+}
+
+#pragma mark - UI changes
+- (void)showLoadingScreen
+{
+    if (self.loadingOverlayView != nil) {
+        [self.loadingOverlayView removeFromSuperview];
+        self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    } else {
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        
+        if (orientation == UIInterfaceOrientationPortrait) {
+            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+            NSLog(@"isPortrait - Saved");
+        } else if (orientation == UIInterfaceOrientationLandscapeLeft | orientation == UIInterfaceOrientationLandscapeRight){ // very wierd case where it doesn't take the correct values for landscape mode.
+            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width)];
+            NSLog(@"isLandscape - Saved");
+        }
+    }
+    [self.tableView addSubview:self.loadingOverlayView];
 }
 @end
