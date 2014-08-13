@@ -22,10 +22,11 @@
 		916215F319926A010019EF2B /* PCFSchedulerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916215F219926A010019EF2B /* PCFSchedulerViewController.m */; };
 		916215FC199279640019EF2B /* PCFSavedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916215FB199279640019EF2B /* PCFSavedTableViewController.m */; };
 		91621600199507340019EF2B /* PCFStopAndRouteInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 916215FF199507340019EF2B /* PCFStopAndRouteInfo.m */; };
-		91621604199527980019EF2B /* ic_ttc_launcher.png in Resources */ = {isa = PBXBuildFile; fileRef = 91621603199527980019EF2B /* ic_ttc_launcher.png */; };
-		9162160719952A500019EF2B /* ic_ttc_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9162160619952A500019EF2B /* ic_ttc_logo.png */; };
+		91621604199527980019EF2B /* ic_ttc_launcher120.png in Resources */ = {isa = PBXBuildFile; fileRef = 91621603199527980019EF2B /* ic_ttc_launcher120.png */; };
 		9162160A199579C10019EF2B /* NSFerret.m in Sources */ = {isa = PBXBuildFile; fileRef = 91621609199579C10019EF2B /* NSFerret.m */; };
 		91DE589B199C032800232354 /* PCFLoadingOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DE589A199C032800232354 /* PCFLoadingOverlayView.m */; };
+		91DE58A3199C126A00232354 /* ic_ttc_launcher58.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58A2199C126A00232354 /* ic_ttc_launcher58.png */; };
+		91DE58A5199C127000232354 /* ic_ttc_launcher80.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58A4199C127000232354 /* ic_ttc_launcher80.png */; };
 		E76B95121979AF64003F37FA /* MSSPush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95111979AF64003F37FA /* MSSPush.framework */; };
 		E76B95141979D02E003F37FA /* MSSData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95131979D02E003F37FA /* MSSData.framework */; };
 /* End PBXBuildFile section */
@@ -57,12 +58,13 @@
 		916215FB199279640019EF2B /* PCFSavedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFSavedTableViewController.m; sourceTree = "<group>"; };
 		916215FE199507340019EF2B /* PCFStopAndRouteInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFStopAndRouteInfo.h; sourceTree = "<group>"; };
 		916215FF199507340019EF2B /* PCFStopAndRouteInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFStopAndRouteInfo.m; sourceTree = "<group>"; };
-		91621603199527980019EF2B /* ic_ttc_launcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_ttc_launcher.png; path = TTCHackathon/ic_ttc_launcher.png; sourceTree = "<group>"; };
-		9162160619952A500019EF2B /* ic_ttc_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_ttc_logo.png; sourceTree = "<group>"; };
+		91621603199527980019EF2B /* ic_ttc_launcher120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_ttc_launcher120.png; path = TTCHackathon/ic_ttc_launcher120.png; sourceTree = "<group>"; };
 		91621608199579C10019EF2B /* NSFerret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFerret.h; sourceTree = "<group>"; };
 		91621609199579C10019EF2B /* NSFerret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFerret.m; sourceTree = "<group>"; };
 		91DE5899199C032800232354 /* PCFLoadingOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFLoadingOverlayView.h; sourceTree = "<group>"; };
 		91DE589A199C032800232354 /* PCFLoadingOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFLoadingOverlayView.m; sourceTree = "<group>"; };
+		91DE58A2199C126A00232354 /* ic_ttc_launcher58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_ttc_launcher58.png; path = TTCHackathon/ic_ttc_launcher58.png; sourceTree = "<group>"; };
+		91DE58A4199C127000232354 /* ic_ttc_launcher80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_ttc_launcher80.png; path = TTCHackathon/ic_ttc_launcher80.png; sourceTree = "<group>"; };
 		E76B95111979AF64003F37FA /* MSSPush.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSPush.framework; sourceTree = "<group>"; };
 		E76B95131979D02E003F37FA /* MSSData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSData.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -145,8 +147,9 @@
 		9162160519952A010019EF2B /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				91621603199527980019EF2B /* ic_ttc_launcher.png */,
-				9162160619952A500019EF2B /* ic_ttc_logo.png */,
+				91DE58A4199C127000232354 /* ic_ttc_launcher80.png */,
+				91DE58A2199C126A00232354 /* ic_ttc_launcher58.png */,
+				91621603199527980019EF2B /* ic_ttc_launcher120.png */,
 			);
 			name = Images;
 			path = ..;
@@ -239,11 +242,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				57F6333E1954A87F00446130 /* Main.storyboard in Resources */,
-				91621604199527980019EF2B /* ic_ttc_launcher.png in Resources */,
+				91DE58A3199C126A00232354 /* ic_ttc_launcher58.png in Resources */,
+				91621604199527980019EF2B /* ic_ttc_launcher120.png in Resources */,
 				5746E597195497C000CAADE9 /* InfoPlist.strings in Resources */,
 				57F633461954BDCD00446130 /* MSSParameters.plist in Resources */,
-				9162160719952A500019EF2B /* ic_ttc_logo.png in Resources */,
 				5746E59F195497C000CAADE9 /* Images.xcassets in Resources */,
+				91DE58A5199C127000232354 /* ic_ttc_launcher80.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
