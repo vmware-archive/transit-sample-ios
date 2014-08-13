@@ -92,6 +92,7 @@
     } else if ([segue.destinationViewController isKindOfClass:[PCFSavedTableViewController class]]) {
         if(self.stopAndRouteInfo.route != nil  && self.stopAndRouteInfo.stop != nil && self.stopAndRouteInfo.tag != nil){
             self.stopAndRouteInfo.enabled = YES;
+            
             [[segue destinationViewController] addToStopAndRoute:self.stopAndRouteInfo];
         }else{
             //if missing any of the info then send nothing
@@ -113,9 +114,9 @@
 
 - (void)didRotateScreen
 {
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
 
-    if (UIDeviceOrientationIsPortrait(orientation)) {
+    if (UIInterfaceOrientationIsPortrait(orientation)) {
         [self.scrollView setScrollEnabled:NO];
     } else {
         [self.scrollView setScrollEnabled:YES];

@@ -35,8 +35,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.savedStopsAndRouteObject = [MSSDataObject objectWithClassName:@"notifications"];
+    [self.savedStopsAndRouteObject setObjectID:@"savedStopsAndRouteObjectID"];
     self.stopAndRouteArray = [[NSMutableArray alloc] init];
-    
+    [self fetchRoutesAndStops];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -56,7 +58,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:NO];
-    [self fetchRoutesAndStops];
+    
     [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning
@@ -103,8 +105,9 @@
         [timeLabel setText:currentItem.time];
         
         UISwitch *enabledSwitch = (UISwitch *)[cell viewWithTag:104];
+        enabledSwitch.tag = indexPath.row;
         [enabledSwitch setOn: currentItem.enabled];
-        
+        [enabledSwitch addTarget:self action:@selector(switchToggled:) forControlEvents: UIControlEventTouchUpInside];
     }
     
     return cell;
@@ -121,26 +124,10 @@
     // Perform the real delete action here. Note: you may need to check editing style
     //   if you do not perform delete only.
     [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
+    [self pushUpdateToServer];
     [self.tableView reloadData];
     NSLog(@"Deleted row.");
 }
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 
 #pragma mark - Navigation
 /*
@@ -154,13 +141,88 @@
 
 - (IBAction)unwindToSavedTableView:(UIStoryboardSegue *)sender
 {
+    [self pushUpdateToServer];
+}
+
+- (void)switchToggled:(UISwitch*)mySwitch
+{
+    PCFStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:mySwitch.tag];
+    
+    if ([mySwitch isOn]) {
+        currentItem.enabled = YES;
+    } else {
+        currentItem.enabled = NO;
+    }
+    [self pushUpdateToServer];
+}
+
+#pragma mark - adding to the array
+- (void)addToStopAndRoute:(PCFStopAndRouteInfo *)stopAndRouteObject
+{
+    for(PCFStopAndRouteInfo* elem in self.stopAndRouteArray){
+        if([elem.stop isEqualToString:stopAndRouteObject.stop] && [elem.time isEqualToString:stopAndRouteObject.time]){
+            NSLog(@"Reject to add elem");
+            return;
+        }
+    }
+    [self.stopAndRouteArray addObject:stopAndRouteObject];
+}
+
+#pragma mark - MSSDataObject functions
+- (void)fetchRoutesAndStops
+{
+    NSLog(@"fetching...");
+    [self.savedStopsAndRouteObject objectForKey:@"savedStopsAndRouteObjectID"];
+    [self.savedStopsAndRouteObject fetchOnSuccess:^(MSSDataObject *object) {
+        if(![object isEqual:nil]){
+            NSData* data = [object[@"routesAndStops"] dataUsingEncoding:NSUTF8StringEncoding];
+            NSArray* JSONArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            if(![self.stopAndRouteArray isEqual:nil]){
+                [self.stopAndRouteArray removeAllObjects];
+            }
+            
+            for(int i = 0; i < JSONArray.count; ++i){
+                NSDictionary *dictionary = [self deserializeStringToObject:[JSONArray objectAtIndex:i]];
+                PCFStopAndRouteInfo *obj = [[PCFStopAndRouteInfo alloc] init];
+                [obj setEnabled:[dictionary[@"enabled"] boolValue]];
+                [obj setRoute:dictionary[@"route"]];
+                [obj setStop:dictionary[@"stop"]];
+                [obj setTag: dictionary[@"tag"]];
+                [obj setTime: dictionary[@"time"]];
+                [self.stopAndRouteArray addObject:obj];
+            }
+            
+            [self.tableView reloadData];
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"FAILURE");
+    }];
+}
+
+/* Helper function */
+- (id)deserializeStringToObject:(NSString *)string
+{
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    id result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+    if (!result) {
+        NSLog(@"%@", error.description);
+    }
+    
+    return result;
+}
+
+/* Everytime we change anything in our array, we have to push it up to the server */
+- (void)pushUpdateToServer {
+    NSLog(@"Pushing to server here...");
     NSMutableArray *stopAndRouteListJSON = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.stopAndRouteArray.count; i++) {
         PCFStopAndRouteInfo *stopAndRouteElement = [self.stopAndRouteArray objectAtIndex:i];
         NSString *booleanString = (stopAndRouteElement.enabled) ? @"1" : @"0";
         NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:stopAndRouteElement.route, @"route",
-                                     stopAndRouteElement.stop, @"stop", stopAndRouteElement.time, @"time",
-                                     stopAndRouteElement.tag, @"tag", booleanString, @"enabled", nil];
+                                        stopAndRouteElement.stop, @"stop", stopAndRouteElement.time, @"time",
+                                        stopAndRouteElement.tag, @"tag", booleanString, @"enabled", nil];
         
         NSData *encodedData = [NSJSONSerialization dataWithJSONObject:jsonDictionary
                                                               options:NSJSONWritingPrettyPrinted error:nil];
@@ -170,35 +232,8 @@
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:stopAndRouteListJSON options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    // Checking the format
-    // NSLog(@"%@",[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     
-    self.savedStopsAndRouteObject = [MSSDataObject objectWithClassName:@"savedStopsAndRouteObject"];
-    [self.savedStopsAndRouteObject setObjectID:@"savedStopsAndRouteObjectID"];
     self.savedStopsAndRouteObject[@"routesAndStops"] = jsonString;
     [self.savedStopsAndRouteObject saveOnSuccess:nil failure:nil];
 }
-
-#pragma mark - adding to the array
-- (void)addToStopAndRoute:(PCFStopAndRouteInfo *)stopAndRouteObject
-{
-    [self.stopAndRouteArray addObject:stopAndRouteObject];
-}
-
-#pragma mark - MSSDataObject functions
-- (void)fetchRoutesAndStops
-{
-    [self.savedStopsAndRouteObject objectForKey:@"savedStopsAndRouteObjectID"];
-    [self.savedStopsAndRouteObject fetchOnSuccess:^(MSSDataObject *object) {
-        if(![object isEqual:nil]){
-            NSString *response = object[@"routesAndStops"];
-            NSLog(@"%@", response);
-        }
-        NSLog(@"successssPLZ");
-        
-    } failure:^(NSError *error) {
-        NSLog(@"FAILURE");
-    }];
-}
-
 @end
