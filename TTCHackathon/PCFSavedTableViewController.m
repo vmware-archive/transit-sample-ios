@@ -8,7 +8,7 @@
 
 #import "PCFSavedTableViewController.h"
 #import "TTCClient.h"
-
+#import "PCFSavedCell.h"
 #import <MSSData/MSSData.h>
 #import <MSSData/AFNetworking.h>
 #import <MSSPush/MSSPushClient.h>
@@ -38,6 +38,7 @@
     self.savedStopsAndRouteObject = [MSSDataObject objectWithClassName:@"notifications"];
     [self.savedStopsAndRouteObject setObjectID:@"savedStopsAndRouteObjectID"];
     self.stopAndRouteArray = [[NSMutableArray alloc] init];
+    self.savedPushEntries = [[NSMutableDictionary alloc] init];
     [self fetchRoutesAndStops];
 }
 
@@ -78,30 +79,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"keyValueCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    
+    PCFSavedCell *cell = (PCFSavedCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+
     PCFStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
     
-    if(![currentItem isEqual:nil]){
+    if(currentItem){
         
-        UILabel *routeLabel = (UILabel *)[cell viewWithTag:100];
-        [routeLabel setText:currentItem.route];
-        
-        UILabel *stopLabel = (UILabel *)[cell viewWithTag:101];
-        [stopLabel setText:currentItem.stop];
-        
-        UILabel *timeLabel = (UILabel *)[cell viewWithTag:102];
-        [timeLabel setText:currentItem.time];
-        
-        UISwitch *enabledSwitch = (UISwitch *)[cell viewWithTag:104];
-        enabledSwitch.tag = indexPath.row;
-        [enabledSwitch setOn: currentItem.enabled];
-        [enabledSwitch addTarget:self action:@selector(switchToggled:) forControlEvents: UIControlEventTouchUpInside];
+        [cell populateViews:currentItem tag:indexPath.row];
+        [cell.toggleSwitch addTarget:self action:@selector(switchToggled:) forControlEvents: UIControlEventTouchUpInside];
     }
     
     return cell;
@@ -115,27 +100,34 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Perform the real delete action here. Note: you may need to check editing style
-    //   if you do not perform delete only.
+    // delete from dictionary first
+    PCFStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
+    [self.savedPushEntries removeObjectForKey:currentItem.identifier];
+    NSLog(@"%d", [self.savedPushEntries count]);
+    
+    // delete from array
     [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
     [self pushUpdateToServer];
+    
     [self.tableView reloadData];
     NSLog(@"Deleted row.");
 }
 
 #pragma mark - Navigation
-/*
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
+// When we click the done button in the scheduler view.
 - (IBAction)unwindToSavedTableView:(UIStoryboardSegue *)sender
 {
     [self pushUpdateToServer];
+    
+    // check if the end of our array exists in our dictionary
+    PCFStopAndRouteInfo *lastItem = self.stopAndRouteArray.lastObject;
+    
+    // check if the recently added item is new
+    if (![[self.savedPushEntries allKeys] containsObject:lastItem.identifier]) {
+        [self.savedPushEntries setValue:@"placeholder" forKey:lastItem.identifier];
+        NSLog(@"adding to dictionary: %@", lastItem.identifier);
+        //[self initializeSDK:lastItem.identifier];
+    }
 }
 
 - (void)switchToggled:(UISwitch*)mySwitch
@@ -144,9 +136,18 @@
     
     if ([mySwitch isOn]) {
         currentItem.enabled = YES;
+        // have to add to dictionary and request push
+        [self.savedPushEntries setObject:@"placeholder" forKey:currentItem.identifier];
+        // [self initializeSDK:currentItem.identifier];
     } else {
         currentItem.enabled = NO;
+        // have to delete from dictionary and request to not push anymore
+        [self.savedPushEntries removeObjectForKey:currentItem.identifier];
+        // request to remove notifications here.
     }
+    
+
+    NSLog(@"%d", [self.savedPushEntries count]);
     [self pushUpdateToServer];
 }
 
@@ -165,7 +166,9 @@
 #pragma mark - MSSDataObject functions
 - (void)fetchRoutesAndStops
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoadingScreen) name:UIDeviceOrientationDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showLoadingScreen)
+                                                 name:UIDeviceOrientationDidChangeNotification object:nil];
     [self showLoadingScreen];
     NSLog(@"fetching...");
     [self.savedStopsAndRouteObject objectForKey:@"savedStopsAndRouteObjectID"];
@@ -184,13 +187,17 @@
                 [obj setEnabled:[dictionary[@"enabled"] boolValue]];
                 [obj setRoute:dictionary[@"route"]];
                 [obj setStop:dictionary[@"stop"]];
-                [obj setTag: dictionary[@"tag"]];
+                [obj setRouteTag: dictionary[@"routeTag"]];
+                [obj setStopTag: dictionary[@"stopTag"]];
                 [obj setTime: dictionary[@"time"]];
+                [obj setTimeIn24h: dictionary[@"timeIn24h"]];
+                [obj setIdentifier:dictionary[@"identifier"]];
                 [self.stopAndRouteArray addObject:obj];
             }
             
             [[NSNotificationCenter defaultCenter] removeObserver:self];
             [self.loadingOverlayView removeFromSuperview];
+            [self populateSavedPushEntries];
             self.tableView.alwaysBounceVertical = YES;
             [self.tableView reloadData];
         }
@@ -199,6 +206,17 @@
     }];
 }
 
+#pragma mark - dictionary functions
+- (void)populateSavedPushEntries
+{
+    for (PCFStopAndRouteInfo* obj in self.stopAndRouteArray) {
+        if (obj.enabled == YES) { // If it is enabled
+           [self.savedPushEntries setValue:@"placeholder" forKey:obj.identifier];
+        }
+    }
+}
+
+#pragma mark - JSON serialization functions
 /* Helper function */
 - (id)deserializeStringToObject:(NSString *)string
 {
@@ -222,7 +240,9 @@
         NSString *booleanString = (stopAndRouteElement.enabled) ? @"1" : @"0";
         NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:stopAndRouteElement.route, @"route",
                                         stopAndRouteElement.stop, @"stop", stopAndRouteElement.time, @"time",
-                                        stopAndRouteElement.tag, @"tag", booleanString, @"enabled", nil];
+                                        stopAndRouteElement.routeTag, @"routeTag", stopAndRouteElement.stopTag, @"stopTag",
+                                        stopAndRouteElement.identifier, @"identifier", stopAndRouteElement.timeIn24h, @"timeIn24h",
+                                        booleanString, @"enabled", nil];
         
         NSData *encodedData = [NSJSONSerialization dataWithJSONObject:jsonDictionary
                                                               options:NSJSONWritingPrettyPrinted error:nil];
@@ -255,5 +275,24 @@
         }
     }
     [self.tableView addSubview:self.loadingOverlayView];
+}
+
+#pragma mark - API backend
+- (void)initializeSDK:(NSString*)identifier
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    MSSParameters *parameters;
+    parameters.developmentPushVariantUUID = @"15a001cd-f200-40a1-b052-763fbeee12a3";
+    parameters.developmentPushReleaseSecret = @"84def001-645b-4dfa-af5f-e2659dd27b0f";
+    [parameters setTags:@[identifier]];
+    [MSSPush setRegistrationParameters:parameters];
+    [MSSPush setCompletionBlockWithSuccess:^{
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        
+    } failure:^(NSError *error) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }];
+    [MSSPush registerForPushNotifications];
 }
 @end

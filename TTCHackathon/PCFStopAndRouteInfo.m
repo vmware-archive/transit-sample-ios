@@ -10,4 +10,8 @@
 
 @implementation PCFStopAndRouteInfo
 
+- (void)createIdentifier
+{
+    self.identifier = [NSString stringWithFormat:@"%@_%@_%@", self.timeIn24h, self.routeTag, self.stopTag];
+}
 @end

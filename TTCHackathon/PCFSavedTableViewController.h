@@ -13,6 +13,7 @@
 @interface PCFSavedTableViewController : UITableViewController
 
 @property (strong, nonatomic) NSMutableArray *stopAndRouteArray;
+@property(strong, nonatomic) NSMutableDictionary *savedPushEntries;
 - (IBAction)unwindToSavedTableView:(UIStoryboardSegue *)sender;
 - (void)addToStopAndRoute:(PCFStopAndRouteInfo *)stopAndRouteObject;
 @end

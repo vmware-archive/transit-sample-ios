@@ -105,18 +105,18 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
             // stop and route object setting
             self.ttcObject[@"stop"] = value;
             [self.stopAndRouteInfo setStop:self.transitValues[indexPath.row][@"title"]];
+            [self.stopAndRouteInfo setStopTag:value];
            
         } else {
             self.ttcObject[@"route"] = value;
-            
             // stop and route object setting
             [self.stopAndRouteInfo setRoute:self.transitValues[indexPath.row][@"title"]];
-            [self.stopAndRouteInfo setTag:value];
+            [self.stopAndRouteInfo setRouteTag:value];
         }
         
         if (self.ttcObject[@"route"] && self.ttcObject[@"stop"]) {
-            [self initializeSDK];
-            [self.ttcObject saveOnSuccess:nil failure:nil];
+//            [self initializeSDK];
+//            [self.ttcObject saveOnSuccess:nil failure:nil];
             [self performSegueWithIdentifier:@"unwindToTimeAndStopView" sender:self];
         }        
     }
@@ -160,7 +160,6 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
     MSSParameters *parameters;
     parameters = [MSSParameters defaultParameters];
     [parameters setTags:@[[NSString stringWithFormat:@"14_%@_%@", self.ttcObject[@"route"], self.ttcObject[@"stop"]]]];
-    
     [MSSPush setRegistrationParameters:parameters];
     [MSSPush setCompletionBlockWithSuccess:^{
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;

@@ -68,20 +68,26 @@
 
 #pragma mark - click events
 - (IBAction)doneButtonPressed:(id)sender {
-    
-    [self performSegueWithIdentifier:@"unwindToSavedTableView" sender:self];
-}
-
-
-- (IBAction)routeStopContainerPressed:(id)sender {
     // format the time
     NSDateFormatter *formate = [[NSDateFormatter alloc] init];
     [formate setDateFormat:@"hh:mm a"];
     NSTimeZone *zone = [NSTimeZone defaultTimeZone];
     [formate setTimeZone:zone];
     NSString* dateStr = [formate stringFromDate:self.timePick.date];
+    
+    [formate setDateFormat:@"HHmm"];
+    [self.stopAndRouteInfo setTimeIn24h: [formate stringFromDate:self.timePick.date]];
+    NSLog(@"Time in 24 hr: %@", self.stopAndRouteInfo.timeIn24h);
     NSLog(@"Time - %@",dateStr);
     [self.stopAndRouteInfo setTime:dateStr];
+    
+    
+    [self performSegueWithIdentifier:@"unwindToSavedTableView" sender:self];
+}
+
+
+- (IBAction)routeStopContainerPressed:(id)sender {
+    
     [self performSegueWithIdentifier:@"segueToDataTable" sender:self];
 }
 
@@ -90,14 +96,11 @@
     if ([segue.destinationViewController isKindOfClass:[PCFDataTableViewController class]]) {
         [[segue destinationViewController] setStopAndRouteInfo:self.stopAndRouteInfo];
     } else if ([segue.destinationViewController isKindOfClass:[PCFSavedTableViewController class]]) {
-        if(self.stopAndRouteInfo.route != nil  && self.stopAndRouteInfo.stop != nil && self.stopAndRouteInfo.tag != nil){
+        if(self.stopAndRouteInfo.route != nil  && self.stopAndRouteInfo.stop != nil){
             self.stopAndRouteInfo.enabled = YES;
-            
+            [self.stopAndRouteInfo createIdentifier];
             [[segue destinationViewController] addToStopAndRoute:self.stopAndRouteInfo];
-        }else{
-            //if missing any of the info then send nothing
         }
-        
     }
 }
 
@@ -110,7 +113,7 @@
     [self.scheduleButton setTitle:str forState:UIControlStateNormal];    
 }
 
-#pragma mark - NOTIFICATIONS
+#pragma mark - Observer functions
 
 - (void)didRotateScreen
 {
@@ -123,4 +126,7 @@
     }
     
 }
+
+//#pragma mark - Modifying stopAndRoute
+//- (void)formatTime
 @end
