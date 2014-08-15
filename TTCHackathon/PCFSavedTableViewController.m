@@ -80,11 +80,9 @@
 {
     static NSString *CellIdentifier = @"keyValueCell";
     PCFSavedCell *cell = (PCFSavedCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-
     PCFStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
     
     if(currentItem){
-        
         [cell populateViews:currentItem tag:indexPath.row];
         [cell.toggleSwitch addTarget:self action:@selector(switchToggled:) forControlEvents: UIControlEventTouchUpInside];
     }
@@ -102,7 +100,12 @@
 {
     // delete from dictionary first
     PCFStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
+    if([currentItem isEqual:nil]){
+        return ;
+    }
+    
     [self.savedPushEntries removeObjectForKey:currentItem.identifier];
+    
     NSLog(@"%d", [self.savedPushEntries count]);
     
     // delete from array
@@ -122,11 +125,14 @@
     // check if the end of our array exists in our dictionary
     PCFStopAndRouteInfo *lastItem = self.stopAndRouteArray.lastObject;
     
+    // check if the item exists
+    if (!lastItem) return;
+    
     // check if the recently added item is new
     if (![[self.savedPushEntries allKeys] containsObject:lastItem.identifier]) {
         [self.savedPushEntries setValue:@"placeholder" forKey:lastItem.identifier];
         NSLog(@"adding to dictionary: %@", lastItem.identifier);
-        //[self initializeSDK:lastItem.identifier];
+        [self initializeSDK:lastItem.identifier];
     }
 }
 
@@ -154,8 +160,8 @@
 #pragma mark - adding to the array
 - (void)addToStopAndRoute:(PCFStopAndRouteInfo *)stopAndRouteObject
 {
-    for(PCFStopAndRouteInfo* elem in self.stopAndRouteArray){
-        if([elem.stop isEqualToString:stopAndRouteObject.stop] && [elem.time isEqualToString:stopAndRouteObject.time]){
+    for(PCFStopAndRouteInfo* sar in self.stopAndRouteArray){
+        if([sar.stop isEqualToString:stopAndRouteObject.stop] && [sar.time isEqualToString:stopAndRouteObject.time]){
             NSLog(@"Reject to add elem");
             return;
         }
@@ -281,10 +287,12 @@
 - (void)initializeSDK:(NSString*)identifier
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    MSSParameters *parameters;
-    parameters.developmentPushVariantUUID = @"15a001cd-f200-40a1-b052-763fbeee12a3";
-    parameters.developmentPushReleaseSecret = @"84def001-645b-4dfa-af5f-e2659dd27b0f";
+    NSLog(@"%@", identifier);
+    MSSParameters *parameters = [[MSSParameters alloc] init];
+    [parameters setPushAPIURL:@"http://cfms-push-service-dev.main.vchs.cfms-apps.com/v1/"];
+    [parameters setDevelopmentPushVariantUUID:@"15a001cd-f200-40a1-b052-763fbeee12a3"];
+    [parameters setDevelopmentPushReleaseSecret:@"84def001-645b-4dfa-af5f-e2659dd27b0f"];
+    [parameters setPushDeviceAlias:@"CATS"];
     [parameters setTags:@[identifier]];
     [MSSPush setRegistrationParameters:parameters];
     [MSSPush setCompletionBlockWithSuccess:^{

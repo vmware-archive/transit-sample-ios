@@ -28,7 +28,7 @@
 		91DE58A3199C126A00232354 /* ic_ttc_launcher58.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58A2199C126A00232354 /* ic_ttc_launcher58.png */; };
 		91DE58A5199C127000232354 /* ic_ttc_launcher80.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58A4199C127000232354 /* ic_ttc_launcher80.png */; };
 		91DE58AE199D569800232354 /* PCFSavedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DE58AD199D569800232354 /* PCFSavedCell.m */; };
-		E76B95121979AF64003F37FA /* MSSPush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95111979AF64003F37FA /* MSSPush.framework */; };
+		DE6B3CA656AE421799946EE4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E013236D742EE9FAA500B /* libPods.a */; };
 		E76B95141979D02E003F37FA /* MSSData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95131979D02E003F37FA /* MSSData.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +53,7 @@
 		57F6333F1954ACF800446130 /* TTCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCClient.h; sourceTree = "<group>"; };
 		57F633401954ACF800446130 /* TTCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCClient.m; sourceTree = "<group>"; };
 		57F633451954BDCD00446130 /* MSSParameters.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MSSParameters.plist; sourceTree = "<group>"; };
+		8A3D486E4EFC4A5B9A834AFA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		916215F119926A010019EF2B /* PCFSchedulerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFSchedulerViewController.h; sourceTree = "<group>"; };
 		916215F219926A010019EF2B /* PCFSchedulerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFSchedulerViewController.m; sourceTree = "<group>"; };
 		916215FA199279640019EF2B /* PCFSavedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFSavedTableViewController.h; sourceTree = "<group>"; };
@@ -68,7 +69,7 @@
 		91DE58A4199C127000232354 /* ic_ttc_launcher80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_ttc_launcher80.png; path = TTCHackathon/ic_ttc_launcher80.png; sourceTree = "<group>"; };
 		91DE58AC199D569800232354 /* PCFSavedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFSavedCell.h; sourceTree = "<group>"; };
 		91DE58AD199D569800232354 /* PCFSavedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFSavedCell.m; sourceTree = "<group>"; };
-		E76B95111979AF64003F37FA /* MSSPush.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSPush.framework; sourceTree = "<group>"; };
+		B57E013236D742EE9FAA500B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E76B95131979D02E003F37FA /* MSSData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSData.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,11 +78,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E76B95121979AF64003F37FA /* MSSPush.framework in Frameworks */,
 				5746E58F195497C000CAADE9 /* CoreGraphics.framework in Frameworks */,
 				5746E591195497C000CAADE9 /* UIKit.framework in Frameworks */,
 				5746E58D195497C000CAADE9 /* Foundation.framework in Frameworks */,
 				E76B95141979D02E003F37FA /* MSSData.framework in Frameworks */,
+				DE6B3CA656AE421799946EE4 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +96,7 @@
 				5746E58E195497C000CAADE9 /* CoreGraphics.framework */,
 				5746E590195497C000CAADE9 /* UIKit.framework */,
 				5746E5A5195497C000CAADE9 /* XCTest.framework */,
+				B57E013236D742EE9FAA500B /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -173,10 +175,10 @@
 			isa = PBXGroup;
 			children = (
 				E76B95131979D02E003F37FA /* MSSData.framework */,
-				E76B95111979AF64003F37FA /* MSSPush.framework */,
 				5746E592195497C000CAADE9 /* TTCHackathon */,
 				F1B601B81925257200B65371 /* Products */,
 				3DFBFBA335484D039ADA1160 /* Frameworks */,
+				8A3D486E4EFC4A5B9A834AFA /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -195,9 +197,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5746E5B3195497C000CAADE9 /* Build configuration list for PBXNativeTarget "TTCHackathon" */;
 			buildPhases = (
+				6FDD8E5852AF406EB9F06EF8 /* Check Pods Manifest.lock */,
 				5746E587195497C000CAADE9 /* Sources */,
 				5746E588195497C000CAADE9 /* Frameworks */,
 				5746E589195497C000CAADE9 /* Resources */,
+				B65D6960E2B84C9E91C45677 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -258,6 +262,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6FDD8E5852AF406EB9F06EF8 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B65D6960E2B84C9E91C45677 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5746E587195497C000CAADE9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -301,6 +338,7 @@
 /* Begin XCBuildConfiguration section */
 		5746E5B4195497C000CAADE9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A3D486E4EFC4A5B9A834AFA /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -328,6 +366,7 @@
 		};
 		5746E5B5195497C000CAADE9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A3D486E4EFC4A5B9A834AFA /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

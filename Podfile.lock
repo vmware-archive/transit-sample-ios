@@ -1,0 +1,10 @@
+PODS:
+  - MSSPush (1.0.0)
+
+DEPENDENCIES:
+  - MSSPush (~> 1.0.0)
+
+SPEC CHECKSUMS:
+  MSSPush: 0e7f475ee00361120e95c8cdc8dc0bdf7fa3367d
+
+COCOAPODS: 0.33.1
