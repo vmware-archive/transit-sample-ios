@@ -35,6 +35,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showLoadingScreen)
+                                                 name:UIDeviceOrientationDidChangeNotification object:nil];
+    
     self.savedStopsAndRouteObject = [MSSDataObject objectWithClassName:@"notifications"];
     [self.savedStopsAndRouteObject setObjectID:@"savedStopsAndRouteObjectID"];
     self.stopAndRouteArray = [[NSMutableArray alloc] init];
@@ -45,6 +50,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+
     [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.navigationController.navigationBarHidden = NO;
@@ -56,6 +62,7 @@
     [super viewWillAppear:NO];
     [self.tableView reloadData];
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -92,18 +99,15 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return YES - we will be able to delete all rows
     return YES;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // delete from dictionary first
     PCFStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
-    if([currentItem isEqual:nil]){
-        return ;
-    }
+    if([currentItem isEqual:nil]) return;
     
+    // delete from dictionary
     [self.savedPushEntries removeObjectForKey:currentItem.identifier];
     
     NSLog(@"%d", [self.savedPushEntries count]);
@@ -112,12 +116,13 @@
     [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
     [self pushUpdateToServer];
     
+    // need to refresh the table to update the view
     [self.tableView reloadData];
     NSLog(@"Deleted row.");
 }
 
 #pragma mark - Navigation
-// When we click the done button in the scheduler view.
+// When we click the done button in the scheduler view we UNWIND back to here.
 - (IBAction)unwindToSavedTableView:(UIStoryboardSegue *)sender
 {
     [self pushUpdateToServer];
@@ -126,7 +131,9 @@
     PCFStopAndRouteInfo *lastItem = self.stopAndRouteArray.lastObject;
     
     // check if the item exists
-    if (!lastItem) return;
+    if ([lastItem isEqual:nil]){
+        return;
+    }
     
     // check if the recently added item is new
     if (![[self.savedPushEntries allKeys] containsObject:lastItem.identifier]) {
@@ -136,6 +143,8 @@
     }
 }
 
+
+#pragma mark - Action events
 - (void)switchToggled:(UISwitch*)mySwitch
 {
     PCFStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:mySwitch.tag];
@@ -157,7 +166,7 @@
     [self pushUpdateToServer];
 }
 
-#pragma mark - adding to the array
+#pragma mark - Array and dictionary functions
 - (void)addToStopAndRoute:(PCFStopAndRouteInfo *)stopAndRouteObject
 {
     for(PCFStopAndRouteInfo* sar in self.stopAndRouteArray){
@@ -169,12 +178,19 @@
     [self.stopAndRouteArray addObject:stopAndRouteObject];
 }
 
-#pragma mark - MSSDataObject functions
+- (void)populateSavedPushEntries
+{
+    for (PCFStopAndRouteInfo* obj in self.stopAndRouteArray) {
+        if (obj.enabled == YES) { // If it is enabled
+            [self.savedPushEntries setValue:@"placeholder" forKey:obj.identifier];
+        }
+    }
+}
+
+#pragma mark - MSSDataObject server functions
+/* When we authenticate we have to fetch our routes and stop from the server */
 - (void)fetchRoutesAndStops
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showLoadingScreen)
-                                                 name:UIDeviceOrientationDidChangeNotification object:nil];
     [self showLoadingScreen];
     NSLog(@"fetching...");
     [self.savedStopsAndRouteObject objectForKey:@"savedStopsAndRouteObjectID"];
@@ -212,30 +228,6 @@
     }];
 }
 
-#pragma mark - dictionary functions
-- (void)populateSavedPushEntries
-{
-    for (PCFStopAndRouteInfo* obj in self.stopAndRouteArray) {
-        if (obj.enabled == YES) { // If it is enabled
-           [self.savedPushEntries setValue:@"placeholder" forKey:obj.identifier];
-        }
-    }
-}
-
-#pragma mark - JSON serialization functions
-/* Helper function */
-- (id)deserializeStringToObject:(NSString *)string
-{
-    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error = nil;
-    id result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-    if (!result) {
-        NSLog(@"%@", error.description);
-    }
-    
-    return result;
-}
-
 /* Everytime we change anything in our array, we have to push it up to the server */
 - (void)pushUpdateToServer {
     self.tableView.alwaysBounceVertical = NO;
@@ -263,27 +255,7 @@
     [self.savedStopsAndRouteObject saveOnSuccess:nil failure:nil];
 }
 
-#pragma mark - UI changes
-- (void)showLoadingScreen
-{
-    if (self.loadingOverlayView != nil) {
-        [self.loadingOverlayView removeFromSuperview];
-        self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    } else {
-        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        
-        if (orientation == UIInterfaceOrientationPortrait) {
-            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-            NSLog(@"isPortrait - Saved");
-        } else if (orientation == UIInterfaceOrientationLandscapeLeft | orientation == UIInterfaceOrientationLandscapeRight){ // very wierd case where it doesn't take the correct values for landscape mode.
-            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width)];
-            NSLog(@"isLandscape - Saved");
-        }
-    }
-    [self.tableView addSubview:self.loadingOverlayView];
-}
-
-#pragma mark - API backend
+/* Registering for notifications */
 - (void)initializeSDK:(NSString*)identifier
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -302,5 +274,41 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }];
     [MSSPush registerForPushNotifications];
+}
+
+/* Serialize a string to JSON object */
+- (id)deserializeStringToObject:(NSString *)string
+{
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    id result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+    if (!result) {
+        NSLog(@"%@", error.description);
+    }
+    
+    return result;
+}
+
+#pragma mark - UI changes
+- (void)showLoadingScreen
+{
+    CGFloat frameWidth = self.view.frame.size.width;
+    CGFloat frameHeight = self.view.frame.size.height;
+    
+    if (self.loadingOverlayView != nil) {
+        [self.loadingOverlayView removeFromSuperview];
+        self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameWidth, frameHeight)];
+        
+    } else {
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        
+        if (orientation == UIInterfaceOrientationPortrait) {
+            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameWidth, frameHeight)];
+            
+        } else if (orientation == UIInterfaceOrientationLandscapeLeft | orientation == UIInterfaceOrientationLandscapeRight){ // very wierd case where it doesn't take the correct values for landscape mode.
+            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameHeight, frameWidth)];
+        }
+    }
+    [self.tableView addSubview:self.loadingOverlayView];
 }
 @end

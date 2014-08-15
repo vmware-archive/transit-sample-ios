@@ -29,5 +29,4 @@
 
 - (IBAction)routeStopContainerPressed:(id)sender;
 - (IBAction)unwindToTimeAndStopView:(UIStoryboardSegue *)sender;
-- (void)didRotateScreen;
 @end

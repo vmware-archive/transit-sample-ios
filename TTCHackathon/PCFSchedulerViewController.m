@@ -31,20 +31,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateScreen) name:UIDeviceOrientationDidChangeNotification object:nil];
     
     self.stopAndRouteInfo = [[PCFStopAndRouteInfo alloc] init];
     self.scheduleButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    // you probably want to center it
-    self.scheduleButton.titleLabel.textAlignment = NSTextAlignmentCenter; // if you want to
-	// Do any additional setup after loading the view.
+    self.scheduleButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     
-    NSLayoutConstraint *con1 = [NSLayoutConstraint constraintWithItem:self.scheduleDatePicker attribute:NSLayoutAttributeTop relatedBy:0.001f toItem:self.innerScheduleView attribute:NSLayoutAttributeTop multiplier:.01f constant:0];
-    [self.scheduleView addConstraints:@[con1]];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateScreen) name:UIDeviceOrientationDidChangeNotification object:nil];
-    
-    // when view loads check orientation.
-    [self didRotateScreen];
+    // need to add a vertical constraint that uses ratios. Could not do it in the interface builder.
+    NSLayoutConstraint *verticalConstraintFromTop = [NSLayoutConstraint constraintWithItem:self.scheduleDatePicker
+                                                                                 attribute:NSLayoutAttributeTop
+                                                                                 relatedBy:0.001f
+                                                                                    toItem:self.innerScheduleView
+                                                                                 attribute:NSLayoutAttributeTop
+                                                                                multiplier:.01f
+                                                                                  constant:0];
+    [self.scheduleView addConstraints:@[verticalConstraintFromTop]];
+    [self modifyScrollViewDependingOnRotation];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -68,20 +70,7 @@
 
 #pragma mark - click events
 - (IBAction)doneButtonPressed:(id)sender {
-    // format the time
-    NSDateFormatter *formate = [[NSDateFormatter alloc] init];
-    [formate setDateFormat:@"hh:mm a"];
-    NSTimeZone *zone = [NSTimeZone defaultTimeZone];
-    [formate setTimeZone:zone];
-    NSString* dateStr = [formate stringFromDate:self.timePick.date];
-    
-    [formate setDateFormat:@"HHmm"];
-    [self.stopAndRouteInfo setTimeIn24h: [formate stringFromDate:self.timePick.date]];
-    NSLog(@"Time in 24 hr: %@", self.stopAndRouteInfo.timeIn24h);
-    NSLog(@"Time - %@",dateStr);
-    [self.stopAndRouteInfo setTime:dateStr];
-    
-    
+    [self formatTime];
     [self performSegueWithIdentifier:@"unwindToSavedTableView" sender:self];
 }
 
@@ -91,10 +80,12 @@
     [self performSegueWithIdentifier:@"segueToDataTable" sender:self];
 }
 
+#pragma mark - segue functions
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.destinationViewController isKindOfClass:[PCFDataTableViewController class]]) {
         [[segue destinationViewController] setStopAndRouteInfo:self.stopAndRouteInfo];
+        
     } else if ([segue.destinationViewController isKindOfClass:[PCFSavedTableViewController class]]) {
         if(self.stopAndRouteInfo.route != nil  && self.stopAndRouteInfo.stop != nil){
             self.stopAndRouteInfo.enabled = YES;
@@ -113,12 +104,11 @@
     [self.scheduleButton setTitle:str forState:UIControlStateNormal];    
 }
 
-#pragma mark - Observer functions
-
-- (void)didRotateScreen
+#pragma mark - Other functions
+/* Disable scrollview if in portrait mode. Renable it when in landscape mode */
+- (void)modifyScrollViewDependingOnRotation
 {
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-
     if (UIInterfaceOrientationIsPortrait(orientation)) {
         [self.scrollView setScrollEnabled:NO];
     } else {
@@ -127,6 +117,23 @@
     
 }
 
-//#pragma mark - Modifying stopAndRoute
-//- (void)formatTime
+/* Format the time based on AM/PM and 24h for our stops and routes */
+- (void)formatTime
+{
+    NSDateFormatter *formate = [[NSDateFormatter alloc] init];
+    
+    //time in 12 hour for displaying on saved table
+    [formate setDateFormat:@"hh:mm a"];
+    NSTimeZone *zone = [NSTimeZone defaultTimeZone];
+    [formate setTimeZone:zone];
+    [self.stopAndRouteInfo setTime:[formate stringFromDate:self.timePick.date]];
+    
+    //time format in 24 hour for identifier
+    [formate setDateFormat:@"HHmm"];
+    [self.stopAndRouteInfo setTimeIn24h: [formate stringFromDate:self.timePick.date]];
+    
+    NSLog(@"Time in 24 hr: %@", self.stopAndRouteInfo.timeIn24h);
+    NSLog(@"Time in 12 hr: %@",self.stopAndRouteInfo.time);
+
+}
 @end

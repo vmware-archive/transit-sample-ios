@@ -174,18 +174,19 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 
 - (void)didRotateForOverlay
 {
+    CGFloat frameWidth = self.view.frame.size.width;
+    CGFloat frameHeight = self.view.frame.size.height;
+    
     if (self.loadingOverlayView != nil) {
         [self.loadingOverlayView removeFromSuperview];
-        self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameWidth, frameHeight)];
     } else {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         
         if (orientation == UIInterfaceOrientationPortrait) {
-            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-            NSLog(@"isPortrait - Saved");
+            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameWidth, frameHeight)];
         } else if (orientation == UIInterfaceOrientationLandscapeLeft | orientation == UIInterfaceOrientationLandscapeRight){ // very wierd case where it doesn't take the correct values for landscape mode.
-            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width)];
-            NSLog(@"isLandscape - Saved");
+            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameHeight, frameWidth)];
         }
     }
     [self.tableView addSubview:self.loadingOverlayView];
