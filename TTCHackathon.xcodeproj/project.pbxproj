@@ -28,6 +28,8 @@
 		91DE58CC199EBF8B00232354 /* ic_ttc_launcher-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58CB199EBF8B00232354 /* ic_ttc_launcher-120.png */; };
 		91DE58CF199EC24C00232354 /* ic_ttc_launcher-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58CD199EC24C00232354 /* ic_ttc_launcher-58.png */; };
 		91DE58D0199EC24C00232354 /* ic_ttc_launcher-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58CE199EC24C00232354 /* ic_ttc_launcher-80.png */; };
+		91DE58DD19A2982500232354 /* PCFTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DE58DC19A2982500232354 /* PCFTitleView.m */; };
+		91DE58DF19A29A4100232354 /* ic_ttc_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58DE19A29A4100232354 /* ic_ttc_logo.png */; };
 		DE6B3CA656AE421799946EE4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E013236D742EE9FAA500B /* libPods.a */; };
 		E76B95141979D02E003F37FA /* MSSData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76B95131979D02E003F37FA /* MSSData.framework */; };
 /* End PBXBuildFile section */
@@ -69,6 +71,9 @@
 		91DE58CB199EBF8B00232354 /* ic_ttc_launcher-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_ttc_launcher-120.png"; sourceTree = "<group>"; };
 		91DE58CD199EC24C00232354 /* ic_ttc_launcher-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_ttc_launcher-58.png"; sourceTree = "<group>"; };
 		91DE58CE199EC24C00232354 /* ic_ttc_launcher-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_ttc_launcher-80.png"; sourceTree = "<group>"; };
+		91DE58DB19A2982500232354 /* PCFTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFTitleView.h; sourceTree = "<group>"; };
+		91DE58DC19A2982500232354 /* PCFTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFTitleView.m; sourceTree = "<group>"; };
+		91DE58DE19A29A4100232354 /* ic_ttc_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_ttc_logo.png; sourceTree = "<group>"; };
 		B57E013236D742EE9FAA500B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E76B95131979D02E003F37FA /* MSSData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MSSData.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,6 +159,7 @@
 		9162160519952A010019EF2B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				91DE58DE19A29A4100232354 /* ic_ttc_logo.png */,
 				91DE58CD199EC24C00232354 /* ic_ttc_launcher-58.png */,
 				91DE58CE199EC24C00232354 /* ic_ttc_launcher-80.png */,
 				91DE58CB199EBF8B00232354 /* ic_ttc_launcher-120.png */,
@@ -167,6 +173,8 @@
 			children = (
 				91DE5899199C032800232354 /* PCFLoadingOverlayView.h */,
 				91DE589A199C032800232354 /* PCFLoadingOverlayView.m */,
+				91DE58DB19A2982500232354 /* PCFTitleView.h */,
+				91DE58DC19A2982500232354 /* PCFTitleView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -250,6 +258,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91DE58DF19A29A4100232354 /* ic_ttc_logo.png in Resources */,
 				91DE58D0199EC24C00232354 /* ic_ttc_launcher-80.png in Resources */,
 				91DE58CC199EBF8B00232354 /* ic_ttc_launcher-120.png in Resources */,
 				57F6333E1954A87F00446130 /* Main.storyboard in Resources */,
@@ -303,6 +312,7 @@
 				57F633341954A64800446130 /* PCFDataTableViewController.m in Sources */,
 				91DE58AE199D569800232354 /* PCFSavedCell.m in Sources */,
 				57F633361954A64800446130 /* PCFSignInViewController.m in Sources */,
+				91DE58DD19A2982500232354 /* PCFTitleView.m in Sources */,
 				5746E59D195497C000CAADE9 /* TTCAppDelegate.m in Sources */,
 				916215FC199279640019EF2B /* PCFSavedTableViewController.m in Sources */,
 				916215F319926A010019EF2B /* PCFSchedulerViewController.m in Sources */,

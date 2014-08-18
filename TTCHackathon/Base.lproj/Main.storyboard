@@ -19,7 +19,7 @@
             </objects>
             <point key="canvasLocation" x="346" y="-489"/>
         </scene>
-        <!--Scheduler View Controller - Transit++-->
+        <!--Scheduler View Controller-->
         <scene sceneID="FAa-ZL-eBj">
             <objects>
                 <viewController storyboardIdentifier="PCFTimeAndStopViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ySk-zm-Kr5" customClass="PCFSchedulerViewController" sceneMemberID="viewController">
@@ -127,7 +127,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <constraint firstAttribute="centerY" secondItem="8gg-vY-wvy" secondAttribute="centerY" id="mq3-Sd-dJ8"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Transit++" id="r5H-Yx-a61">
+                    <navigationItem key="navigationItem" id="r5H-Yx-a61">
                         <barButtonItem key="backBarButtonItem" title=" " id="GWy-r1-anF"/>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="E11-U5-Dt3">
                             <connections>
@@ -282,7 +282,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Transit++" id="7v0-Xv-Nn4">
+                    <navigationItem key="navigationItem" id="7v0-Xv-Nn4">
                         <barButtonItem key="backBarButtonItem" title=" " id="mwc-Kl-eAL"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -360,7 +360,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Transit++" id="Ol7-Yd-B2i">
+                    <navigationItem key="navigationItem" id="Ol7-Yd-B2i">
                         <barButtonItem key="backBarButtonItem" title=" " id="yAJ-Ul-uv0"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="9X4-h8-ouC">
                             <connections>
@@ -371,6 +371,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <connections>
+                        <outlet property="navItem" destination="Ol7-Yd-B2i" id="q0C-Lh-5F1"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bdJ-UJ-tUH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -408,7 +411,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Transit++" id="EcF-17-q56">
+                    <navigationItem key="navigationItem" id="EcF-17-q56">
                         <barButtonItem key="backBarButtonItem" title=" " id="lOv-am-dzF"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

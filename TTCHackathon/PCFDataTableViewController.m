@@ -4,7 +4,7 @@
 
 #import "PCFDataTableViewController.h"
 #import "TTCClient.h"
-
+#import "PCFTitleView.h"
 #import <MSSData/MSSData.h>
 #import <MSSData/AFNetworking.h>
 #import <MSSPush/MSSPushClient.h>
@@ -32,8 +32,9 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
     
     self.tableView.alwaysBounceVertical = NO;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateForOverlay) name:UIDeviceOrientationDidChangeNotification object:nil];
+    self.navigationItem.titleView = [[PCFTitleView alloc] initWithFrame:CGRectMake(0, 0, 150, 30) andTitle:@"Transit++"];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateForOverlay) name:UIDeviceOrientationDidChangeNotification object:nil];
     [self didRotateForOverlay];
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -42,8 +43,6 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
     [refreshControl addTarget:self action:@selector(refreshTable:) forControlEvents:UIControlEventValueChanged];
     
     [self refreshTable:refreshControl];
-    
-    
     
     if (!self.ttcObject) {
         self.ttcObject = [MSSDataObject objectWithClassName:@"TTCObject"];

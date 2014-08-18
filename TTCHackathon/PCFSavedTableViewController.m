@@ -7,6 +7,7 @@
 //
 
 #import "PCFSavedTableViewController.h"
+#import "PCFTitleView.h"
 #import "TTCClient.h"
 #import "PCFSavedCell.h"
 #import <MSSData/MSSData.h>
@@ -19,6 +20,7 @@
 
 @property MSSDataObject *savedStopsAndRouteObject;
 @property PCFLoadingOverlayView *loadingOverlayView;
+@property (strong, nonatomic) IBOutlet UINavigationItem *navItem;
 @end
 
 @implementation PCFSavedTableViewController
@@ -36,6 +38,14 @@
 {
     [super viewDidLoad];
     
+    [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController.navigationBar setTranslucent:YES];
+    
+    // Custom initialization
+    self.navigationItem.titleView = [[PCFTitleView alloc] initWithFrame:CGRectMake(0, 0, 150, 30) andTitle:@"Transit++"];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showLoadingScreen)
                                                  name:UIDeviceOrientationDidChangeNotification object:nil];
@@ -45,16 +55,6 @@
     self.stopAndRouteArray = [[NSMutableArray alloc] init];
     self.savedPushEntries = [[NSMutableDictionary alloc] init];
     [self fetchRoutesAndStops];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:YES];
-
-    [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-    self.navigationController.navigationBarHidden = NO;
-    [self.navigationController.navigationBar setTranslucent:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -125,6 +125,9 @@
 // When we click the done button in the scheduler view we UNWIND back to here.
 - (IBAction)unwindToSavedTableView:(UIStoryboardSegue *)sender
 {
+    // base case - if nothing exists
+    if (self.stopAndRouteArray.count == 0) return;
+    
     [self pushUpdateToServer];
     
     // check if the end of our array exists in our dictionary
@@ -225,6 +228,7 @@
         }
     } failure:^(NSError *error) {
         NSLog(@"FAILURE");
+        [self.loadingOverlayView removeFromSuperview];
     }];
 }
 

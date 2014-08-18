@@ -7,6 +7,7 @@
 //
 
 #import "PCFSchedulerViewController.h"
+#import "PCFTitleView.h"
 
 @interface PCFSchedulerViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *scheduleButton;
@@ -32,6 +33,8 @@
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modifyScrollViewDependingOnRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
+    
+    self.navigationItem.titleView = [[PCFTitleView alloc] initWithFrame:CGRectMake(0, 0, 150, 30) andTitle:@"Transit++"];
     
     self.stopAndRouteInfo = [[PCFStopAndRouteInfo alloc] init];
     self.scheduleButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
