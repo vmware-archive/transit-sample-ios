@@ -3,19 +3,19 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "ic_ttc_launcher58.png",
+      "filename" : "ic_ttc_launcher-58.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "ic_ttc_launcher80.png",
+      "filename" : "ic_ttc_launcher-80.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "ic_ttc_launcher120.png",
+      "filename" : "ic_ttc_launcher-120.png",
       "scale" : "2x"
     }
   ],
