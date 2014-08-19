@@ -32,8 +32,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modifyScrollViewDependingOnRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
-    
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modifyScrollViewDependingOnRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
+    [self.scrollView setScrollEnabled:YES];
     self.navigationItem.titleView = [[PCFTitleView alloc] initWithFrame:CGRectMake(0, 0, 150, 30) andTitle:@"Transit++"];
     
     self.stopAndRouteInfo = [[PCFStopAndRouteInfo alloc] init];
@@ -49,7 +49,7 @@
                                                                                 multiplier:.01f
                                                                                   constant:0];
     [self.scheduleView addConstraints:@[verticalConstraintFromTop]];
-    [self modifyScrollViewDependingOnRotation];
+    //[self modifyScrollViewDependingOnRotation];
 }
 
 - (void)viewDidAppear:(BOOL)animated

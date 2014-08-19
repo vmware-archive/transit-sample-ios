@@ -31,10 +31,10 @@
         [titleLabel sizeToFit];
         [self addSubview:titleLabel];
         
-        NSDictionary *views     = @{ @"imageView" : imageView,
-                                     @"titleLabel"     : titleLabel };
+        NSDictionary *views     = @{ @"imageView"  : imageView,
+                                     @"titleLabel" : titleLabel };
         
-        NSDictionary *metrics   = @{ @"width"     : @(CGRectGetWidth(self.frame) / 2) };
+        NSDictionary *metrics   = @{ @"width"      : @(CGRectGetWidth(self.frame) / 2) };
         
         NSArray *constraints;
         constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView]|" options:0 metrics:nil views:views];

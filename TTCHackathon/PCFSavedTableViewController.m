@@ -37,7 +37,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.tableView.alwaysBounceVertical = YES;
     [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.navigationController.navigationBarHidden = NO;
@@ -119,6 +119,7 @@
     // need to refresh the table to update the view
     [self.tableView reloadData];
     NSLog(@"Deleted row.");
+    self.tableView.alwaysBounceVertical = YES;
 }
 
 #pragma mark - Navigation
@@ -222,8 +223,7 @@
             
             [[NSNotificationCenter defaultCenter] removeObserver:self];
             [self.loadingOverlayView removeFromSuperview];
-            [self populateSavedPushEntries];
-            self.tableView.alwaysBounceVertical = YES;
+            [self populateSavedPushEntries];            
             [self.tableView reloadData];
         }
     } failure:^(NSError *error) {
@@ -234,7 +234,6 @@
 
 /* Everytime we change anything in our array, we have to push it up to the server */
 - (void)pushUpdateToServer {
-    self.tableView.alwaysBounceVertical = NO;
     NSLog(@"Pushing to server here...");
     NSMutableArray *stopAndRouteListJSON = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.stopAndRouteArray.count; i++) {
