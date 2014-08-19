@@ -143,7 +143,10 @@
     if (![[self.savedPushEntries allKeys] containsObject:lastItem.identifier]) {
         [self.savedPushEntries setValue:@"placeholder" forKey:lastItem.identifier];
         NSLog(@"adding to dictionary: %@", lastItem.identifier);
-        [self initializeSDK:lastItem.identifier];
+        NSArray *keys=[self.savedPushEntries allKeys];
+        [self initializeSDK:keys];
+        
+        //[self initializeSDK:lastItem.identifier];
     }
 }
 
@@ -259,16 +262,17 @@
 }
 
 /* Registering for notifications */
-- (void)initializeSDK:(NSString*)identifier
+- (void)initializeSDK:(NSArray*)keys
+
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    NSLog(@"%@", identifier);
+    //NSLog(@"%@", identifier);
     MSSParameters *parameters = [[MSSParameters alloc] init];
     [parameters setPushAPIURL:@"http://cfms-push-service-dev.main.vchs.cfms-apps.com/v1/"];
     [parameters setDevelopmentPushVariantUUID:@"15a001cd-f200-40a1-b052-763fbeee12a3"];
     [parameters setDevelopmentPushReleaseSecret:@"84def001-645b-4dfa-af5f-e2659dd27b0f"];
     [parameters setPushDeviceAlias:@"CATS"];
-    [parameters setTags:@[identifier]];
+    [parameters setTags:keys];
     [MSSPush setRegistrationParameters:parameters];
     [MSSPush setCompletionBlockWithSuccess:^{
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
