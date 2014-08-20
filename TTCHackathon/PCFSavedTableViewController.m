@@ -61,6 +61,9 @@
 {
     [super viewWillAppear:NO];
     [self.tableView reloadData];
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
 }
 
 - (void)didReceiveMemoryWarning
