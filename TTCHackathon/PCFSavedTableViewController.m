@@ -116,8 +116,8 @@
     
     // delete from dictionary
     [self.savedPushEntries removeObjectForKey:currentItem.identifier];
-    
-    NSLog(@"%d", [self.savedPushEntries count]);
+    NSArray *keys=[self.savedPushEntries allKeys];
+    [self initializeSDK:keys];
     
     // delete from array
     [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
@@ -127,10 +127,6 @@
     [self.tableView reloadData];
     NSLog(@"Deleted row.");
     self.tableView.alwaysBounceVertical = YES;
-    
-    /*
-     * JOHEE - CODE HERE PLZ
-     */
 }
 
 #pragma mark - Navigation
@@ -156,8 +152,6 @@
         NSLog(@"adding to dictionary: %@", lastItem.identifier);
         NSArray *keys=[self.savedPushEntries allKeys];
         [self initializeSDK:keys];
-        
-        //[self initializeSDK:lastItem.identifier];
     }
 }
 
@@ -169,20 +163,15 @@
     
     if ([mySwitch isOn]) {
         currentItem.enabled = YES;
-        /* 
-         * JOOHEE CODE HERE PLZZZ - have to add to dictionary and request push
-         */
+        // adding to the dictionary
         [self.savedPushEntries setObject:@"placeholder" forKey:currentItem.identifier];
-        // [self initializeSDK:currentItem.identifier];
     } else {
         currentItem.enabled = NO;
         // have to delete from dictionary and request to not push anymore
         [self.savedPushEntries removeObjectForKey:currentItem.identifier];
-        /* JOOHEE CODE HERE PLZZZ -  request to remove notifications here.
-         *git
-         */
     }
-    
+    NSArray *keys=[self.savedPushEntries allKeys];
+    [self initializeSDK:keys];
 
     NSLog(@"%d", [self.savedPushEntries count]);
     [self pushUpdateToServer];
@@ -288,11 +277,13 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     //NSLog(@"%@", identifier);
     MSSParameters *parameters = [[MSSParameters alloc] init];
-    [parameters setPushAPIURL:@"http://cfms-push-service-dev.main.vchs.cfms-apps.com/v1/"];
+    [parameters setPushAPIURL:@"http://cfms-push-service-dev.main.vchs.cfms-apps.com"];
     [parameters setDevelopmentPushVariantUUID:@"15a001cd-f200-40a1-b052-763fbeee12a3"];
-    [parameters setDevelopmentPushReleaseSecret:@"84def001-645b-4dfa-af5f-e2659dd27b0f"];
+    [parameters setDevelopmentPushVariantSecret:@"84def001-645b-4dfa-af5f-e2659dd27b0f"];
+    [parameters setProductionPushVariantUUID:@"15a001cd-f200-40a1-b052-763fbeee12a3"];
+    [parameters setProductionPushVariantSecret:@"84def001-645b-4dfa-af5f-e2659dd27b0f"];
     [parameters setPushDeviceAlias:@"CATS"];
-    [parameters setTags:keys];
+    [parameters setPushTags:[NSSet setWithArray:keys]];
     [MSSPush setRegistrationParameters:parameters];
     [MSSPush setCompletionBlockWithSuccess:^{
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
