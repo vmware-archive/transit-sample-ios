@@ -12,12 +12,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="zqa-7g-eAL" kind="relationship" relationship="rootViewController" id="xBR-wR-CeJ"/>
+                        <segue destination="CQA-q5-WG8" kind="relationship" relationship="rootViewController" id="7o3-md-a4J"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BEs-gV-Tv4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="346" y="-489"/>
+            <point key="canvasLocation" x="-120" y="-480"/>
         </scene>
         <!--Scheduler View Controller-->
         <scene sceneID="FAa-ZL-eBj">
@@ -373,6 +373,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
                         <outlet property="navItem" destination="Ol7-Yd-B2i" id="q0C-Lh-5F1"/>
+                        <segue destination="zqa-7g-eAL" kind="modal" identifier="modalSegueToSignIn" id="7nh-pq-9QI"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bdJ-UJ-tUH" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -4,6 +4,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol signInViewDelegate <NSObject>
+    -(void)authenticationSuccess;
+@end
+
 @interface PCFSignInViewController : UIViewController
+
+@property id <signInViewDelegate> delegate;
 
 @end

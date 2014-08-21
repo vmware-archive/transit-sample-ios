@@ -84,9 +84,11 @@ static NSString *const kClientSecret = @"006d0cea91f01a82cdc57afafbbc0d26c832896
         
     } else {
         [self.activityIndicatorView stopAnimating];
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-        UIViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"PCFSavedTableViewController"];
-        [self.navigationController pushViewController:controller animated:YES];
+        //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        //UIViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"PCFSavedTableViewController"];
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+            [self.delegate authenticationSuccess];
+        }];
     }
 }
 

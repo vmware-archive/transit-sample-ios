@@ -21,6 +21,7 @@
 @property MSSDataObject *savedStopsAndRouteObject;
 @property PCFLoadingOverlayView *loadingOverlayView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navItem;
+@property BOOL didReachAuthenticateScreen;
 @end
 
 @implementation PCFSavedTableViewController
@@ -37,6 +38,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.didReachAuthenticateScreen = NO;
     self.tableView.alwaysBounceVertical = YES;
     [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
@@ -50,11 +52,8 @@
                                              selector:@selector(showLoadingScreen)
                                                  name:UIDeviceOrientationDidChangeNotification object:nil];
     
-    self.savedStopsAndRouteObject = [MSSDataObject objectWithClassName:@"notifications"];
-    [self.savedStopsAndRouteObject setObjectID:@"savedStopsAndRouteObjectID"];
     self.stopAndRouteArray = [[NSMutableArray alloc] init];
     self.savedPushEntries = [[NSMutableDictionary alloc] init];
-    [self fetchRoutesAndStops];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -64,6 +63,11 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:NO];
+    if (self.didReachAuthenticateScreen == NO) [self performSegueWithIdentifier:@"modalSegueToSignIn" sender:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -123,6 +127,10 @@
     [self.tableView reloadData];
     NSLog(@"Deleted row.");
     self.tableView.alwaysBounceVertical = YES;
+    
+    /*
+     * JOHEE - CODE HERE PLZ
+     */
 }
 
 #pragma mark - Navigation
@@ -161,14 +169,18 @@
     
     if ([mySwitch isOn]) {
         currentItem.enabled = YES;
-        // have to add to dictionary and request push
+        /* 
+         * JOOHEE CODE HERE PLZZZ - have to add to dictionary and request push
+         */
         [self.savedPushEntries setObject:@"placeholder" forKey:currentItem.identifier];
         // [self initializeSDK:currentItem.identifier];
     } else {
         currentItem.enabled = NO;
         // have to delete from dictionary and request to not push anymore
         [self.savedPushEntries removeObjectForKey:currentItem.identifier];
-        // request to remove notifications here.
+        /* JOOHEE CODE HERE PLZZZ -  request to remove notifications here.
+         *git
+         */
     }
     
 
@@ -198,6 +210,11 @@
 }
 
 #pragma mark - MSSDataObject server functions
+/* Do MSS stuff */
+- (void)postAuthenticationLoad {
+    NSLog(@"Blahhhhh heree");
+}
+
 /* When we authenticate we have to fetch our routes and stop from the server */
 - (void)fetchRoutesAndStops
 {
@@ -320,5 +337,23 @@
         }
     }
     [self.tableView addSubview:self.loadingOverlayView];
+}
+
+#pragma mark - Segue
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"modalSegueToSignIn"]) {
+        PCFSignInViewController *signInVC = segue.destinationViewController;
+        signInVC.delegate = self;
+        self.didReachAuthenticateScreen = YES;
+    }
+}
+
+#pragma mark - Delegate
+- (void)authenticationSuccess {
+    NSLog(@"delegate callback");
+    self.savedStopsAndRouteObject = [MSSDataObject objectWithClassName:@"notifications"];
+    [self.savedStopsAndRouteObject setObjectID:@"savedStopsAndRouteObjectID"];
+    [self fetchRoutesAndStops];
 }
 @end

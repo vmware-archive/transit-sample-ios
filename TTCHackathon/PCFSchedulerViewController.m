@@ -32,6 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden = NO;
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modifyScrollViewDependingOnRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
     [self.scrollView setScrollEnabled:YES];
     self.navigationItem.titleView = [[PCFTitleView alloc] initWithFrame:CGRectMake(0, 0, 150, 30) andTitle:@"Transit++"];
@@ -55,7 +56,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-    self.navigationController.navigationBarHidden = NO;
+    
     
 }
 
