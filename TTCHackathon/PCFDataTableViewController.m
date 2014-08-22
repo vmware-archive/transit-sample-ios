@@ -18,8 +18,6 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 
 @property NSArray *transitValues;
 @property MSSDataObject *ttcObject;
-//@property UIActivityIndicatorView *activityIndicatorView;
-//@property UIView *loadingOverlayView;
 @property PCFLoadingOverlayView *loadingOverlayView;
 
 @end
@@ -54,6 +52,16 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 {
     [super viewDidAppear:YES];
     self.navigationController.navigationBarHidden = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (self.isMovingFromParentViewController) {
+        if (self.ttcObject[@"route"]) {
+            [self.ttcObject removeObjectForKey:@"route"];
+        }
+    }
 }
 
 - (void)refreshTable:(UIRefreshControl *)sender
@@ -105,12 +113,16 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
             self.ttcObject[@"stop"] = value;
             [self.stopAndRouteInfo setStop:self.transitValues[indexPath.row][@"title"]];
             [self.stopAndRouteInfo setStopTag:value];
+            NSLog(@"stop: %@", self.transitValues[indexPath.row][@"title"]);
+            NSLog(@"stopTag: %@", value);
            
         } else {
             self.ttcObject[@"route"] = value;
             // stop and route object setting
             [self.stopAndRouteInfo setRoute:self.transitValues[indexPath.row][@"title"]];
             [self.stopAndRouteInfo setRouteTag:value];
+            NSLog(@"route: %@", self.transitValues[indexPath.row][@"title"]);
+            NSLog(@"routeTag: %@", value);
         }
         
         if (self.ttcObject[@"route"] && self.ttcObject[@"stop"]) {
@@ -170,5 +182,4 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
     }
     [self.tableView addSubview:self.loadingOverlayView];
 }
-
 @end

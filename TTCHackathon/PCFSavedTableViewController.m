@@ -21,6 +21,7 @@
 @property MSSDataObject *savedStopsAndRouteObject;
 @property PCFLoadingOverlayView *loadingOverlayView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navItem;
+
 @property BOOL didReachAuthenticateScreen;
 @end
 
