@@ -18,5 +18,5 @@
 
 - (IBAction)unwindToSavedTableView:(UIStoryboardSegue *)sender;
 - (void)addToStopAndRoute:(PCFStopAndRouteInfo *)stopAndRouteObject;
-- (void)postAuthenticationLoad;
+
 @end

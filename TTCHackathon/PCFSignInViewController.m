@@ -9,20 +9,11 @@
 static NSString *const kOAuthServerURL = @"http://ident.one.pepsi.cf-app.com";
 static NSString *const kDataServiceURL = @"http://data-service.one.pepsi.cf-app.com";
 
-//static NSString *const kOAuthServerURL = @"http://datasync-authentication.kona.coffee.cfms-apps.com";
-//static NSString *const kDataServiceURL = @"http://datasync-datastore.kona.coffee.cfms-apps.com";
+static NSString *const kClientID = @"ios-client";
+static NSString *const kClientSecret = @"006d0cea91f01a82cdc57afafbbc0d26c8328964029d5b5eae920e2fdc703169";
 
 static NSString *const textBeforeSignInView = @"This application requires that you authenticate before proceeding.";
 static NSString *const textAfterSignInView = @"Waiting to receive access token from identity server.";
-
-//static NSString *const kClientID = @"PushSDKDemoApp";
-//static NSString *const kClientSecret = @"secret";
-
-//static NSString *const kClientID = @"6006fa24-2757-481d-b894-f79ed8037e1f";
-//static NSString *const kClientSecret = @"C8eJhboAHq_h-oP6po5MoRWQsjWATFDZM8dqbKXBZ8RdeMvv_faF88DVBAp6OsAozU9brBqhYt0RTwpZABYRIQ";
-
-static NSString *const kClientID = @"ios-client";
-static NSString *const kClientSecret = @"006d0cea91f01a82cdc57afafbbc0d26c8328964029d5b5eae920e2fdc703169";
 
 @interface PCFSignInViewController () <MSSSignInDelegate>
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
@@ -84,8 +75,6 @@ static NSString *const kClientSecret = @"006d0cea91f01a82cdc57afafbbc0d26c832896
         
     } else {
         [self.activityIndicatorView stopAnimating];
-        //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-        //UIViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"PCFSavedTableViewController"];
         [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
             [self.delegate authenticationSuccess];
         }];

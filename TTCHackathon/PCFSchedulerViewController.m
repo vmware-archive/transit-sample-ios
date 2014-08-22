@@ -33,8 +33,7 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modifyScrollViewDependingOnRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
-    [self.scrollView setScrollEnabled:YES];
+    [self.scrollView setScrollEnabled:NO];
     self.navigationItem.titleView = [[PCFTitleView alloc] initWithFrame:CGRectMake(0, 0, 150, 30) andTitle:@"Transit++"];
     
     self.stopAndRouteInfo = [[PCFStopAndRouteInfo alloc] init];
@@ -50,14 +49,6 @@
                                                                                 multiplier:.01f
                                                                                   constant:0];
     [self.scheduleView addConstraints:@[verticalConstraintFromTop]];
-    //[self modifyScrollViewDependingOnRotation];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:YES];
-    
-    
 }
 
 - (void)viewDidLayoutSubviews
@@ -72,7 +63,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - click events
+#pragma mark - press events
+
 - (IBAction)doneButtonPressed:(id)sender {
     [self formatTime];
     [self performSegueWithIdentifier:@"unwindToSavedTableView" sender:self];
@@ -85,6 +77,7 @@
 }
 
 #pragma mark - segue functions
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.destinationViewController isKindOfClass:[PCFDataTableViewController class]]) {
@@ -108,18 +101,7 @@
     [self.scheduleButton setTitle:str forState:UIControlStateNormal];    
 }
 
-#pragma mark - Other functions
-/* Disable scrollview if in portrait mode. Renable it when in landscape mode */
-- (void)modifyScrollViewDependingOnRotation
-{
-    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-    if (UIInterfaceOrientationIsPortrait(orientation)) {
-        [self.scrollView setScrollEnabled:NO];
-    } else {
-        [self.scrollView setScrollEnabled:YES];
-    }
-    
-}
+#pragma mark - datePicker
 
 /* Format the time based on AM/PM and 24h for our stops and routes */
 - (void)formatTime

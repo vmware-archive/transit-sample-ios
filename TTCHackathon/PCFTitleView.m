@@ -15,8 +15,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        // Custom initialization
-        
         UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ic_ttc_logo.png"]];
         imageView.translatesAutoresizingMaskIntoConstraints = NO;
         [imageView setFrame: CGRectMake(0, 0, 25, 25)];
@@ -46,15 +44,5 @@
     }
     return self;
 }
-
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

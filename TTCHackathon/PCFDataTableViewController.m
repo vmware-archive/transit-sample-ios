@@ -114,8 +114,6 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
         }
         
         if (self.ttcObject[@"route"] && self.ttcObject[@"stop"]) {
-//            [self initializeSDK];
-//            [self.ttcObject saveOnSuccess:nil failure:nil];
             [self performSegueWithIdentifier:@"unwindToTimeAndStopView" sender:self];
         }        
     }
@@ -150,24 +148,6 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
     [[segue destinationViewController] setStopAndRouteInfo:self.stopAndRouteInfo];
 }
 
-
-#pragma mark - API backend
-- (void)initializeSDK
-{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    MSSParameters *parameters;
-    parameters = [MSSParameters defaultParameters];
-    [parameters setTags:@[[NSString stringWithFormat:@"14_%@_%@", self.ttcObject[@"route"], self.ttcObject[@"stop"]]]];
-    [MSSPush setRegistrationParameters:parameters];
-    [MSSPush setCompletionBlockWithSuccess:^{
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        
-    } failure:^(NSError *error) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    }];
-    [MSSPush registerForPushNotifications];
-}
 
 #pragma mark - Notifications
 

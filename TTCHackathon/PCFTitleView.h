@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface PCFTitleView : UIView
+
 - (id)initWithFrame:(CGRect)frame andTitle:(NSString*)title;
 
 @end

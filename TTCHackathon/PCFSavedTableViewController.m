@@ -129,7 +129,8 @@
     self.tableView.alwaysBounceVertical = YES;
 }
 
-#pragma mark - Navigation
+#pragma mark - segue functions
+
 // When we click the done button in the scheduler view we UNWIND back to here.
 - (IBAction)unwindToSavedTableView:(UIStoryboardSegue *)sender
 {
@@ -155,8 +156,17 @@
     }
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"modalSegueToSignIn"]) {
+        PCFSignInViewController *signInVC = segue.destinationViewController;
+        signInVC.delegate = self;
+        self.didReachAuthenticateScreen = YES;
+    }
+}
 
 #pragma mark - Action events
+
 - (void)switchToggled:(UISwitch*)mySwitch
 {
     PCFStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:mySwitch.tag];
@@ -178,7 +188,8 @@
 }
 
 #pragma mark - Array and dictionary functions
-- (void)addToStopAndRoute:(PCFStopAndRouteInfo *)stopAndRouteObject
+
+- (void)addToStopAndRoute:(PCFStopAndRouteInfo *)stopAndRouteObject // add to our array
 {
     for(PCFStopAndRouteInfo* sar in self.stopAndRouteArray){
         if([sar.stop isEqualToString:stopAndRouteObject.stop] && [sar.time isEqualToString:stopAndRouteObject.time]){
@@ -189,20 +200,16 @@
     [self.stopAndRouteArray addObject:stopAndRouteObject];
 }
 
-- (void)populateSavedPushEntries
+- (void)populateSavedPushEntries // add to our dictionary
 {
     for (PCFStopAndRouteInfo* obj in self.stopAndRouteArray) {
         if (obj.enabled == YES) { // If it is enabled
-            [self.savedPushEntries setValue:@"placeholder" forKey:obj.identifier];
+            [self.savedPushEntries setValue:@"placeholder" forKey:obj.identifier]; // only the key is necessary
         }
     }
 }
 
 #pragma mark - MSSDataObject server functions
-/* Do MSS stuff */
-- (void)postAuthenticationLoad {
-    NSLog(@"Blahhhhh heree");
-}
 
 /* When we authenticate we have to fetch our routes and stop from the server */
 - (void)fetchRoutesAndStops
@@ -230,7 +237,7 @@
                 [obj setTime: dictionary[@"time"]];
                 [obj setTimeIn24h: dictionary[@"timeIn24h"]];
                 [obj setIdentifier:dictionary[@"identifier"]];
-                [self.stopAndRouteArray addObject:obj];
+                [self.stopAndRouteArray addObject:obj]; // add the entry into the dictionary
             }
             
             [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -244,7 +251,7 @@
     }];
 }
 
-/* Everytime we change anything in our array, we have to push it up to the server */
+/* Everytime we change anything in our ARRAY, we have to push it up to the server */
 - (void)pushUpdateToServer {
     NSLog(@"Pushing to server here...");
     NSMutableArray *stopAndRouteListJSON = [[NSMutableArray alloc] init];
@@ -270,12 +277,11 @@
     [self.savedStopsAndRouteObject saveOnSuccess:nil failure:nil];
 }
 
-/* Registering for notifications */
+/* Registering for notifications with cloud foundry */
 - (void)initializeSDK:(NSArray*)keys
 
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    //NSLog(@"%@", identifier);
     MSSParameters *parameters = [[MSSParameters alloc] init];
     [parameters setPushAPIURL:@"http://cfms-push-service-dev.main.vchs.cfms-apps.com"];
     [parameters setDevelopmentPushVariantUUID:@"15a001cd-f200-40a1-b052-763fbeee12a3"];
@@ -307,7 +313,8 @@
     return result;
 }
 
-#pragma mark - UI changes
+#pragma mark - View functions 
+
 - (void)showLoadingScreen
 {
     CGFloat frameWidth = self.view.frame.size.width;
@@ -330,17 +337,8 @@
     [self.tableView addSubview:self.loadingOverlayView];
 }
 
-#pragma mark - Segue
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"modalSegueToSignIn"]) {
-        PCFSignInViewController *signInVC = segue.destinationViewController;
-        signInVC.delegate = self;
-        self.didReachAuthenticateScreen = YES;
-    }
-}
-
 #pragma mark - Delegate
+
 - (void)authenticationSuccess {
     NSLog(@"delegate callback");
     self.savedStopsAndRouteObject = [MSSDataObject objectWithClassName:@"notifications"];
