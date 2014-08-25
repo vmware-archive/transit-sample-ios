@@ -57,12 +57,10 @@ static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/ro
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    if (self.isMovingFromParentViewController) {
-        if (self.ttcObject[@"route"]) {
-            [self.ttcObject removeObjectForKey:@"route"];
-        }
+    if (self.isMovingFromParentViewController && self.ttcObject[@"route"]) {
+        [self.ttcObject removeObjectForKey:@"route"];
     }
-}
+} 
 
 - (void)refreshTable:(UIRefreshControl *)sender
 {
