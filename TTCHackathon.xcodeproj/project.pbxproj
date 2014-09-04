@@ -21,7 +21,6 @@
 		916215F319926A010019EF2B /* PCFSchedulerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916215F219926A010019EF2B /* PCFSchedulerViewController.m */; };
 		916215FC199279640019EF2B /* PCFSavedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916215FB199279640019EF2B /* PCFSavedTableViewController.m */; };
 		91621600199507340019EF2B /* PCFStopAndRouteInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 916215FF199507340019EF2B /* PCFStopAndRouteInfo.m */; };
-		9162160A199579C10019EF2B /* NSFerret.m in Sources */ = {isa = PBXBuildFile; fileRef = 91621609199579C10019EF2B /* NSFerret.m */; };
 		91DE589B199C032800232354 /* PCFLoadingOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DE589A199C032800232354 /* PCFLoadingOverlayView.m */; };
 		91DE58AE199D569800232354 /* PCFSavedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DE58AD199D569800232354 /* PCFSavedCell.m */; };
 		91DE58CC199EBF8B00232354 /* ic_ttc_launcher-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58CB199EBF8B00232354 /* ic_ttc_launcher-120.png */; };
@@ -60,8 +59,6 @@
 		916215FB199279640019EF2B /* PCFSavedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFSavedTableViewController.m; sourceTree = "<group>"; };
 		916215FE199507340019EF2B /* PCFStopAndRouteInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFStopAndRouteInfo.h; sourceTree = "<group>"; };
 		916215FF199507340019EF2B /* PCFStopAndRouteInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFStopAndRouteInfo.m; sourceTree = "<group>"; };
-		91621608199579C10019EF2B /* NSFerret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSFerret.h; sourceTree = "<group>"; };
-		91621609199579C10019EF2B /* NSFerret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFerret.m; sourceTree = "<group>"; };
 		91DE5899199C032800232354 /* PCFLoadingOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFLoadingOverlayView.h; sourceTree = "<group>"; };
 		91DE589A199C032800232354 /* PCFLoadingOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFLoadingOverlayView.m; sourceTree = "<group>"; };
 		91DE58AC199D569800232354 /* PCFSavedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCFSavedCell.h; sourceTree = "<group>"; };
@@ -125,8 +122,6 @@
 				5746E593195497C000CAADE9 /* Supporting Files */,
 				57F6333F1954ACF800446130 /* TTCClient.h */,
 				57F633401954ACF800446130 /* TTCClient.m */,
-				91621608199579C10019EF2B /* NSFerret.h */,
-				91621609199579C10019EF2B /* NSFerret.m */,
 				91DE58AC199D569800232354 /* PCFSavedCell.h */,
 				91DE58AD199D569800232354 /* PCFSavedCell.m */,
 			);
@@ -315,7 +310,6 @@
 				91621600199507340019EF2B /* PCFStopAndRouteInfo.m in Sources */,
 				91DE589B199C032800232354 /* PCFLoadingOverlayView.m in Sources */,
 				57F633411954ACF800446130 /* TTCClient.m in Sources */,
-				9162160A199579C10019EF2B /* NSFerret.m in Sources */,
 				5746E599195497C000CAADE9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,7 +359,7 @@
 				INFOPLIST_FILE = "TTCHackathon/TTCHackathon-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d2803ace-78c8-494a-b43b-4f5e7278e512";
+				PROVISIONING_PROFILE = "6758691e-302c-4ba2-ad97-d8331b27f91a";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -390,7 +384,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d2803ace-78c8-494a-b43b-4f5e7278e512";
+				PROVISIONING_PROFILE = "6758691e-302c-4ba2-ad97-d8331b27f91a";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

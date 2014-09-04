@@ -9,8 +9,8 @@
 static NSString *const kOAuthServerURL = @"http://ident.one.pepsi.cf-app.com";
 static NSString *const kDataServiceURL = @"http://data-service.one.pepsi.cf-app.com";
 
-static NSString *const kClientID = @"ios-client";
-static NSString *const kClientSecret = @"006d0cea91f01a82cdc57afafbbc0d26c8328964029d5b5eae920e2fdc703169";
+static NSString *const kClientID = @"38797289-4c41-4484-8b1d-e5e9b3322bf9";
+static NSString *const kClientSecret = @"JCA_kYEfST2POx41VS-JiiddwsF36Ydz_HzvuvsyNTNekp7qlXcaFH-fZ6Tw3Sf1oCrh0T6QpEOMQsLdjWHyLw";
 
 static NSString *const textBeforeSignInView = @"This application requires that you authenticate before proceeding.";
 static NSString *const textAfterSignInView = @"Waiting to receive access token from identity server.";
