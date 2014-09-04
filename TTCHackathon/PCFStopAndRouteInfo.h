@@ -11,7 +11,7 @@
 @property (nonatomic, strong) NSString* route;
 @property (nonatomic, strong) NSString* stop;
 @property (nonatomic, strong) NSString* time;
-@property (nonatomic, strong) NSString* timeIn24h;
+@property (nonatomic, strong) NSString* timeInUtc;
 @property (nonatomic, strong) NSString* routeTag;
 @property (nonatomic, strong) NSString* stopTag;
 @property (nonatomic, strong) NSString* identifier;

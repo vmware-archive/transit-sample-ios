@@ -106,19 +106,22 @@
 /* Format the time based on AM/PM and 24h for our stops and routes */
 - (void)formatTime
 {
-    NSDateFormatter *formate = [[NSDateFormatter alloc] init];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
     //time in 12 hour for displaying on saved table
-    [formate setDateFormat:@"hh:mm a"];
+    [formatter setDateFormat:@"hh:mm a"];
     NSTimeZone *zone = [NSTimeZone defaultTimeZone];
-    [formate setTimeZone:zone];
-    [self.stopAndRouteInfo setTime:[formate stringFromDate:self.timePick.date]];
+    [formatter setTimeZone:zone];
+    [self.stopAndRouteInfo setTime:[formatter stringFromDate:self.timePick.date]];
     
-    //time format in 24 hour for identifier
-    [formate setDateFormat:@"HHmm"];
-    [self.stopAndRouteInfo setTimeIn24h: [formate stringFromDate:self.timePick.date]];
+    NSTimeZone *utcTimeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+    [formatter setTimeZone:utcTimeZone];
     
-    NSLog(@"Time in 24 hr: %@", self.stopAndRouteInfo.timeIn24h);
+    //time format in UTC for identifier
+    [formatter setDateFormat:@"HHmm"];
+    [self.stopAndRouteInfo setTimeInUtc: [formatter stringFromDate:self.timePick.date]];
+    
+    NSLog(@"Time in UTC: %@", self.stopAndRouteInfo.timeInUtc);
     NSLog(@"Time in 12 hr: %@",self.stopAndRouteInfo.time);
 
 }

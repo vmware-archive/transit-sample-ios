@@ -236,9 +236,11 @@
                 [obj setRouteTag: dictionary[@"routeTag"]];
                 [obj setStopTag: dictionary[@"stopTag"]];
                 [obj setTime: dictionary[@"time"]];
-                [obj setTimeIn24h: dictionary[@"timeIn24h"]];
+                [obj setTimeInUtc: dictionary[@"timeInUtc"]];
                 [obj setIdentifier:dictionary[@"identifier"]];
                 [self.stopAndRouteArray addObject:obj]; // add the entry into the dictionary
+                
+                NSLog(@"Loaded item: %@", dictionary);
             }
             
             [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -262,17 +264,21 @@
         NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:stopAndRouteElement.route, @"route",
                                         stopAndRouteElement.stop, @"stop", stopAndRouteElement.time, @"time",
                                         stopAndRouteElement.routeTag, @"routeTag", stopAndRouteElement.stopTag, @"stopTag",
-                                        stopAndRouteElement.identifier, @"identifier", stopAndRouteElement.timeIn24h, @"timeIn24h",
+                                        stopAndRouteElement.identifier, @"identifier", stopAndRouteElement.timeInUtc, @"timeInUtc",
                                         booleanString, @"enabled", nil];
         
+        NSLog(@"Saving item: %@", jsonDictionary);
         NSData *encodedData = [NSJSONSerialization dataWithJSONObject:jsonDictionary
-                                                              options:NSJSONWritingPrettyPrinted error:nil];
+                                                              options:0
+                                                                error:nil];
         NSString *jsonString =[[NSString alloc] initWithData:encodedData encoding:NSUTF8StringEncoding];
         [stopAndRouteListJSON addObject:jsonString];
     }
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:stopAndRouteListJSON options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"Saving routesAndStops: %@", jsonString);
     
     self.savedStopsAndRouteObject[@"routesAndStops"] = jsonString;
     [self.savedStopsAndRouteObject saveOnSuccess:nil failure:nil];
