@@ -290,12 +290,12 @@
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     MSSParameters *parameters = [[MSSParameters alloc] init];
-    [parameters setPushAPIURL:@"http://cfms-push-service-dev.main.vchs.cfms-apps.com"];
+    [parameters setPushAPIURL:@"http://push-notifications.one.pepsi.cf-app.com"];
     [parameters setDevelopmentPushVariantUUID:@"15a001cd-f200-40a1-b052-763fbeee12a3"];
     [parameters setDevelopmentPushVariantSecret:@"84def001-645b-4dfa-af5f-e2659dd27b0f"];
     [parameters setProductionPushVariantUUID:@"15a001cd-f200-40a1-b052-763fbeee12a3"];
     [parameters setProductionPushVariantSecret:@"84def001-645b-4dfa-af5f-e2659dd27b0f"];
-    [parameters setPushDeviceAlias:@"CATS"];
+    [parameters setPushDeviceAlias:@"Transit"];
     [parameters setPushTags:[NSSet setWithArray:keys]];
     [MSSPush setRegistrationParameters:parameters];
     [MSSPush setCompletionBlockWithSuccess:^{
@@ -324,24 +324,24 @@
 
 - (void)showLoadingScreen
 {
-    CGFloat frameWidth = self.view.frame.size.width;
-    CGFloat frameHeight = self.view.frame.size.height;
-    
-    if (self.loadingOverlayView != nil) {
-        [self.loadingOverlayView removeFromSuperview];
-        self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameWidth, frameHeight)];
-        
-    } else {
-        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        
-        if (orientation == UIInterfaceOrientationPortrait) {
-            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameWidth, frameHeight)];
-            
-        } else if (orientation == UIInterfaceOrientationLandscapeLeft | orientation == UIInterfaceOrientationLandscapeRight){ // very wierd case where it doesn't take the correct values for landscape mode.
-            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameHeight, frameWidth)];
-        }
-    }
-    [self.tableView addSubview:self.loadingOverlayView];
+//    CGFloat frameWidth = self.view.frame.size.width;
+//    CGFloat frameHeight = self.view.frame.size.height;
+//    
+//    if (self.loadingOverlayView != nil) {
+//        [self.loadingOverlayView removeFromSuperview];
+//        self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameWidth, frameHeight)];
+//        
+//    } else {
+//        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+//        
+//        if (orientation == UIInterfaceOrientationPortrait) {
+//            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameWidth, frameHeight)];
+//            
+//        } else if (orientation == UIInterfaceOrientationLandscapeLeft | orientation == UIInterfaceOrientationLandscapeRight){ // very wierd case where it doesn't take the correct values for landscape mode.
+//            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameHeight, frameWidth)];
+//        }
+//    }
+//    [self.tableView addSubview:self.loadingOverlayView];
 }
 
 #pragma mark - Delegate
