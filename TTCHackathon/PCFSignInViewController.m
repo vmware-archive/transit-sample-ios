@@ -6,11 +6,11 @@
 
 #import "PCFSignInViewController.h"
 
-static NSString *const kOAuthServerURL = @"http://datasync-authentication.one.pepsi.cf-app.com";
-static NSString *const kDataServiceURL = @"http://datasync-datastore.one.pepsi.cf-app.com";
+static NSString *const kOAuthServerURL = @"http://datasync-authentication.demo.vchs.cfms-apps.com";
+static NSString *const kDataServiceURL = @"http://datasync-datastore.demo.vchs.cfms-apps.com";
 
-static NSString *const kClientID = @"a2b9fe12-e6a4-48c8-a4ae-f420b92681c2";
-static NSString *const kClientSecret = @"UwP2LcW0C_Fjmsc7UrEDlS0mhRDItYhYPvtvTAkbhwsVK0I-N0gOf_WtwyBbMhWQ5DWVjZXjai-LiBB0HNUJoA";
+static NSString *const kClientID = @"cd68e385-c0e8-4740-a563-748e643a2280";
+static NSString *const kClientSecret = @"IaioD3Mcj4XU67ySMidiFDNrKwv68RB4Cft2zLrdJHoWcdqjsCSWf1U1EZDR6JKufpNp9NTcBqSxbR6bA95_eg";
 
 static NSString *const textBeforeSignInView = @"This application requires that you authenticate before proceeding.";
 static NSString *const textAfterSignInView = @"Waiting to receive access token from identity server.";

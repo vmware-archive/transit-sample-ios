@@ -11,8 +11,8 @@
 #import <MSSPush/MSSParameters.h>
 #import <MSSPush/MSSPush.h>
 
-static NSString *const kRoutePath = @"http://nextbus.one.pepsi.cf-app.com/ttc/routes";
-static NSString *const kStopsPath = @"http://nextbus.one.pepsi.cf-app.com/ttc/routes/%@";
+static NSString *const kRoutePath = @"http://transit-gateway.demo.vchs.cfms-apps.com/ttc/routes";
+static NSString *const kStopsPath = @"http://transit-gateway.demo.vchs.cfms-apps.com/ttc/routes/%@";
 
 @interface PCFDataTableViewController ()
 

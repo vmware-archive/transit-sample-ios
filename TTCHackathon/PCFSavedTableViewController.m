@@ -290,7 +290,7 @@
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     MSSParameters *parameters = [[MSSParameters alloc] init];
-    [parameters setPushAPIURL:@"http://push-notifications.one.pepsi.cf-app.com"];
+    [parameters setPushAPIURL:@"http://push-notifications.demo.vchs.cfms-apps.com"];
     [parameters setDevelopmentPushVariantUUID:@"15a001cd-f200-40a1-b052-763fbeee12a3"];
     [parameters setDevelopmentPushVariantSecret:@"84def001-645b-4dfa-af5f-e2659dd27b0f"];
     [parameters setProductionPushVariantUUID:@"15a001cd-f200-40a1-b052-763fbeee12a3"];
