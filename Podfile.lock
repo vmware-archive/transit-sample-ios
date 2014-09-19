@@ -1,10 +1,19 @@
 PODS:
+  - MSSData (1.0.0)
   - MSSPush (1.0.1)
 
 DEPENDENCIES:
-  - MSSPush (~> 1.0.1)
+  - MSSData (from `../data-ios`)
+  - MSSPush (from `../push-ios`)
+
+EXTERNAL SOURCES:
+  MSSData:
+    :path: ../data-ios
+  MSSPush:
+    :path: ../push-ios
 
 SPEC CHECKSUMS:
+  MSSData: aeaf8be3ab42093dc54c8a513a8e8f686e67977f
   MSSPush: bf6e1ad3a29ec7c639f28d32dc77d91a07d86cbc
 
 COCOAPODS: 0.33.1

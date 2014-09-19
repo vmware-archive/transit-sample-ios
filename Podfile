@@ -1,2 +1,3 @@
 platform :ios, '7.0'
-pod 'MSSPush', '~> 1.0.1'
+pod 'MSSPush', :path => '../push-ios'
+pod 'MSSData', :path => '../data-ios'
