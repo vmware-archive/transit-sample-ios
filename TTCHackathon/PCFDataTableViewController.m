@@ -6,7 +6,7 @@
 #import "TTCClient.h"
 #import "PCFTitleView.h"
 #import <MSSData/MSSData.h>
-#import <MSSData/AFNetworking.h>
+#import <MSSData/MSSAFNetworking.h>
 #import <MSSPush/MSSPushClient.h>
 #import <MSSPush/MSSParameters.h>
 #import <MSSPush/MSSPush.h>
@@ -65,7 +65,7 @@ static NSString *const kStopsPath = @"http://transit-gateway.demo.vchs.cfms-apps
 - (void)refreshTable:(UIRefreshControl *)sender
 {
     NSString *path = (self.ttcObject[@"route"] ? [NSString stringWithFormat:kStopsPath, self.ttcObject[@"route"]]  : kRoutePath);
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:path]]
+    MSSAFJSONRequestOperation *operation = [MSSAFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:path]]
                                                                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
                                                                                             if (sender) {
                                                                                                 [sender endRefreshing];

@@ -10,8 +10,9 @@
 #import "PCFTitleView.h"
 #import "TTCClient.h"
 #import "PCFSavedCell.h"
+#import "TTCAppDelegate.h"
 #import <MSSData/MSSData.h>
-#import <MSSData/AFNetworking.h>
+#import <MSSData/MSSAFNetworking.h>
 #import <MSSPush/MSSPushClient.h>
 #import <MSSPush/MSSParameters.h>
 #import <MSSPush/MSSPush.h>

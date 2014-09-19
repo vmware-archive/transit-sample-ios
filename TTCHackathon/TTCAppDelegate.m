@@ -40,6 +40,22 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    if (userInfo[@"aps"][@"alert"]) {
+        NSLog(@"Remote notification received: %@", userInfo[@"aps"][@"alert"]);
+        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notification"
+                                                            message:userInfo[@"aps"][@"alert"]
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            [alert show];
+        }
+    } else {
+        NSLog(@"Remote notification received!");
+    }
+}
+
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication

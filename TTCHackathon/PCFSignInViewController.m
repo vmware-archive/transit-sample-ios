@@ -66,7 +66,7 @@ static NSString *const textAfterSignInView = @"Waiting to receive access token f
     [[MSSDataSignIn sharedInstance] signOut];
 }
 
-- (void)finishedWithAuth:(AFOAuthCredential *)auth
+- (void)finishedWithAuth:(MSSAFOAuthCredential *)auth
                    error:(NSError *)error
 {
     if (error) {

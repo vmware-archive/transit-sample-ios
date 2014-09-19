@@ -2,9 +2,9 @@
 //  Copyright (C) 2014 Pivotal Software, Inc. All rights reserved.
 //
 
-#import <MSSData/AFHTTPClient.h>
+#import <MSSData/MSSAFHTTPClient.h>
 
-@interface TTCClient : AFHTTPClient
+@interface TTCClient : MSSAFHTTPClient
 
 + (instancetype)sharedClient;
 

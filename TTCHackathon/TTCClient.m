@@ -14,7 +14,7 @@ static NSString *const kBaseURL = @"";
     static TTCClient *sharedClient;
     dispatch_once(&onceToken, ^{
         sharedClient = [[self alloc] initWithBaseURL:[NSURL URLWithString:kBaseURL]];
-        sharedClient.parameterEncoding = AFJSONParameterEncoding;
+        sharedClient.parameterEncoding = MSSAFJSONParameterEncoding;
     });
     return sharedClient;
 }
