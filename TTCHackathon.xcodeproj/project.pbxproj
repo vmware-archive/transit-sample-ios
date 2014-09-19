@@ -28,6 +28,7 @@
 		91DE58D0199EC24C00232354 /* ic_ttc_launcher-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58CE199EC24C00232354 /* ic_ttc_launcher-80.png */; };
 		91DE58DD19A2982500232354 /* PCFTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DE58DC19A2982500232354 /* PCFTitleView.m */; };
 		91DE58DF19A29A4100232354 /* ic_ttc_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58DE19A29A4100232354 /* ic_ttc_logo.png */; };
+		D45F20AB19CCCFA8004D7E79 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = D45F20AA19CCCFA8004D7E79 /* Settings.m */; };
 		DE6B3CA656AE421799946EE4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E013236D742EE9FAA500B /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,8 @@
 		91DE58DC19A2982500232354 /* PCFTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCFTitleView.m; sourceTree = "<group>"; };
 		91DE58DE19A29A4100232354 /* ic_ttc_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_ttc_logo.png; sourceTree = "<group>"; };
 		B57E013236D742EE9FAA500B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D45F20A919CCCF6B004D7E79 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
+		D45F20AA19CCCFA8004D7E79 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +105,8 @@
 			isa = PBXGroup;
 			children = (
 				57F6333C1954A87F00446130 /* Main.storyboard */,
+				D45F20A919CCCF6B004D7E79 /* Settings.h */,
+				D45F20AA19CCCFA8004D7E79 /* Settings.m */,
 				57F633321954A64800446130 /* PCFSignInViewController.h */,
 				57F633331954A64800446130 /* PCFSignInViewController.m */,
 				916215FA199279640019EF2B /* PCFSavedTableViewController.h */,
@@ -298,6 +303,7 @@
 			files = (
 				57F633341954A64800446130 /* PCFDataTableViewController.m in Sources */,
 				91DE58AE199D569800232354 /* PCFSavedCell.m in Sources */,
+				D45F20AB19CCCFA8004D7E79 /* Settings.m in Sources */,
 				57F633361954A64800446130 /* PCFSignInViewController.m in Sources */,
 				91DE58DD19A2982500232354 /* PCFTitleView.m in Sources */,
 				5746E59D195497C000CAADE9 /* TTCAppDelegate.m in Sources */,

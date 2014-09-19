@@ -6,16 +6,18 @@
 //  Copyright (c) 2014 Pivotal. All rights reserved.
 //
 
-#import "PCFSavedTableViewController.h"
-#import "PCFTitleView.h"
-#import "TTCClient.h"
-#import "PCFSavedCell.h"
-#import "TTCAppDelegate.h"
 #import <MSSData/MSSData.h>
 #import <MSSData/MSSAFNetworking.h>
 #import <MSSPush/MSSPushClient.h>
 #import <MSSPush/MSSParameters.h>
 #import <MSSPush/MSSPush.h>
+
+#import "PCFSavedTableViewController.h"
+#import "PCFTitleView.h"
+#import "PCFSavedCell.h"
+#import "TTCClient.h"
+#import "TTCAppDelegate.h"
+#import "Settings.h"
 
 @interface PCFSavedTableViewController ()
 
@@ -291,12 +293,12 @@
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     MSSParameters *parameters = [[MSSParameters alloc] init];
-    [parameters setPushAPIURL:@"http://push-notifications.demo.vchs.cfms-apps.com"];
-    [parameters setDevelopmentPushVariantUUID:@"15a001cd-f200-40a1-b052-763fbeee12a3"];
-    [parameters setDevelopmentPushVariantSecret:@"84def001-645b-4dfa-af5f-e2659dd27b0f"];
-    [parameters setProductionPushVariantUUID:@"15a001cd-f200-40a1-b052-763fbeee12a3"];
-    [parameters setProductionPushVariantSecret:@"84def001-645b-4dfa-af5f-e2659dd27b0f"];
-    [parameters setPushDeviceAlias:@"Transit"];
+    [parameters setPushAPIURL:kPushBaseServerUrl];
+    [parameters setDevelopmentPushVariantUUID:kPushDevelopmentVariantUuid];
+    [parameters setDevelopmentPushVariantSecret:kPushDevelopmentVariantSecret];
+    [parameters setProductionPushVariantUUID:kPushProductionVariantUuid];
+    [parameters setProductionPushVariantSecret:kPushProductionVariantSecret];
+    [parameters setPushDeviceAlias:kPushDeviceAlias];
     [parameters setPushTags:[NSSet setWithArray:keys]];
     [MSSPush setRegistrationParameters:parameters];
     [MSSPush setCompletionBlockWithSuccess:^{

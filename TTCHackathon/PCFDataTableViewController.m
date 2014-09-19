@@ -10,9 +10,9 @@
 #import <MSSPush/MSSPushClient.h>
 #import <MSSPush/MSSParameters.h>
 #import <MSSPush/MSSPush.h>
+#import "Settings.h"
 
-static NSString *const kRoutePath = @"http://transit-gateway.demo.vchs.cfms-apps.com/ttc/routes";
-static NSString *const kStopsPath = @"http://transit-gateway.demo.vchs.cfms-apps.com/ttc/routes/%@";
+static NSString *const kRoute = @"route";
 
 @interface PCFDataTableViewController ()
 
@@ -57,14 +57,14 @@ static NSString *const kStopsPath = @"http://transit-gateway.demo.vchs.cfms-apps
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    if (self.isMovingFromParentViewController && self.ttcObject[@"route"]) {
-        [self.ttcObject removeObjectForKey:@"route"];
+    if (self.isMovingFromParentViewController && self.ttcObject[kRoute]) {
+        [self.ttcObject removeObjectForKey:kRoute];
     }
 } 
 
 - (void)refreshTable:(UIRefreshControl *)sender
 {
-    NSString *path = (self.ttcObject[@"route"] ? [NSString stringWithFormat:kStopsPath, self.ttcObject[@"route"]]  : kRoutePath);
+    NSString *path = (self.ttcObject[kRoute] ? [NSString stringWithFormat:kStopsPath, self.ttcObject[kRoute]]  : kRoutePath);
     MSSAFJSONRequestOperation *operation = [MSSAFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:path]]
                                                                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
                                                                                             if (sender) {
@@ -97,7 +97,7 @@ static NSString *const kStopsPath = @"http://transit-gateway.demo.vchs.cfms-apps
 
 - (NSString *)transitValueForIndex:(NSIndexPath *)indexPath
 {
-    return  self.ttcObject[@"route"] ? self.transitValues[indexPath.row][@"stopId"] : self.transitValues[indexPath.row][@"tag"];
+    return  self.ttcObject[kRoute] ? self.transitValues[indexPath.row][@"stopId"] : self.transitValues[indexPath.row][@"tag"];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -105,7 +105,7 @@ static NSString *const kStopsPath = @"http://transit-gateway.demo.vchs.cfms-apps
     NSString *value = [self transitValueForIndex:indexPath];
     
     if (value) {
-        if (self.ttcObject[@"route"]) {
+        if (self.ttcObject[kRoute]) {
             
             // stop and route object setting
             self.ttcObject[@"stop"] = value;

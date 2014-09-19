@@ -3,19 +3,14 @@
 //
 
 #import <MSSData/MSSDataSignIn.h>
-
 #import "PCFSignInViewController.h"
-
-static NSString *const kOAuthServerURL = @"http://datasync-authentication.demo.vchs.cfms-apps.com";
-static NSString *const kDataServiceURL = @"http://datasync-datastore.demo.vchs.cfms-apps.com";
-
-static NSString *const kClientID = @"cd68e385-c0e8-4740-a563-748e643a2280";
-static NSString *const kClientSecret = @"IaioD3Mcj4XU67ySMidiFDNrKwv68RB4Cft2zLrdJHoWcdqjsCSWf1U1EZDR6JKufpNp9NTcBqSxbR6bA95_eg";
+#import "Settings.h"
 
 static NSString *const textBeforeSignInView = @"This application requires that you authenticate before proceeding.";
 static NSString *const textAfterSignInView = @"Waiting to receive access token from identity server.";
 
 @interface PCFSignInViewController () <MSSSignInDelegate>
+
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 @property (weak, nonatomic) IBOutlet UILabel *signInLabel;
 @property (weak, nonatomic) IBOutlet UIButton *signInButton;
@@ -34,8 +29,8 @@ static NSString *const textAfterSignInView = @"Waiting to receive access token f
     self.signInButton.layer.shadowOpacity = 0.5;
     
     MSSDataSignIn *instance = [MSSDataSignIn sharedInstance];
-    instance.clientID = kClientID;
-    instance.clientSecret = kClientSecret;
+    instance.clientID = kPushClientID;
+    instance.clientSecret = kPushClientSecret;
     instance.openIDConnectURL = kOAuthServerURL;
     instance.dataServiceURL = kDataServiceURL;
     instance.delegate = self;
