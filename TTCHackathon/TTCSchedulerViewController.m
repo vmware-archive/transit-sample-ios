@@ -1,26 +1,24 @@
 //
-//  PCFTimeAndStopViewController.m
-//  TTCHackathon
-//
-//  Created by DX121-XL on 2014-08-06.
 //  Copyright (c) 2014 Pivotal. All rights reserved.
 //
 
-#import "PCFSchedulerViewController.h"
-#import "PCFTitleView.h"
+#import "TTCSchedulerViewController.h"
+#import "TTCTitleView.h"
 
-@interface PCFSchedulerViewController ()
+@interface TTCSchedulerViewController ()
+
 @property (weak, nonatomic) IBOutlet UIButton *scheduleButton;
 @property (strong, nonatomic) IBOutlet UIView *scheduleView;
 @property (weak, nonatomic) IBOutlet UIDatePicker *scheduleDatePicker;
 @property (weak, nonatomic) IBOutlet UIView *innerScheduleView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+
 @end
 
-@implementation PCFSchedulerViewController
+@implementation TTCSchedulerViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -29,14 +27,14 @@
     return self;
 }
 
-- (void)viewDidLoad
+- (void) viewDidLoad
 {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
     [self.scrollView setScrollEnabled:NO];
-    self.navigationItem.titleView = [[PCFTitleView alloc] initWithFrame:CGRectMake(0, 0, 150, 30) andTitle:@"Transit++"];
+    self.navigationItem.titleView = [[TTCTitleView alloc] initWithFrame:CGRectMake(0, 0, 150, 30) andTitle:@"Transit++"];
     
-    self.stopAndRouteInfo = [[PCFStopAndRouteInfo alloc] init];
+    self.stopAndRouteInfo = [[TTCStopAndRouteInfo alloc] init];
     self.scheduleButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.scheduleButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     
@@ -51,13 +49,13 @@
     [self.scheduleView addConstraints:@[verticalConstraintFromTop]];
 }
 
-- (void)viewDidLayoutSubviews
+- (void) viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
     [self.scrollView setContentSize:CGSizeMake(320, 600)];
 }
 
-- (void)didReceiveMemoryWarning
+- (void) didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -65,26 +63,26 @@
 
 #pragma mark - press events
 
-- (IBAction)doneButtonPressed:(id)sender {
+- (IBAction) doneButtonPressed:(id)sender {
     [self formatTime];
     [self performSegueWithIdentifier:@"unwindToSavedTableView" sender:self];
 }
 
-
-- (IBAction)routeStopContainerPressed:(id)sender {
+- (IBAction) routeStopContainerPressed:(id)sender {
     
     [self performSegueWithIdentifier:@"segueToDataTable" sender:self];
 }
 
 #pragma mark - segue functions
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.destinationViewController isKindOfClass:[PCFDataTableViewController class]]) {
+    if ([segue.destinationViewController isKindOfClass:[TTCDataTableViewController class]]) {
         [[segue destinationViewController] setStopAndRouteInfo:self.stopAndRouteInfo];
         
-    } else if ([segue.destinationViewController isKindOfClass:[PCFSavedTableViewController class]]) {
-        if(self.stopAndRouteInfo.route != nil  && self.stopAndRouteInfo.stop != nil){
+    } else if ([segue.destinationViewController isKindOfClass:[TTCSavedTableViewController class]]) {
+        
+        if (self.stopAndRouteInfo.route != nil  && self.stopAndRouteInfo.stop != nil) {
             self.stopAndRouteInfo.enabled = YES;
             [self.stopAndRouteInfo createIdentifier];
             [[segue destinationViewController] addToStopAndRoute:self.stopAndRouteInfo];
@@ -92,8 +90,7 @@
     }
 }
 
-
-- (IBAction)unwindToTimeAndStopView:(UIStoryboardSegue *)sender
+- (IBAction) unwindToTimeAndStopView:(UIStoryboardSegue *)sender
 {
     self.route.text = self.stopAndRouteInfo.route;
     self.stop.text = self.stopAndRouteInfo.stop;
@@ -104,7 +101,7 @@
 #pragma mark - datePicker
 
 /* Format the time based on AM/PM and 24h for our stops and routes */
-- (void)formatTime
+- (void) formatTime
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
@@ -123,6 +120,6 @@
     
     NSLog(@"Time in UTC: %@", self.stopAndRouteInfo.timeInUtc);
     NSLog(@"Time in 12 hr: %@",self.stopAndRouteInfo.time);
-
 }
+
 @end

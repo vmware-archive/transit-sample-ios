@@ -6,6 +6,6 @@
 
 @interface TTCClient : MSSAFHTTPClient
 
-+ (instancetype)sharedClient;
++ (instancetype) sharedClient;
 
 @end

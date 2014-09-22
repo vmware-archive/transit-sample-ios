@@ -4,11 +4,12 @@
 
 #import "TTCClient.h"
 
+// TODO - why is the base url blank?  that seems silly.
 static NSString *const kBaseURL = @"";
 
 @implementation TTCClient
 
-+ (instancetype)sharedClient
++ (instancetype) sharedClient
 {
     static dispatch_once_t onceToken;
     static TTCClient *sharedClient;
@@ -18,7 +19,5 @@ static NSString *const kBaseURL = @"";
     });
     return sharedClient;
 }
-
-
 
 @end
