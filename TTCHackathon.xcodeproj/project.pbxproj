@@ -29,6 +29,7 @@
 		91DE58DD19A2982500232354 /* TTCTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DE58DC19A2982500232354 /* TTCTitleView.m */; };
 		91DE58DF19A29A4100232354 /* ic_ttc_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58DE19A29A4100232354 /* ic_ttc_logo.png */; };
 		D45F20AB19CCCFA8004D7E79 /* TTCSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = D45F20AA19CCCFA8004D7E79 /* TTCSettings.m */; };
+		D49ABDA619D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D49ABDA519D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m */; };
 		DE6B3CA656AE421799946EE4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E013236D742EE9FAA500B /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,8 @@
 		B57E013236D742EE9FAA500B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D45F20A919CCCF6B004D7E79 /* TTCSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCSettings.h; sourceTree = "<group>"; };
 		D45F20AA19CCCFA8004D7E79 /* TTCSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCSettings.m; sourceTree = "<group>"; };
+		D49ABDA419D1E1FD0092BFB7 /* TTCPushRegistrationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTCPushRegistrationHelper.h; path = Util/TTCPushRegistrationHelper.h; sourceTree = "<group>"; };
+		D49ABDA519D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTCPushRegistrationHelper.m; path = Util/TTCPushRegistrationHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +111,7 @@
 				9162160519952A010019EF2B /* Images */,
 				916215FD199506F90019EF2B /* Models */,
 				5746E593195497C000CAADE9 /* Supporting Files */,
+				D49ABDA319D1E1C80092BFB7 /* Util */,
 				91DE5898199C02F700232354 /* Views */,
 				D478F75419D07B1D004027CF /* View Controllers */,
 			);
@@ -187,6 +191,15 @@
 				D45F20AA19CCCFA8004D7E79 /* TTCSettings.m */,
 			);
 			name = App;
+			sourceTree = "<group>";
+		};
+		D49ABDA319D1E1C80092BFB7 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				D49ABDA419D1E1FD0092BFB7 /* TTCPushRegistrationHelper.h */,
+				D49ABDA519D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m */,
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 		F1B601AE1925257200B65371 = {
@@ -317,6 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D49ABDA619D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m in Sources */,
 				57F633341954A64800446130 /* TTCDataTableViewController.m in Sources */,
 				91DE58AE199D569800232354 /* TTCSavedCell.m in Sources */,
 				D45F20AB19CCCFA8004D7E79 /* TTCSettings.m in Sources */,
@@ -365,7 +379,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TTCHackathon/TTCHackathon-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -391,7 +405,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TTCHackathon/TTCHackathon-Prefix.pch";
 				INFOPLIST_FILE = "TTCHackathon/TTCHackathon-Info.plist";

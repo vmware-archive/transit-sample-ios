@@ -4,10 +4,7 @@
 
 #import <MSSData/MSSData.h>
 #import <MSSData/MSSAFNetworking.h>
-#import <MSSPush/MSSPushClient.h>
-#import <MSSPush/MSSParameters.h>
-#import <MSSPush/MSSPush.h>
-
+#import "TTCPushRegistrationHelper.h"
 #import "TTCSavedTableViewController.h"
 #import "TTCLoadingOverlayView.h"
 #import "TTCTitleView.h"
@@ -112,22 +109,24 @@
 
 - (void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
-    if([currentItem isEqual:nil]) return;
-    
-    // delete from dictionary
-    [self.savedPushEntries removeObjectForKey:currentItem.identifier];
-    NSArray *keys = [self.savedPushEntries allKeys];
-    [self initializePushSDK:keys];
-    
-    // delete from array
-    [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
-    [self pushUpdateToServer];
-    
-    // need to refresh the table to update the view
-    [self.tableView reloadData];
-    NSLog(@"Deleted row.");
-    self.tableView.alwaysBounceVertical = YES;
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
+        if (!currentItem) return;
+        
+        // delete from dictionary
+        [self.savedPushEntries removeObjectForKey:currentItem.identifier];
+        NSArray *keys = [self.savedPushEntries allKeys];
+        [TTCPushRegistrationHelper initializePushSDK:keys];
+        
+        // delete from array
+        [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
+        [self pushUpdateToServer];
+        
+        // need to refresh the table to update the view
+        [self.tableView reloadData];
+        NSLog(@"Deleted row.");
+        self.tableView.alwaysBounceVertical = YES;
+    }
 }
 
 #pragma mark - segue functions
@@ -155,7 +154,7 @@
         [self.savedPushEntries setValue:@"placeholder" forKey:lastItem.identifier];
         NSLog(@"adding to dictionary: %@", lastItem.identifier);
         NSArray *keys = [self.savedPushEntries allKeys];
-        [self initializePushSDK:keys];
+        [TTCPushRegistrationHelper initializePushSDK:keys];
     }
 }
 
@@ -185,9 +184,9 @@
     }
     
     NSArray *keys = [self.savedPushEntries allKeys];
-    [self initializePushSDK:keys];
+    [TTCPushRegistrationHelper initializePushSDK:keys];
 
-    NSLog(@"%lu", (unsigned long) [self.savedPushEntries count]);
+    NSLog(@"Number of enabled stops: %lu", (unsigned long) [self.savedPushEntries count]);
     [self pushUpdateToServer];
 }
 
@@ -197,7 +196,7 @@
 {
     for (TTCStopAndRouteInfo* sar in self.stopAndRouteArray) {
         if([sar.stop isEqualToString:stopAndRouteObject.stop] && [sar.time isEqualToString:stopAndRouteObject.time]) {
-            NSLog(@"Reject to add element");
+            NSLog(@"Not adding new stop since it's already in the list.");
             return;
         }
     }
@@ -222,7 +221,6 @@
     
     NSLog(@"Fetching saved routes and stops...");
     
-    [self.savedStopsAndRouteObject objectForKey:@"savedStopsAndRouteObjectID"];
     [self.savedStopsAndRouteObject fetchOnSuccess:^(MSSDataObject *fetchedObject) {
         
         if (fetchedObject) {
@@ -265,7 +263,7 @@
 
             // Update the push registration on the server
             NSArray *keys = [self.savedPushEntries allKeys];
-            [self initializePushSDK:keys];
+            [TTCPushRegistrationHelper initializePushSDK:keys];
             
         } else {
             NSLog(@"Note: fetched object was nil.");
@@ -278,10 +276,23 @@
     }];
 }
 
+/* Serialize a string to JSON object */
+- (id) deserializeStringToObject:(NSString *)string
+{
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    id result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+    if (!result) {
+        NSLog(@"%@", error.description);
+    }
+    
+    return result;
+}
+
 /* Everytime we change anything in our ARRAY, we have to push it up to the server */
 - (void) pushUpdateToServer
 {
-    NSLog(@"Pushing to server here...");
+    NSLog(@"Pushing saved stops to server here...");
     NSMutableArray *stopAndRouteListJSON = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < self.stopAndRouteArray.count; i++) {
@@ -290,14 +301,14 @@
         NSString *enabled = (stopAndRouteElement.enabled) ? @"1" : @"0";
         
         NSDictionary *dict = @{
-                               @"route":stopAndRouteElement.route,
-                               @"stop":stopAndRouteElement.stop,
-                               @"time":stopAndRouteElement.time,
-                               @"routeTag":stopAndRouteElement.routeTag,
-                               @"stopTag":stopAndRouteElement.stopTag,
+                               @"route" :      stopAndRouteElement.route,
+                               @"stop" :       stopAndRouteElement.stop,
+                               @"time" :       stopAndRouteElement.time,
+                               @"routeTag" :   stopAndRouteElement.routeTag,
+                               @"stopTag" :    stopAndRouteElement.stopTag,
                                @"identifier" : stopAndRouteElement.identifier,
-                               @"timeInUtc" : stopAndRouteElement.timeInUtc,
-                               @"enabled" : enabled
+                               @"timeInUtc" :  stopAndRouteElement.timeInUtc,
+                               @"enabled" :    enabled
                                };
 
         NSLog(@"Saving item: %@", dict);
@@ -315,59 +326,6 @@
     
     self.savedStopsAndRouteObject[@"routesAndStops"] = jsonString;
     [self.savedStopsAndRouteObject saveOnSuccess:nil failure:nil];
-}
-
-/* Registering for notifications with the Push Service */
-- (void) initializePushSDK:(NSArray*)pushTags
-{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    MSSParameters *parameters = [[MSSParameters alloc] init];
-    [parameters setPushAPIURL:kPushBaseServerUrl];
-    [parameters setDevelopmentPushVariantUUID:kPushDevelopmentVariantUuid];
-    [parameters setDevelopmentPushVariantSecret:kPushDevelopmentVariantSecret];
-    [parameters setProductionPushVariantUUID:kPushProductionVariantUuid];
-    [parameters setProductionPushVariantSecret:kPushProductionVariantSecret];
-    [parameters setPushDeviceAlias:kPushDeviceAlias];
-    [parameters setPushTags:[NSSet setWithArray:pushTags]];
-    [MSSPush setRegistrationParameters:parameters];
-    
-    [MSSPush setCompletionBlockWithSuccess:^{
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        
-    } failure:^(NSError *error) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    }];
-    
-    UIApplication *application = [UIApplication sharedApplication];
-    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-        
-        // iOS 8.0+
-        UIUserNotificationType notificationTypes = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
-        [application registerUserNotificationSettings:settings];
-        
-    } else {
-        
-        // < iOS 8.0
-        UIRemoteNotificationType notificationType = UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound;
-        [MSSPush setRemoteNotificationTypes:notificationType];
-    }
-    
-    [MSSPush registerForPushNotifications];
-}
-
-/* Serialize a string to JSON object */
-- (id) deserializeStringToObject:(NSString *)string
-{
-    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error = nil;
-    id result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-    if (!result) {
-        NSLog(@"%@", error.description);
-    }
-    
-    return result;
 }
 
 #pragma mark - View functions 
