@@ -52,8 +52,8 @@
                                              selector:@selector(showLoadingScreen)
                                                  name:UIDeviceOrientationDidChangeNotification object:nil];
     
-    self.stopAndRouteArray = [[NSMutableArray alloc] init];
-    self.savedPushEntries = [[NSMutableDictionary alloc] init];
+    self.stopAndRouteArray = [NSMutableArray array];
+    self.savedPushEntries = [NSMutableDictionary dictionary];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -117,7 +117,7 @@
     
     // delete from dictionary
     [self.savedPushEntries removeObjectForKey:currentItem.identifier];
-    NSArray *keys=[self.savedPushEntries allKeys];
+    NSArray *keys = [self.savedPushEntries allKeys];
     [self initializePushSDK:keys];
     
     // delete from array
@@ -154,7 +154,7 @@
     if (![[self.savedPushEntries allKeys] containsObject:lastItem.identifier]) {
         [self.savedPushEntries setValue:@"placeholder" forKey:lastItem.identifier];
         NSLog(@"adding to dictionary: %@", lastItem.identifier);
-        NSArray *keys=[self.savedPushEntries allKeys];
+        NSArray *keys = [self.savedPushEntries allKeys];
         [self initializePushSDK:keys];
     }
 }
@@ -183,7 +183,8 @@
         // have to delete from dictionary and request to not push anymore
         [self.savedPushEntries removeObjectForKey:currentItem.identifier];
     }
-    NSArray *keys=[self.savedPushEntries allKeys];
+    
+    NSArray *keys = [self.savedPushEntries allKeys];
     [self initializePushSDK:keys];
 
     NSLog(@"%lu", (unsigned long) [self.savedPushEntries count]);
@@ -218,51 +219,68 @@
 - (void) fetchRoutesAndStops
 {
     [self showLoadingScreen];
-    NSLog(@"fetching...");
+    
+    NSLog(@"Fetching saved routes and stops...");
+    
     [self.savedStopsAndRouteObject objectForKey:@"savedStopsAndRouteObjectID"];
-    [self.savedStopsAndRouteObject fetchOnSuccess:^(MSSDataObject *object) {
+    [self.savedStopsAndRouteObject fetchOnSuccess:^(MSSDataObject *fetchedObject) {
         
-        if (![object isEqual:nil]){
+        if (fetchedObject) {
             
-            NSData* data = [object[@"routesAndStops"] dataUsingEncoding:NSUTF8StringEncoding];
-            NSArray* JSONArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSData* data = [fetchedObject[@"routesAndStops"] dataUsingEncoding:NSUTF8StringEncoding];
+            NSArray* jsonArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             
-            if (![self.stopAndRouteArray isEqual:nil]) {
+            if (self.stopAndRouteArray) {
                 [self.stopAndRouteArray removeAllObjects];
             }
             
-            for (int i = 0; i < JSONArray.count; ++i) {
+            if (!jsonArray || jsonArray.count <= 0) {
                 
-                NSDictionary *dictionary = [self deserializeStringToObject:[JSONArray objectAtIndex:i]];
-                TTCStopAndRouteInfo *obj = [[TTCStopAndRouteInfo alloc] init];
-                [obj setEnabled:[dictionary[@"enabled"] boolValue]];
-                [obj setRoute:dictionary[@"route"]];
-                [obj setStop:dictionary[@"stop"]];
-                [obj setRouteTag: dictionary[@"routeTag"]];
-                [obj setStopTag: dictionary[@"stopTag"]];
-                [obj setTime: dictionary[@"time"]];
-                [obj setTimeInUtc: dictionary[@"timeInUtc"]];
-                [obj setIdentifier:dictionary[@"identifier"]];
-                [self.stopAndRouteArray addObject:obj]; // add the entry into the dictionary
+                NSLog(@"Note: no routes and stops saved on server.");
                 
-                NSLog(@"Loaded item: %@", dictionary);
+            } else {
+            
+                for (int i = 0; i < jsonArray.count; ++i) {
+                    
+                    NSDictionary *dictionary = [self deserializeStringToObject:[jsonArray objectAtIndex:i]];
+                    TTCStopAndRouteInfo *obj = [[TTCStopAndRouteInfo alloc] init];
+                    [obj setEnabled:[dictionary[@"enabled"] boolValue]];
+                    [obj setRoute:dictionary[@"route"]];
+                    [obj setStop:dictionary[@"stop"]];
+                    [obj setRouteTag: dictionary[@"routeTag"]];
+                    [obj setStopTag: dictionary[@"stopTag"]];
+                    [obj setTime: dictionary[@"time"]];
+                    [obj setTimeInUtc: dictionary[@"timeInUtc"]];
+                    [obj setIdentifier:dictionary[@"identifier"]];
+                    [self.stopAndRouteArray addObject:obj]; // add the entry into the dictionary
+                    
+                    NSLog(@"Loaded item: %@", dictionary);
+                }
             }
             
             [[NSNotificationCenter defaultCenter] removeObserver:self];
             [self.loadingOverlayView removeFromSuperview];
             [self populateSavedPushEntries];            
             [self.tableView reloadData];
+
+            // Update the push registration on the server
+            NSArray *keys = [self.savedPushEntries allKeys];
+            [self initializePushSDK:keys];
+            
+        } else {
+            NSLog(@"Note: fetched object was nil.");
         }
         
     } failure:^(NSError *error) {
-        NSLog(@"FAILURE");
+        
+        NSLog(@"Error: could not fetch saved route and stops: %@", error);
         [self.loadingOverlayView removeFromSuperview];
     }];
 }
 
 /* Everytime we change anything in our ARRAY, we have to push it up to the server */
-- (void) pushUpdateToServer {
-    
+- (void) pushUpdateToServer
+{
     NSLog(@"Pushing to server here...");
     NSMutableArray *stopAndRouteListJSON = [[NSMutableArray alloc] init];
     
@@ -321,6 +339,21 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }];
     
+    UIApplication *application = [UIApplication sharedApplication];
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        
+        // iOS 8.0+
+        UIUserNotificationType notificationTypes = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
+        [application registerUserNotificationSettings:settings];
+        
+    } else {
+        
+        // < iOS 8.0
+        UIRemoteNotificationType notificationType = UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound;
+        [MSSPush setRemoteNotificationTypes:notificationType];
+    }
+    
     [MSSPush registerForPushNotifications];
 }
 
@@ -365,8 +398,9 @@
 
 #pragma mark - Delegate
 
-- (void) authenticationSuccess {
-    NSLog(@"Authentication delegate callback");
+- (void) authenticationSuccess
+{
+    NSLog(@"Authentication succeeded.");
     self.savedStopsAndRouteObject = [MSSDataObject objectWithClassName:@"notifications"];
     [self.savedStopsAndRouteObject setObjectID:@"savedStopsAndRouteObjectID"];
     [self fetchRoutesAndStops];
