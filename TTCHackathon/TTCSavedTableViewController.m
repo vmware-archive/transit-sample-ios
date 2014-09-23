@@ -16,8 +16,9 @@
 
 @property MSSDataObject *savedStopsAndRouteObject;
 @property TTCLoadingOverlayView *loadingOverlayView;
-@property (strong, nonatomic) IBOutlet UINavigationItem *navItem;
 @property BOOL didReachAuthenticateScreen;
+@property (strong, nonatomic) NSMutableSet *savedPushEntries;    // keeps track of only all the enabled stops and routes.
+@property (strong, nonatomic) NSMutableArray *stopAndRouteArray; // keeps track of all stops and routes we saved (enabled AND disabled).
 
 @end
 
@@ -50,7 +51,7 @@
                                                  name:UIDeviceOrientationDidChangeNotification object:nil];
     
     self.stopAndRouteArray = [NSMutableArray array];
-    self.savedPushEntries = [NSMutableDictionary dictionary];
+    self.savedPushEntries = [NSMutableSet set];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -113,10 +114,9 @@
         TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
         if (!currentItem) return;
         
-        // delete from dictionary
-        [self.savedPushEntries removeObjectForKey:currentItem.identifier];
-        NSArray *keys = [self.savedPushEntries allKeys];
-        [TTCPushRegistrationHelper initializePushSDK:keys];
+        // delete from set
+        [self.savedPushEntries removeObject:currentItem.identifier];
+        [TTCPushRegistrationHelper initializePushSDK:self.savedPushEntries];
         
         // delete from array
         [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
@@ -150,11 +150,10 @@
     }
     
     // check if the recently added item is new
-    if (![[self.savedPushEntries allKeys] containsObject:lastItem.identifier]) {
-        [self.savedPushEntries setValue:@"placeholder" forKey:lastItem.identifier];
-        NSLog(@"adding to dictionary: %@", lastItem.identifier);
-        NSArray *keys = [self.savedPushEntries allKeys];
-        [TTCPushRegistrationHelper initializePushSDK:keys];
+    if (![self.savedPushEntries containsObject:lastItem.identifier]) {
+        [self.savedPushEntries addObject:lastItem.identifier];
+        NSLog(@"Adding stop to set: %@", lastItem.identifier);
+        [TTCPushRegistrationHelper initializePushSDK:self.savedPushEntries];
     }
 }
 
@@ -176,15 +175,14 @@
     if ([mySwitch isOn]) {
         currentItem.enabled = YES;
         // adding to the dictionary
-        [self.savedPushEntries setObject:@"placeholder" forKey:currentItem.identifier];
+        [self.savedPushEntries addObject:currentItem.identifier];
     } else {
         currentItem.enabled = NO;
         // have to delete from dictionary and request to not push anymore
-        [self.savedPushEntries removeObjectForKey:currentItem.identifier];
+        [self.savedPushEntries removeObject:currentItem.identifier];
     }
     
-    NSArray *keys = [self.savedPushEntries allKeys];
-    [TTCPushRegistrationHelper initializePushSDK:keys];
+    [TTCPushRegistrationHelper initializePushSDK:self.savedPushEntries];
 
     NSLog(@"Number of enabled stops: %lu", (unsigned long) [self.savedPushEntries count]);
     [self pushUpdateToServer];
@@ -207,7 +205,7 @@
 {
     for (TTCStopAndRouteInfo* obj in self.stopAndRouteArray) {
         if (obj.enabled == YES) {
-            [self.savedPushEntries setValue:@"placeholder" forKey:obj.identifier]; // only the key is necessary
+            [self.savedPushEntries addObject:obj.identifier];
         }
     }
 }
@@ -262,8 +260,7 @@
             [self.tableView reloadData];
 
             // Update the push registration on the server
-            NSArray *keys = [self.savedPushEntries allKeys];
-            [TTCPushRegistrationHelper initializePushSDK:keys];
+            [TTCPushRegistrationHelper initializePushSDK:self.savedPushEntries];
             
         } else {
             NSLog(@"Note: fetched object was nil.");

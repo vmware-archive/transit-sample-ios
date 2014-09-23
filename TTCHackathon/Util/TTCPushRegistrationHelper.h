@@ -10,6 +10,6 @@
 
 @interface TTCPushRegistrationHelper : NSObject
 
-+ (void) initializePushSDK:(NSArray*)pushTags;
++ (void) initializePushSDK:(NSSet*)pushTags;
 
 @end

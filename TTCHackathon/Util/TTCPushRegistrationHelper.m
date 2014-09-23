@@ -15,7 +15,7 @@
 @implementation TTCPushRegistrationHelper
 
 /* Registering for notifications with the Push Service */
-+ (void) initializePushSDK:(NSArray*)pushTags
++ (void) initializePushSDK:(NSSet*)pushTags
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
@@ -26,7 +26,7 @@
     [parameters setProductionPushVariantUUID:kPushProductionVariantUuid];
     [parameters setProductionPushVariantSecret:kPushProductionVariantSecret];
     [parameters setPushDeviceAlias:kPushDeviceAlias];
-    [parameters setPushTags:[NSSet setWithArray:pushTags]];
+    [parameters setPushTags:pushTags];
     [MSSPush setRegistrationParameters:parameters];
     
     [MSSPush setCompletionBlockWithSuccess:^{
