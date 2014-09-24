@@ -9,7 +9,6 @@
 #import <MSSPush/MSSPush.h>
 #import "TTCDataTableViewController.h"
 #import "TTCClient.h"
-#import "TTCTitleView.h"
 #import "TTCSettings.h"
 #import "TTCLoadingOverlayView.h"
 
@@ -31,7 +30,7 @@ static NSString *const kRoute = @"route";
     
     self.tableView.alwaysBounceVertical = NO;
     
-    self.navigationItem.titleView = [[TTCTitleView alloc] initWithFrame:CGRectMake(0, 0, 150, 30) andTitle:@"Transit++"];
+    self.navigationItem.title = @"Transit++";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateForOverlay) name:UIDeviceOrientationDidChangeNotification object:nil];
     [self didRotateForOverlay];

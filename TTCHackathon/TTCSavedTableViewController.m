@@ -7,7 +7,6 @@
 #import "TTCPushRegistrationHelper.h"
 #import "TTCSavedTableViewController.h"
 #import "TTCLoadingOverlayView.h"
-#import "TTCTitleView.h"
 #import "TTCSavedCell.h"
 #import "TTCAppDelegate.h"
 #import "TTCSettings.h"
@@ -42,9 +41,7 @@
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setTranslucent:YES];
-    
-    // Custom initialization
-    self.navigationItem.titleView = [[TTCTitleView alloc] initWithFrame:CGRectMake(0, 0, 150, 30) andTitle:@"Transit++"];
+    self.navigationItem.title = @"Transit++";
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showLoadingScreen)

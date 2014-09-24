@@ -3,7 +3,6 @@
 //
 
 #import "TTCSchedulerViewController.h"
-#import "TTCTitleView.h"
 
 @interface TTCSchedulerViewController ()
 
@@ -32,7 +31,7 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
     [self.scrollView setScrollEnabled:NO];
-    self.navigationItem.titleView = [[TTCTitleView alloc] initWithFrame:CGRectMake(0, 0, 150, 30) andTitle:@"Transit++"];
+    self.navigationItem.title = @"Transit++";
     
     self.stopAndRouteInfo = [[TTCStopAndRouteInfo alloc] init];
     self.scheduleButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
