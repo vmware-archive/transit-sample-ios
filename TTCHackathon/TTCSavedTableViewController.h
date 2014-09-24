@@ -8,6 +8,7 @@
 
 @interface TTCSavedTableViewController : UITableViewController <TTCSignInViewDelegate>
 
+- (IBAction) logout;
 - (IBAction) unwindToSavedTableView:(UIStoryboardSegue *)sender;
 - (void) addToStopAndRoute:(TTCStopAndRouteInfo *)stopAndRouteObject;
 

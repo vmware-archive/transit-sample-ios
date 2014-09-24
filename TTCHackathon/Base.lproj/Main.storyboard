@@ -326,7 +326,11 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Ol7-Yd-B2i">
-                        <barButtonItem key="backBarButtonItem" title=" " id="yAJ-Ul-uv0"/>
+                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="Vkb-TS-DU0">
+                            <connections>
+                                <action selector="logout" destination="CQA-q5-WG8" id="B9C-b3-gqP"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="9X4-h8-ouC">
                             <connections>
                                 <segue destination="ySk-zm-Kr5" kind="push" identifier="" id="VcH-KU-1aW"/>

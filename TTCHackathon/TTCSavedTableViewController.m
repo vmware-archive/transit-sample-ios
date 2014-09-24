@@ -185,6 +185,16 @@
     [self pushUpdateToServer];
 }
 
+- (IBAction) logout
+{
+    self.stopAndRouteArray = [NSMutableArray array];
+    self.savedPushEntries = [NSMutableSet set];
+    [[MSSDataSignIn sharedInstance] signOut];
+    [TTCPushRegistrationHelper unregister];
+    self.didReachAuthenticateScreen = NO;
+    [self performSegueWithIdentifier:@"modalSegueToSignIn" sender:self];
+}
+
 #pragma mark - Array and dictionary functions
 
 - (void) addToStopAndRoute:(TTCStopAndRouteInfo *)stopAndRouteObject // add to our array
