@@ -248,7 +248,7 @@
 		F1B601AF1925257200B65371 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = PCF;
+				CLASSPREFIX = TTC;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Pivotal;
 				TargetAttributes = {

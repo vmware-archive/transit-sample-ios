@@ -116,7 +116,7 @@
         
         // delete from set
         [self.savedPushEntries removeObject:currentItem.identifier];
-        [TTCPushRegistrationHelper initializePushSDK:self.savedPushEntries];
+        [TTCPushRegistrationHelper initialize:self.savedPushEntries];
         
         // delete from array
         [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
@@ -153,7 +153,7 @@
     if (![self.savedPushEntries containsObject:lastItem.identifier]) {
         [self.savedPushEntries addObject:lastItem.identifier];
         NSLog(@"Adding stop to set: %@", lastItem.identifier);
-        [TTCPushRegistrationHelper initializePushSDK:self.savedPushEntries];
+        [TTCPushRegistrationHelper initialize:self.savedPushEntries];
     }
 }
 
@@ -182,7 +182,7 @@
         [self.savedPushEntries removeObject:currentItem.identifier];
     }
     
-    [TTCPushRegistrationHelper initializePushSDK:self.savedPushEntries];
+    [TTCPushRegistrationHelper initialize:self.savedPushEntries];
 
     NSLog(@"Number of enabled stops: %lu", (unsigned long) [self.savedPushEntries count]);
     [self pushUpdateToServer];
@@ -260,7 +260,7 @@
             [self.tableView reloadData];
 
             // Update the push registration on the server
-            [TTCPushRegistrationHelper initializePushSDK:self.savedPushEntries];
+            [TTCPushRegistrationHelper initialize:self.savedPushEntries];
             
         } else {
             NSLog(@"Note: fetched object was nil.");

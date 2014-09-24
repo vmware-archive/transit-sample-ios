@@ -6,28 +6,19 @@
 //  Copyright (c) 2014 Pivotal. All rights reserved.
 //
 
-#import <MSSPush/MSSPushClient.h>
-#import <MSSPush/MSSParameters.h>
 #import <MSSPush/MSSPush.h>
+#import <MSSPush/MSSParameters.h>
 #import "TTCPushRegistrationHelper.h"
 #import "TTCSettings.h"
 
 @implementation TTCPushRegistrationHelper
 
 /* Registering for notifications with the Push Service */
-+ (void) initializePushSDK:(NSSet*)pushTags
++ (void) initialize:(NSSet*)pushTags
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    MSSParameters *parameters = [[MSSParameters alloc] init];
-    [parameters setPushAPIURL:kPushBaseServerUrl];
-    [parameters setDevelopmentPushVariantUUID:kPushDevelopmentVariantUuid];
-    [parameters setDevelopmentPushVariantSecret:kPushDevelopmentVariantSecret];
-    [parameters setProductionPushVariantUUID:kPushProductionVariantUuid];
-    [parameters setProductionPushVariantSecret:kPushProductionVariantSecret];
-    [parameters setPushDeviceAlias:kPushDeviceAlias];
-    [parameters setPushTags:pushTags];
-    [MSSPush setRegistrationParameters:parameters];
+    [MSSPush setRegistrationParameters:[TTCPushRegistrationHelper getParameters:pushTags]];
     
     [MSSPush setCompletionBlockWithSuccess:^{
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -52,6 +43,36 @@
     }
     
     [MSSPush registerForPushNotifications];
+}
+
++ (void) unregister
+{
+    void (^successBlock)() = ^{
+        NSLog(@"Successfully unregistered from push notifications.");
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    };
+    
+    void (^failureBlock)(NSError*) = ^(NSError *error) {
+        NSLog(@"Error upon unregistering from push notifications: %@", error);
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    };
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [MSSPush setRegistrationParameters:[TTCPushRegistrationHelper getParameters:nil]];
+    [MSSPush unregisterWithPushServerSuccess:successBlock failure:failureBlock];
+}
+
++ (MSSParameters*) getParameters:(NSSet*)tags
+{
+    MSSParameters *parameters = [[MSSParameters alloc] init];
+    [parameters setPushAPIURL:kPushBaseServerUrl];
+    [parameters setDevelopmentPushVariantUUID:kPushDevelopmentVariantUuid];
+    [parameters setDevelopmentPushVariantSecret:kPushDevelopmentVariantSecret];
+    [parameters setProductionPushVariantUUID:kPushProductionVariantUuid];
+    [parameters setProductionPushVariantSecret:kPushProductionVariantSecret];
+    [parameters setPushDeviceAlias:kPushDeviceAlias];
+    [parameters setPushTags:tags];
+    return parameters;
 }
 
 @end

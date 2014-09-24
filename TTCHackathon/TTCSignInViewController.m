@@ -5,6 +5,7 @@
 #import <MSSData/MSSDataSignIn.h>
 #import "TTCSignInViewController.h"
 #import "TTCSettings.h"
+#import "TTCPushRegistrationHelper.h"
 
 static NSString *const textBeforeSignInView = @"This application requires that you authenticate before proceeding.";
 static NSString *const textAfterSignInView = @"Waiting to receive access token from identity server.";
@@ -54,6 +55,7 @@ static NSString *const textAfterSignInView = @"Waiting to receive access token f
 
 - (IBAction) signOutClicked:(id)sender {
     [[MSSDataSignIn sharedInstance] signOut];
+    [TTCPushRegistrationHelper unregister];
 }
 
 - (void) finishedWithAuth:(MSSAFOAuthCredential *)auth
