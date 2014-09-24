@@ -36,16 +36,6 @@
     self.stopAndRouteInfo = [[TTCStopAndRouteInfo alloc] init];
     self.scheduleButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.scheduleButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    // need to add a vertical constraint that uses ratios. Could not do it in the interface builder.
-    NSLayoutConstraint *verticalConstraintFromTop = [NSLayoutConstraint constraintWithItem:self.scheduleDatePicker
-                                                                                 attribute:NSLayoutAttributeTop
-                                                                                 relatedBy:0.001f
-                                                                                    toItem:self.innerScheduleView
-                                                                                 attribute:NSLayoutAttributeTop
-                                                                                multiplier:.01f
-                                                                                  constant:0];
-    [self.scheduleView addConstraints:@[verticalConstraintFromTop]];
 }
 
 - (void) viewDidLayoutSubviews
