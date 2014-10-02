@@ -54,7 +54,7 @@ static NSString *const textAfterSignInView = @"Waiting to receive access token f
 }
 
 - (IBAction) signOutClicked:(id)sender {
-    [[MSSDataSignIn sharedInstance] signOut];
+    [[MSSDataSignIn sharedInstance] disconnect];
     [TTCPushRegistrationHelper unregister];
 }
 
@@ -71,6 +71,12 @@ static NSString *const textAfterSignInView = @"Waiting to receive access token f
             [self.delegate authenticationSuccess];
         }];
     }
+}
+
+- (void)didDisconnectWithError:(NSError *)error
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Log Out Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 @end

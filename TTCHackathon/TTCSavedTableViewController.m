@@ -189,7 +189,7 @@
 {
     self.stopAndRouteArray = [NSMutableArray array];
     self.savedPushEntries = [NSMutableSet set];
-    [[MSSDataSignIn sharedInstance] signOut];
+    [[MSSDataSignIn sharedInstance] disconnect];
     [TTCPushRegistrationHelper unregister];
     self.didReachAuthenticateScreen = NO;
     [self performSegueWithIdentifier:@"modalSegueToSignIn" sender:self];
