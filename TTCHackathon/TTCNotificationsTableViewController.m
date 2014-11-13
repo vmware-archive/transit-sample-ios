@@ -88,6 +88,8 @@
 - (void) registerForNotifications {
     void (^block)(NSNotification*) = ^(NSNotification* notification) {
         [self showLastNotification];
+        TTCLastNotificationView *view = (TTCLastNotificationView*) self.tableView.tableHeaderView;
+        [view flash];
     };
     [[NSNotificationCenter defaultCenter] addObserverForName:kRemoteNotificationReceived
                                                       object:nil
@@ -106,11 +108,22 @@
                 TTCLastNotificationView *view = (TTCLastNotificationView*) i;
                 [view showNotification:lastNotificationText date:lastNotificationDate];
                 self.tableView.tableHeaderView = view;
+                
+                UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(lastNotificationSwiped)];
+                swipeRecognizer.direction = UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight;
+                [view addGestureRecognizer:swipeRecognizer];
             }
         }
     } else {
         self.tableView.tableHeaderView = nil;
     }
+}
+
+- (void) lastNotificationSwiped
+{
+    [TTCUserDefaults setLastNotificationText:nil];
+    [TTCUserDefaults setLastNotificationTime:nil];
+    [self showLastNotification];
 }
 
 #pragma mark - Table view data source

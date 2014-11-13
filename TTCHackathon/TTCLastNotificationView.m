@@ -6,7 +6,16 @@
 //  Copyright (c) 2014 Pivotal. All rights reserved.
 //
 
+#define ANIMATION_ITERATIONS 13
+#define ANIMATION_PERIOD 0.2
+
 #import "TTCLastNotificationView.h"
+
+@interface TTCLastNotificationView ()
+
+@property NSInteger animationIterationsRemaining;
+
+@end
 
 @implementation TTCLastNotificationView
 
@@ -25,6 +34,39 @@
         self.notificationView.text = nil;
         self.labelView.text = nil;
     }
+}
+
+- (void) flash
+{
+    self.animationIterationsRemaining = ANIMATION_ITERATIONS;
+    [self fadeIn:self.labelView];
+    [self fadeIn:self.notificationView];
+}
+
+- (void) fadeIn:(UIView*)view
+{
+    view.alpha = 0;
+    [UIView animateWithDuration:ANIMATION_PERIOD animations:^{
+        view.alpha = 1;
+    } completion:^(BOOL finished) {
+        self.animationIterationsRemaining -= 1;
+        if (self.animationIterationsRemaining > 0) {
+            [self fadeOut:view];
+        }
+    }];
+}
+
+- (void) fadeOut:(UIView*)view
+{
+    view.alpha = 1;
+    [UIView animateWithDuration:ANIMATION_PERIOD animations:^{
+        view.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.animationIterationsRemaining -= 1;
+        if (self.animationIterationsRemaining > 0) {
+            [self fadeIn:view];
+        }
+    }];
 }
 
 @end

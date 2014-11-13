@@ -160,13 +160,13 @@
 		91DE5898199C02F700232354 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D4262D961A150191005C4A04 /* TTCLastNotificationView.h */,
+				D4262D971A150191005C4A04 /* TTCLastNotificationView.m */,
+				D4262D9E1A1542FE005C4A04 /* TTCLastNotificationView.xib */,
 				91DE5899199C032800232354 /* TTCLoadingOverlayView.h */,
 				91DE589A199C032800232354 /* TTCLoadingOverlayView.m */,
 				91DE58AC199D569800232354 /* TTCNotificationTableViewCell.h */,
 				91DE58AD199D569800232354 /* TTCNotificationTableViewCell.m */,
-				D4262D961A150191005C4A04 /* TTCLastNotificationView.h */,
-				D4262D971A150191005C4A04 /* TTCLastNotificationView.m */,
-				D4262D9E1A1542FE005C4A04 /* TTCLastNotificationView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -174,12 +174,12 @@
 		D478F75419D07B1D004027CF /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				57F6332E1954A64800446130 /* TTCRouteAndStopViewController.h */,
-				57F6332F1954A64800446130 /* TTCRouteAndStopViewController.m */,
-				916215FA199279640019EF2B /* TTCNotificationsTableViewController.h */,
-				916215FB199279640019EF2B /* TTCNotificationsTableViewController.m */,
 				916215F119926A010019EF2B /* TTCAddNotificationViewController.h */,
 				916215F219926A010019EF2B /* TTCAddNotificationViewController.m */,
+				916215FA199279640019EF2B /* TTCNotificationsTableViewController.h */,
+				916215FB199279640019EF2B /* TTCNotificationsTableViewController.m */,
+				57F6332E1954A64800446130 /* TTCRouteAndStopViewController.h */,
+				57F6332F1954A64800446130 /* TTCRouteAndStopViewController.m */,
 				57F633321954A64800446130 /* TTCSignInViewController.h */,
 				57F633331954A64800446130 /* TTCSignInViewController.m */,
 			);

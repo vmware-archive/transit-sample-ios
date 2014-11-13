@@ -14,5 +14,6 @@
 @property (nonatomic) IBOutlet UITextView *notificationView;
 
 - (void) showNotification:(NSString*)notification date:(NSDate*)date;
+- (void) flash;
 
 @end
