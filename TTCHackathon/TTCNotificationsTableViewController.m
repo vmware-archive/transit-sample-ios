@@ -5,15 +5,15 @@
 #import <MSSData/MSSData.h>
 #import <MSSData/MSSAFNetworking.h>
 #import "TTCPushRegistrationHelper.h"
-#import "TTCSavedTableViewController.h"
+#import "TTCNotificationsTableViewController.h"
 #import "TTCLoadingOverlayView.h"
-#import "TTCSavedCell.h"
+#import "TTCNotificationTableViewCell.h"
 #import "TTCAppDelegate.h"
 #import "TTCSettings.h"
 #import "TTCLastNotificationView.h"
 #import "TTCUserDefaults.h"
 
-@interface TTCSavedTableViewController ()
+@interface TTCNotificationsTableViewController ()
 
 @property MSSDataObject *savedStopsAndRouteObject;
 @property TTCLoadingOverlayView *loadingOverlayView;
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation TTCSavedTableViewController
+@implementation TTCNotificationsTableViewController
 
 - (id) initWithStyle:(UITableViewStyle)style
 {
@@ -131,7 +131,7 @@
 {
     static NSString *cellIdentifier = @"keyValueCell";
     
-    TTCSavedCell *cell = (TTCSavedCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    TTCNotificationTableViewCell *cell = (TTCNotificationTableViewCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
     
     if (currentItem) {

@@ -14,15 +14,15 @@
 		5746E599195497C000CAADE9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5746E598195497C000CAADE9 /* main.m */; };
 		5746E59D195497C000CAADE9 /* TTCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5746E59C195497C000CAADE9 /* TTCAppDelegate.m */; };
 		5746E59F195497C000CAADE9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5746E59E195497C000CAADE9 /* Images.xcassets */; };
-		57F633341954A64800446130 /* TTCDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F6332F1954A64800446130 /* TTCDataTableViewController.m */; };
+		57F633341954A64800446130 /* TTCRouteAndStopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F6332F1954A64800446130 /* TTCRouteAndStopViewController.m */; };
 		57F633361954A64800446130 /* TTCSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F633331954A64800446130 /* TTCSignInViewController.m */; };
 		57F6333E1954A87F00446130 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57F6333C1954A87F00446130 /* Main.storyboard */; };
 		57F633411954ACF800446130 /* TTCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F633401954ACF800446130 /* TTCClient.m */; };
-		916215F319926A010019EF2B /* TTCSchedulerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916215F219926A010019EF2B /* TTCSchedulerViewController.m */; };
-		916215FC199279640019EF2B /* TTCSavedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916215FB199279640019EF2B /* TTCSavedTableViewController.m */; };
+		916215F319926A010019EF2B /* TTCAddNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916215F219926A010019EF2B /* TTCAddNotificationViewController.m */; };
+		916215FC199279640019EF2B /* TTCNotificationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 916215FB199279640019EF2B /* TTCNotificationsTableViewController.m */; };
 		91621600199507340019EF2B /* TTCStopAndRouteInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 916215FF199507340019EF2B /* TTCStopAndRouteInfo.m */; };
 		91DE589B199C032800232354 /* TTCLoadingOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DE589A199C032800232354 /* TTCLoadingOverlayView.m */; };
-		91DE58AE199D569800232354 /* TTCSavedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DE58AD199D569800232354 /* TTCSavedCell.m */; };
+		91DE58AE199D569800232354 /* TTCNotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DE58AD199D569800232354 /* TTCNotificationTableViewCell.m */; };
 		91DE58CC199EBF8B00232354 /* ic_ttc_launcher-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58CB199EBF8B00232354 /* ic_ttc_launcher-120.png */; };
 		91DE58CF199EC24C00232354 /* ic_ttc_launcher-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58CD199EC24C00232354 /* ic_ttc_launcher-58.png */; };
 		91DE58D0199EC24C00232354 /* ic_ttc_launcher-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58CE199EC24C00232354 /* ic_ttc_launcher-80.png */; };
@@ -48,24 +48,24 @@
 		5746E59C195497C000CAADE9 /* TTCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTCAppDelegate.m; sourceTree = "<group>"; };
 		5746E59E195497C000CAADE9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TTCHackathon/Images.xcassets; sourceTree = "<group>"; };
 		5746E5A5195497C000CAADE9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		57F6332E1954A64800446130 /* TTCDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCDataTableViewController.h; sourceTree = "<group>"; };
-		57F6332F1954A64800446130 /* TTCDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCDataTableViewController.m; sourceTree = "<group>"; };
+		57F6332E1954A64800446130 /* TTCRouteAndStopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCRouteAndStopViewController.h; sourceTree = "<group>"; };
+		57F6332F1954A64800446130 /* TTCRouteAndStopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCRouteAndStopViewController.m; sourceTree = "<group>"; };
 		57F633321954A64800446130 /* TTCSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCSignInViewController.h; sourceTree = "<group>"; };
 		57F633331954A64800446130 /* TTCSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCSignInViewController.m; sourceTree = "<group>"; };
 		57F6333D1954A87F00446130 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		57F6333F1954ACF800446130 /* TTCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCClient.h; sourceTree = "<group>"; };
 		57F633401954ACF800446130 /* TTCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCClient.m; sourceTree = "<group>"; };
 		8A3D486E4EFC4A5B9A834AFA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		916215F119926A010019EF2B /* TTCSchedulerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCSchedulerViewController.h; sourceTree = "<group>"; };
-		916215F219926A010019EF2B /* TTCSchedulerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCSchedulerViewController.m; sourceTree = "<group>"; };
-		916215FA199279640019EF2B /* TTCSavedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCSavedTableViewController.h; sourceTree = "<group>"; };
-		916215FB199279640019EF2B /* TTCSavedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCSavedTableViewController.m; sourceTree = "<group>"; };
+		916215F119926A010019EF2B /* TTCAddNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCAddNotificationViewController.h; sourceTree = "<group>"; };
+		916215F219926A010019EF2B /* TTCAddNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCAddNotificationViewController.m; sourceTree = "<group>"; };
+		916215FA199279640019EF2B /* TTCNotificationsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCNotificationsTableViewController.h; sourceTree = "<group>"; };
+		916215FB199279640019EF2B /* TTCNotificationsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCNotificationsTableViewController.m; sourceTree = "<group>"; };
 		916215FE199507340019EF2B /* TTCStopAndRouteInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCStopAndRouteInfo.h; sourceTree = "<group>"; };
 		916215FF199507340019EF2B /* TTCStopAndRouteInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCStopAndRouteInfo.m; sourceTree = "<group>"; };
 		91DE5899199C032800232354 /* TTCLoadingOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCLoadingOverlayView.h; sourceTree = "<group>"; };
 		91DE589A199C032800232354 /* TTCLoadingOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCLoadingOverlayView.m; sourceTree = "<group>"; };
-		91DE58AC199D569800232354 /* TTCSavedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCSavedCell.h; sourceTree = "<group>"; };
-		91DE58AD199D569800232354 /* TTCSavedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCSavedCell.m; sourceTree = "<group>"; };
+		91DE58AC199D569800232354 /* TTCNotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCNotificationTableViewCell.h; sourceTree = "<group>"; };
+		91DE58AD199D569800232354 /* TTCNotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCNotificationTableViewCell.m; sourceTree = "<group>"; };
 		91DE58CB199EBF8B00232354 /* ic_ttc_launcher-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_ttc_launcher-120.png"; sourceTree = "<group>"; };
 		91DE58CD199EC24C00232354 /* ic_ttc_launcher-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_ttc_launcher-58.png"; sourceTree = "<group>"; };
 		91DE58CE199EC24C00232354 /* ic_ttc_launcher-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_ttc_launcher-80.png"; sourceTree = "<group>"; };
@@ -162,8 +162,8 @@
 			children = (
 				91DE5899199C032800232354 /* TTCLoadingOverlayView.h */,
 				91DE589A199C032800232354 /* TTCLoadingOverlayView.m */,
-				91DE58AC199D569800232354 /* TTCSavedCell.h */,
-				91DE58AD199D569800232354 /* TTCSavedCell.m */,
+				91DE58AC199D569800232354 /* TTCNotificationTableViewCell.h */,
+				91DE58AD199D569800232354 /* TTCNotificationTableViewCell.m */,
 				D4262D961A150191005C4A04 /* TTCLastNotificationView.h */,
 				D4262D971A150191005C4A04 /* TTCLastNotificationView.m */,
 				D4262D9E1A1542FE005C4A04 /* TTCLastNotificationView.xib */,
@@ -174,12 +174,12 @@
 		D478F75419D07B1D004027CF /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				57F6332E1954A64800446130 /* TTCDataTableViewController.h */,
-				57F6332F1954A64800446130 /* TTCDataTableViewController.m */,
-				916215FA199279640019EF2B /* TTCSavedTableViewController.h */,
-				916215FB199279640019EF2B /* TTCSavedTableViewController.m */,
-				916215F119926A010019EF2B /* TTCSchedulerViewController.h */,
-				916215F219926A010019EF2B /* TTCSchedulerViewController.m */,
+				57F6332E1954A64800446130 /* TTCRouteAndStopViewController.h */,
+				57F6332F1954A64800446130 /* TTCRouteAndStopViewController.m */,
+				916215FA199279640019EF2B /* TTCNotificationsTableViewController.h */,
+				916215FB199279640019EF2B /* TTCNotificationsTableViewController.m */,
+				916215F119926A010019EF2B /* TTCAddNotificationViewController.h */,
+				916215F219926A010019EF2B /* TTCAddNotificationViewController.m */,
 				57F633321954A64800446130 /* TTCSignInViewController.h */,
 				57F633331954A64800446130 /* TTCSignInViewController.m */,
 			);
@@ -340,15 +340,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				D49ABDA619D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m in Sources */,
-				57F633341954A64800446130 /* TTCDataTableViewController.m in Sources */,
-				91DE58AE199D569800232354 /* TTCSavedCell.m in Sources */,
+				57F633341954A64800446130 /* TTCRouteAndStopViewController.m in Sources */,
+				91DE58AE199D569800232354 /* TTCNotificationTableViewCell.m in Sources */,
 				D4262D981A150191005C4A04 /* TTCLastNotificationView.m in Sources */,
 				D45F20AB19CCCFA8004D7E79 /* TTCSettings.m in Sources */,
 				57F633361954A64800446130 /* TTCSignInViewController.m in Sources */,
 				D4262D9D1A1511F1005C4A04 /* TTCUserDefaults.m in Sources */,
 				5746E59D195497C000CAADE9 /* TTCAppDelegate.m in Sources */,
-				916215FC199279640019EF2B /* TTCSavedTableViewController.m in Sources */,
-				916215F319926A010019EF2B /* TTCSchedulerViewController.m in Sources */,
+				916215FC199279640019EF2B /* TTCNotificationsTableViewController.m in Sources */,
+				916215F319926A010019EF2B /* TTCAddNotificationViewController.m in Sources */,
 				91621600199507340019EF2B /* TTCStopAndRouteInfo.m in Sources */,
 				91DE589B199C032800232354 /* TTCLoadingOverlayView.m in Sources */,
 				57F633411954ACF800446130 /* TTCClient.m in Sources */,

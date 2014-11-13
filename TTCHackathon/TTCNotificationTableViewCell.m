@@ -2,9 +2,9 @@
 //  Copyright (c) 2014 Pivotal. All rights reserved.
 //
 
-#import "TTCSavedCell.h"
+#import "TTCNotificationTableViewCell.h"
 
-@implementation TTCSavedCell
+@implementation TTCNotificationTableViewCell
 
 // TODO - remove these two methods - they don't do anything.
 

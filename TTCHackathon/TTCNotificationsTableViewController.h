@@ -6,7 +6,7 @@
 #import "TTCStopAndRouteInfo.h"
 #import "TTCSignInViewController.h"
 
-@interface TTCSavedTableViewController : UITableViewController <TTCSignInViewDelegate>
+@interface TTCNotificationsTableViewController : UITableViewController <TTCSignInViewDelegate>
 
 - (IBAction) logout;
 - (IBAction) unwindToSavedTableView:(UIStoryboardSegue *)sender;

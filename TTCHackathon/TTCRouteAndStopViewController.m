@@ -7,14 +7,14 @@
 #import <MSSPush/MSSPushClient.h>
 #import <MSSPush/MSSParameters.h>
 #import <MSSPush/MSSPush.h>
-#import "TTCDataTableViewController.h"
+#import "TTCRouteAndStopViewController.h"
 #import "TTCClient.h"
 #import "TTCSettings.h"
 #import "TTCLoadingOverlayView.h"
 
 static NSString *const kRoute = @"route";
 
-@interface TTCDataTableViewController ()
+@interface TTCRouteAndStopViewController ()
 
 @property NSArray *transitValues;
 @property MSSDataObject *ttcObject;
@@ -22,7 +22,7 @@ static NSString *const kRoute = @"route";
 
 @end
 
-@implementation TTCDataTableViewController
+@implementation TTCRouteAndStopViewController
 
 - (void) viewDidLoad
 {

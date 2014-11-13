@@ -9,10 +9,10 @@
 #import <MSSPush/MSSParameters.h>
 #import <MSSPush/MSSPush.h>
 #import "TTCStopAndRouteInfo.h"
-#import "TTCDataTableViewController.h"
-#import "TTCSavedTableViewController.h"
+#import "TTCRouteAndStopViewController.h"
+#import "TTCNotificationsTableViewController.h"
 
-@interface TTCSchedulerViewController : UIViewController
+@interface TTCAddNotificationViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *timePick;
 @property (weak, nonatomic) IBOutlet UILabel *route;

@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 #import "TTCStopAndRouteInfo.h"
 
-@interface TTCDataTableViewController : UITableViewController
+@interface TTCRouteAndStopViewController : UITableViewController
 
 @property (strong, nonatomic) TTCStopAndRouteInfo *stopAndRouteInfo;
 

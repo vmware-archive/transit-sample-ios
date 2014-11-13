@@ -2,9 +2,9 @@
 //  Copyright (c) 2014 Pivotal. All rights reserved.
 //
 
-#import "TTCSchedulerViewController.h"
+#import "TTCAddNotificationViewController.h"
 
-@interface TTCSchedulerViewController ()
+@interface TTCAddNotificationViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *scheduleButton;
 @property (strong, nonatomic) IBOutlet UIView *scheduleView;
@@ -15,7 +15,7 @@
 
 @end
 
-@implementation TTCSchedulerViewController
+@implementation TTCAddNotificationViewController
 
 - (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -66,10 +66,10 @@
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.destinationViewController isKindOfClass:[TTCDataTableViewController class]]) {
+    if ([segue.destinationViewController isKindOfClass:[TTCRouteAndStopViewController class]]) {
         [[segue destinationViewController] setStopAndRouteInfo:self.stopAndRouteInfo];
         
-    } else if ([segue.destinationViewController isKindOfClass:[TTCSavedTableViewController class]]) {
+    } else if ([segue.destinationViewController isKindOfClass:[TTCNotificationsTableViewController class]]) {
         
         if (self.stopAndRouteInfo.route != nil  && self.stopAndRouteInfo.stop != nil) {
             self.stopAndRouteInfo.enabled = YES;
