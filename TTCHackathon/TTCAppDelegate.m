@@ -4,6 +4,9 @@
 
 #import <MSSData/MSSDataSignIn.h>
 #import "TTCAppDelegate.h"
+#import "TTCUserDefaults.h"
+
+NSString *const kRemoteNotificationReceived = @"NOTIFICATION_RECEIVED";
 
 @implementation TTCAppDelegate
 
@@ -18,12 +21,11 @@
         NSLog(@"Remote notification received: %@", userInfo[@"aps"][@"alert"]);
         
         if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Notification"
-                                                            message:userInfo[@"aps"][@"alert"]
-                                                           delegate:nil
-                                                  cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-            [alert show];
+
+            [TTCUserDefaults setLastNotificationText:userInfo[@"aps"][@"alert"]];
+            [TTCUserDefaults setLastNotificationTime:[NSDate date]];
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotificationReceived object:self userInfo:userInfo];
         }
         
     } else {

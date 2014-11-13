@@ -10,6 +10,8 @@
 #import "TTCSavedCell.h"
 #import "TTCAppDelegate.h"
 #import "TTCSettings.h"
+#import "TTCLastNotificationView.h"
+#import "TTCUserDefaults.h"
 
 @interface TTCSavedTableViewController ()
 
@@ -62,13 +64,53 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:NO];
-    if (self.didReachAuthenticateScreen == NO) [self performSegueWithIdentifier:@"modalSegueToSignIn" sender:self];
+    if (self.didReachAuthenticateScreen == NO) {
+        [self performSegueWithIdentifier:@"modalSegueToSignIn" sender:self];
+    } else {
+        [self registerForNotifications];
+        [self showLastNotification];
+    }
 }
 
 - (void) didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kRemoteNotificationReceived object:nil];
+}
+
+#pragma mark - Notification handling
+
+- (void) registerForNotifications {
+    void (^block)(NSNotification*) = ^(NSNotification* notification) {
+        [self showLastNotification];
+    };
+    [[NSNotificationCenter defaultCenter] addObserverForName:kRemoteNotificationReceived
+                                                      object:nil
+                                                       queue:[NSOperationQueue mainQueue]
+                                                  usingBlock:block];
+}
+
+- (void) showLastNotification {
+    NSString *lastNotificationText = [TTCUserDefaults getLastNotificationText];
+    NSDate *lastNotificationDate = [TTCUserDefaults getLastNotificationTime];
+    if (lastNotificationText) {
+        
+        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"TTCLastNotificationView" owner:self options:nil];
+        for (id i in objects) {
+            if([i isKindOfClass:[TTCLastNotificationView class]]) {
+                TTCLastNotificationView *view = (TTCLastNotificationView*) i;
+                [view showNotification:lastNotificationText date:lastNotificationDate];
+                self.tableView.tableHeaderView = view;
+            }
+        }
+    } else {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 #pragma mark - Table view data source

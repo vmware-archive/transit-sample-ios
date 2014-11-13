@@ -4,6 +4,8 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const kRemoteNotificationReceived;
+
 @interface TTCAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

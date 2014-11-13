@@ -27,6 +27,9 @@
 		91DE58CF199EC24C00232354 /* ic_ttc_launcher-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58CD199EC24C00232354 /* ic_ttc_launcher-58.png */; };
 		91DE58D0199EC24C00232354 /* ic_ttc_launcher-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58CE199EC24C00232354 /* ic_ttc_launcher-80.png */; };
 		91DE58DF19A29A4100232354 /* ic_ttc_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58DE19A29A4100232354 /* ic_ttc_logo.png */; };
+		D4262D981A150191005C4A04 /* TTCLastNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = D4262D971A150191005C4A04 /* TTCLastNotificationView.m */; };
+		D4262D9D1A1511F1005C4A04 /* TTCUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D4262D9C1A1511F1005C4A04 /* TTCUserDefaults.m */; };
+		D4262D9F1A1542FE005C4A04 /* TTCLastNotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4262D9E1A1542FE005C4A04 /* TTCLastNotificationView.xib */; };
 		D45F20AB19CCCFA8004D7E79 /* TTCSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = D45F20AA19CCCFA8004D7E79 /* TTCSettings.m */; };
 		D49ABDA619D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D49ABDA519D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m */; };
 		DE6B3CA656AE421799946EE4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E013236D742EE9FAA500B /* libPods.a */; };
@@ -68,6 +71,11 @@
 		91DE58CE199EC24C00232354 /* ic_ttc_launcher-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_ttc_launcher-80.png"; sourceTree = "<group>"; };
 		91DE58DE19A29A4100232354 /* ic_ttc_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_ttc_logo.png; sourceTree = "<group>"; };
 		B57E013236D742EE9FAA500B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4262D961A150191005C4A04 /* TTCLastNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCLastNotificationView.h; sourceTree = "<group>"; };
+		D4262D971A150191005C4A04 /* TTCLastNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCLastNotificationView.m; sourceTree = "<group>"; };
+		D4262D9B1A1511F1005C4A04 /* TTCUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCUserDefaults.h; sourceTree = "<group>"; };
+		D4262D9C1A1511F1005C4A04 /* TTCUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCUserDefaults.m; sourceTree = "<group>"; };
+		D4262D9E1A1542FE005C4A04 /* TTCLastNotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTCLastNotificationView.xib; sourceTree = "<group>"; };
 		D45F20A919CCCF6B004D7E79 /* TTCSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCSettings.h; sourceTree = "<group>"; };
 		D45F20AA19CCCFA8004D7E79 /* TTCSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCSettings.m; sourceTree = "<group>"; };
 		D49ABDA419D1E1FD0092BFB7 /* TTCPushRegistrationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTCPushRegistrationHelper.h; path = Util/TTCPushRegistrationHelper.h; sourceTree = "<group>"; };
@@ -156,6 +164,9 @@
 				91DE589A199C032800232354 /* TTCLoadingOverlayView.m */,
 				91DE58AC199D569800232354 /* TTCSavedCell.h */,
 				91DE58AD199D569800232354 /* TTCSavedCell.m */,
+				D4262D961A150191005C4A04 /* TTCLastNotificationView.h */,
+				D4262D971A150191005C4A04 /* TTCLastNotificationView.m */,
+				D4262D9E1A1542FE005C4A04 /* TTCLastNotificationView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -184,6 +195,8 @@
 				57F633401954ACF800446130 /* TTCClient.m */,
 				D45F20A919CCCF6B004D7E79 /* TTCSettings.h */,
 				D45F20AA19CCCFA8004D7E79 /* TTCSettings.m */,
+				D4262D9B1A1511F1005C4A04 /* TTCUserDefaults.h */,
+				D4262D9C1A1511F1005C4A04 /* TTCUserDefaults.m */,
 			);
 			name = App;
 			sourceTree = "<group>";
@@ -280,6 +293,7 @@
 				91DE58CC199EBF8B00232354 /* ic_ttc_launcher-120.png in Resources */,
 				57F6333E1954A87F00446130 /* Main.storyboard in Resources */,
 				91DE58CF199EC24C00232354 /* ic_ttc_launcher-58.png in Resources */,
+				D4262D9F1A1542FE005C4A04 /* TTCLastNotificationView.xib in Resources */,
 				5746E597195497C000CAADE9 /* InfoPlist.strings in Resources */,
 				5746E59F195497C000CAADE9 /* Images.xcassets in Resources */,
 			);
@@ -328,8 +342,10 @@
 				D49ABDA619D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m in Sources */,
 				57F633341954A64800446130 /* TTCDataTableViewController.m in Sources */,
 				91DE58AE199D569800232354 /* TTCSavedCell.m in Sources */,
+				D4262D981A150191005C4A04 /* TTCLastNotificationView.m in Sources */,
 				D45F20AB19CCCFA8004D7E79 /* TTCSettings.m in Sources */,
 				57F633361954A64800446130 /* TTCSignInViewController.m in Sources */,
+				D4262D9D1A1511F1005C4A04 /* TTCUserDefaults.m in Sources */,
 				5746E59D195497C000CAADE9 /* TTCAppDelegate.m in Sources */,
 				916215FC199279640019EF2B /* TTCSavedTableViewController.m in Sources */,
 				916215F319926A010019EF2B /* TTCSchedulerViewController.m in Sources */,
@@ -383,7 +399,7 @@
 				INFOPLIST_FILE = "TTCHackathon/TTCHackathon-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dbad8472-51d3-4150-b52a-3fc9bdaffbff";
+				PROVISIONING_PROFILE = "18b3dda0-598e-4a4d-8bb8-4c92f1c34b5c";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -406,7 +422,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dbad8472-51d3-4150-b52a-3fc9bdaffbff";
+				PROVISIONING_PROFILE = "18b3dda0-598e-4a4d-8bb8-4c92f1c34b5c";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
