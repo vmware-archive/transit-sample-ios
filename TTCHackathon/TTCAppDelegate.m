@@ -15,21 +15,21 @@ NSString *const kRemoteNotificationReceived = @"NOTIFICATION_RECEIVED";
     return YES;
 }
 
-- (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler
 {
+    NSLog(@"Remote notification received: %@", userInfo);
+    
     if (userInfo[@"aps"][@"alert"]) {
-        NSLog(@"Remote notification received: %@", userInfo[@"aps"][@"alert"]);
-        
-        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-
-            [TTCUserDefaults setLastNotificationText:userInfo[@"aps"][@"alert"]];
-            [TTCUserDefaults setLastNotificationTime:[NSDate date]];
-
-            [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotificationReceived object:self userInfo:userInfo];
-        }
-        
+        [TTCUserDefaults setLastNotificationText:userInfo[@"aps"][@"alert"]];
     } else {
-        NSLog(@"Remote notification received!");
+        [TTCUserDefaults setLastNotificationText:@"NO MESSAGE"];
+    }
+    
+    [TTCUserDefaults setLastNotificationTime:[NSDate date]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotificationReceived object:self userInfo:userInfo];
+
+    if (handler) {
+        handler(UIBackgroundFetchResultNewData);
     }
 }
 

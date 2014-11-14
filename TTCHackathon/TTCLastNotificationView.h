@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TTCLastNotificationView : UIView
+@interface TTCLastNotificationView : UITableViewCell
 
 @property (nonatomic) IBOutlet UITextView *labelView;
 @property (nonatomic) IBOutlet UITextView *notificationView;

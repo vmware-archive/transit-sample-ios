@@ -20,19 +20,11 @@
 @property BOOL didReachAuthenticateScreen;
 @property (strong, nonatomic) NSMutableSet *savedPushEntries;    // keeps track of only all the enabled stops and routes.
 @property (strong, nonatomic) NSMutableArray *stopAndRouteArray; // keeps track of all stops and routes we saved (enabled AND disabled).
+@property TTCLastNotificationView *lastNotificationView;
 
 @end
 
 @implementation TTCNotificationsTableViewController
-
-- (id) initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void) viewDidLoad
 {
@@ -72,12 +64,6 @@
     }
 }
 
-- (void) didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)viewDidDisappear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kRemoteNotificationReceived object:nil];
@@ -88,8 +74,7 @@
 - (void) registerForNotifications {
     void (^block)(NSNotification*) = ^(NSNotification* notification) {
         [self showLastNotification];
-        TTCLastNotificationView *view = (TTCLastNotificationView*) self.tableView.tableHeaderView;
-        [view flash];
+        [self.lastNotificationView flash];
     };
     [[NSNotificationCenter defaultCenter] addObserverForName:kRemoteNotificationReceived
                                                       object:nil
@@ -105,44 +90,49 @@
         NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"TTCLastNotificationView" owner:self options:nil];
         for (id i in objects) {
             if([i isKindOfClass:[TTCLastNotificationView class]]) {
-                TTCLastNotificationView *view = (TTCLastNotificationView*) i;
-                [view showNotification:lastNotificationText date:lastNotificationDate];
-                self.tableView.tableHeaderView = view;
-                
-                UISwipeGestureRecognizer *swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(lastNotificationSwiped)];
-                swipeRecognizer.direction = UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight;
-                [view addGestureRecognizer:swipeRecognizer];
+                self.lastNotificationView = (TTCLastNotificationView*) i;
+                [self.lastNotificationView showNotification:lastNotificationText date:lastNotificationDate];
+                [self.tableView reloadData];
             }
         }
     } else {
-        self.tableView.tableHeaderView = nil;
+        self.lastNotificationView = nil;
+        [self.tableView reloadData];
     }
-}
-
-- (void) lastNotificationSwiped
-{
-    [TTCUserDefaults setLastNotificationText:nil];
-    [TTCUserDefaults setLastNotificationTime:nil];
-    [self showLastNotification];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return self.stopAndRouteArray.count;
+    if (section == 0) {
+        return self.lastNotificationView != nil ? 1 : 0;
+    } else {
+        return self.stopAndRouteArray.count;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        return 96;
+    } else {
+        return 127;
+    }
 }
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"keyValueCell";
+ 
+    if (indexPath.section == 0) {
+        return self.lastNotificationView;
+    }
     
     TTCNotificationTableViewCell *cell = (TTCNotificationTableViewCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
@@ -162,22 +152,30 @@
 
 - (void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
-        if (!currentItem) return;
-        
-        // delete from set
-        [self.savedPushEntries removeObject:currentItem.identifier];
-        [TTCPushRegistrationHelper initialize:self.savedPushEntries];
-        
-        // delete from array
-        [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
-        [self pushUpdateToServer];
-        
-        // need to refresh the table to update the view
-        [self.tableView reloadData];
-        NSLog(@"Deleted row.");
-        self.tableView.alwaysBounceVertical = YES;
+    if (indexPath.section == 0) {
+        if (editingStyle == UITableViewCellEditingStyleDelete) {
+            [TTCUserDefaults setLastNotificationText:nil];
+            [TTCUserDefaults setLastNotificationTime:nil];
+            [self showLastNotification];
+        }
+    } else {
+        if (editingStyle == UITableViewCellEditingStyleDelete) {
+            TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
+            if (!currentItem) return;
+            
+            // delete from set
+            [self.savedPushEntries removeObject:currentItem.identifier];
+            [TTCPushRegistrationHelper initialize:self.savedPushEntries];
+            
+            // delete from array
+            [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
+            [self pushUpdateToServer];
+            
+            // need to refresh the table to update the view
+            [self.tableView reloadData];
+            NSLog(@"Deleted row.");
+            self.tableView.alwaysBounceVertical = YES;
+        }
     }
 }
 
