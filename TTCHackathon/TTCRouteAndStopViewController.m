@@ -4,9 +4,6 @@
 
 #import <MSSData/MSSData.h>
 #import <MSSData/MSSAFNetworking.h>
-#import <MSSPush/MSSPushClient.h>
-#import <MSSPush/MSSParameters.h>
-#import <MSSPush/MSSPush.h>
 #import "TTCRouteAndStopViewController.h"
 #import "TTCClient.h"
 #import "TTCSettings.h"
@@ -43,8 +40,8 @@ static NSString *const kRoute = @"route";
     [self refreshTable:refreshControl];
     
     if (!self.ttcObject) {
-        self.ttcObject = [MSSDataObject objectWithClassName:@"TTCObject"];
-        [self.ttcObject setObjectID:@"TTCObjectID"];
+        self.ttcObject = [MSSDataObject objectWithClassName:@"notifications"];
+        [self.ttcObject setObjectID:@"my-notifications"];
     }
 }
 

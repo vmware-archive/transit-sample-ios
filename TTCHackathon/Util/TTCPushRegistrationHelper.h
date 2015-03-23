@@ -10,7 +10,7 @@
 
 @interface TTCPushRegistrationHelper : NSObject
 
-+ (void) initialize:(NSSet*)pushTags;
++ (void) updateTags:(NSSet*)pushTags;
 + (void) unregister;
 
 @end

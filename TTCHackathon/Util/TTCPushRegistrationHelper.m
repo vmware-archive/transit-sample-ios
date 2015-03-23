@@ -6,73 +6,54 @@
 //  Copyright (c) 2014 Pivotal. All rights reserved.
 //
 
-#import <MSSPush/MSSPush.h>
-#import <MSSPush/MSSParameters.h>
+#import <PCFPush/PCFPush.h>
 #import "TTCPushRegistrationHelper.h"
 #import "TTCSettings.h"
 
 @implementation TTCPushRegistrationHelper
 
 /* Registering for notifications with the Push Service */
-+ (void) initialize:(NSSet*)pushTags
++ (void) updateTags:(NSSet*)pushTags
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    [MSSPush setRegistrationParameters:[TTCPushRegistrationHelper getParameters:pushTags]];
-    
-    [MSSPush setCompletionBlockWithSuccess:^{
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        
-    } failure:^(NSError *error) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    }];
-    
+
     UIApplication *application = [UIApplication sharedApplication];
+
     if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         
-        // iOS 8.0+
+        // iOS 8.0 +
         UIUserNotificationType notificationTypes = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
         [application registerUserNotificationSettings:settings];
+        [application registerForRemoteNotifications];
         
     } else {
         
         // < iOS 8.0
-        UIRemoteNotificationType notificationType = UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound;
-        [MSSPush setRemoteNotificationTypes:notificationType];
+        UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound;
+        [application registerForRemoteNotificationTypes:notificationTypes];
     }
-    
-    [MSSPush registerForPushNotifications];
+   
+    [PCFPush subscribeToTags:pushTags success:^{
+        NSLog(@"CF tags update succeeded!");
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    } failure:^(NSError *error) {
+        NSLog(@"CF tags update failed: %@", error);
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }];
 }
 
 + (void) unregister
 {
-    void (^successBlock)() = ^{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    [PCFPush unregisterFromPCFPushNotificationsWithSuccess:^{
         NSLog(@"Successfully unregistered from push notifications.");
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    };
-    
-    void (^failureBlock)(NSError*) = ^(NSError *error) {
+    } failure:^(NSError *error) {
         NSLog(@"Error upon unregistering from push notifications: %@", error);
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    };
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [MSSPush setRegistrationParameters:[TTCPushRegistrationHelper getParameters:nil]];
-    [MSSPush unregisterWithPushServerSuccess:successBlock failure:failureBlock];
-}
-
-+ (MSSParameters*) getParameters:(NSSet*)tags
-{
-    MSSParameters *parameters = [[MSSParameters alloc] init];
-    [parameters setPushAPIURL:kPushBaseServerUrl];
-    [parameters setDevelopmentPushVariantUUID:kPushDevelopmentVariantUuid];
-    [parameters setDevelopmentPushVariantSecret:kPushDevelopmentVariantSecret];
-    [parameters setProductionPushVariantUUID:kPushProductionVariantUuid];
-    [parameters setProductionPushVariantSecret:kPushProductionVariantSecret];
-    [parameters setPushDeviceAlias:kPushDeviceAlias];
-    [parameters setPushTags:tags];
-    return parameters;
+    }];
 }
 
 @end

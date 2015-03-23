@@ -37,10 +37,6 @@
     [self.navigationController.navigationBar setTranslucent:YES];
     self.navigationItem.title = @"Transit++";
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showLoadingScreen)
-                                                 name:UIDeviceOrientationDidChangeNotification object:nil];
-    
     self.stopAndRouteArray = [NSMutableArray array];
     self.savedPushEntries = [NSMutableSet set];
 }
@@ -164,8 +160,8 @@
             if (!currentItem) return;
             
             // delete from set
-            [self.savedPushEntries removeObject:currentItem.identifier];
-            [TTCPushRegistrationHelper initialize:self.savedPushEntries];
+            [self.savedPushEntries removeObject:currentItem.tag];
+            [TTCPushRegistrationHelper updateTags:self.savedPushEntries];
             
             // delete from array
             [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
@@ -200,10 +196,10 @@
     }
     
     // check if the recently added item is new
-    if (![self.savedPushEntries containsObject:lastItem.identifier]) {
-        [self.savedPushEntries addObject:lastItem.identifier];
-        NSLog(@"Adding stop to set: %@", lastItem.identifier);
-        [TTCPushRegistrationHelper initialize:self.savedPushEntries];
+    if (![self.savedPushEntries containsObject:lastItem.tag]) {
+        [self.savedPushEntries addObject:lastItem.tag];
+        NSLog(@"Adding stop to set: %@", lastItem.tag);
+        [TTCPushRegistrationHelper updateTags:self.savedPushEntries];
     }
 }
 
@@ -225,14 +221,14 @@
     if ([mySwitch isOn]) {
         currentItem.enabled = YES;
         // adding to the dictionary
-        [self.savedPushEntries addObject:currentItem.identifier];
+        [self.savedPushEntries addObject:currentItem.tag];
     } else {
         currentItem.enabled = NO;
         // have to delete from dictionary and request to not push anymore
-        [self.savedPushEntries removeObject:currentItem.identifier];
+        [self.savedPushEntries removeObject:currentItem.tag];
     }
     
-    [TTCPushRegistrationHelper initialize:self.savedPushEntries];
+    [TTCPushRegistrationHelper updateTags:self.savedPushEntries];
 
     NSLog(@"Number of enabled stops: %lu", (unsigned long) [self.savedPushEntries count]);
     [self pushUpdateToServer];
@@ -265,7 +261,7 @@
 {
     for (TTCStopAndRouteInfo* obj in self.stopAndRouteArray) {
         if (obj.enabled == YES) {
-            [self.savedPushEntries addObject:obj.identifier];
+            [self.savedPushEntries addObject:obj.tag];
         }
     }
 }
@@ -274,16 +270,14 @@
 
 /* When we authenticate we have to fetch our routes and stop from the server */
 - (void) fetchRoutesAndStops
-{
-    [self showLoadingScreen];
-    
+{    
     NSLog(@"Fetching saved routes and stops...");
     
     [self.savedStopsAndRouteObject fetchOnSuccess:^(MSSDataObject *fetchedObject) {
         
         if (fetchedObject) {
             
-            NSData* data = [fetchedObject[@"routesAndStops"] dataUsingEncoding:NSUTF8StringEncoding];
+            NSData* data = [fetchedObject[@"items"] dataUsingEncoding:NSUTF8StringEncoding];
             NSArray* jsonArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             
             if (self.stopAndRouteArray) {
@@ -298,16 +292,13 @@
             
                 for (int i = 0; i < jsonArray.count; ++i) {
                     
-                    NSDictionary *dictionary = [self deserializeStringToObject:[jsonArray objectAtIndex:i]];
+                    NSDictionary *dictionary = [jsonArray objectAtIndex:i];
                     TTCStopAndRouteInfo *obj = [[TTCStopAndRouteInfo alloc] init];
                     [obj setEnabled:[dictionary[@"enabled"] boolValue]];
                     [obj setRoute:dictionary[@"route"]];
                     [obj setStop:dictionary[@"stop"]];
-                    [obj setRouteTag: dictionary[@"routeTag"]];
-                    [obj setStopTag: dictionary[@"stopTag"]];
+                    [obj setTag: dictionary[@"tag"]];
                     [obj setTime: dictionary[@"time"]];
-                    [obj setTimeInUtc: dictionary[@"timeInUtc"]];
-                    [obj setIdentifier:dictionary[@"identifier"]];
                     [self.stopAndRouteArray addObject:obj]; // add the entry into the dictionary
                     
                     NSLog(@"Loaded item: %@", dictionary);
@@ -320,7 +311,7 @@
             [self.tableView reloadData];
 
             // Update the push registration on the server
-            [TTCPushRegistrationHelper initialize:self.savedPushEntries];
+            [TTCPushRegistrationHelper updateTags:self.savedPushEntries];
             
         } else {
             NSLog(@"Note: fetched object was nil.");
@@ -358,22 +349,15 @@
         NSString *enabled = (stopAndRouteElement.enabled) ? @"1" : @"0";
         
         NSDictionary *dict = @{
+                               @"enabled" :    enabled,
                                @"route" :      stopAndRouteElement.route,
                                @"stop" :       stopAndRouteElement.stop,
-                               @"time" :       stopAndRouteElement.time,
-                               @"routeTag" :   stopAndRouteElement.routeTag,
-                               @"stopTag" :    stopAndRouteElement.stopTag,
-                               @"identifier" : stopAndRouteElement.identifier,
-                               @"timeInUtc" :  stopAndRouteElement.timeInUtc,
-                               @"enabled" :    enabled
+                               @"tag" :        stopAndRouteElement.tag,
+                               @"time" :       stopAndRouteElement.time
                                };
 
         NSLog(@"Saving item: %@", dict);
-        NSData *encodedData = [NSJSONSerialization dataWithJSONObject:dict
-                                                              options:0
-                                                                error:nil];
-        NSString *jsonString =[[NSString alloc] initWithData:encodedData encoding:NSUTF8StringEncoding];
-        [stopAndRouteListJSON addObject:jsonString];
+        [stopAndRouteListJSON addObject:dict];
     }
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:stopAndRouteListJSON options:NSJSONWritingPrettyPrinted error:nil];
@@ -381,34 +365,12 @@
     
     NSLog(@"Saving routesAndStops: %@", jsonString);
     
-    self.savedStopsAndRouteObject[@"routesAndStops"] = jsonString;
-    [self.savedStopsAndRouteObject saveOnSuccess:nil failure:nil];
-}
-
-#pragma mark - View functions 
-
-// TODO - find out why this method is commented out
-
-- (void) showLoadingScreen
-{
-//    CGFloat frameWidth = self.view.frame.size.width;
-//    CGFloat frameHeight = self.view.frame.size.height;
-//    
-//    if (self.loadingOverlayView != nil) {
-//        [self.loadingOverlayView removeFromSuperview];
-//        self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameWidth, frameHeight)];
-//        
-//    } else {
-//        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-//        
-//        if (orientation == UIInterfaceOrientationPortrait) {
-//            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameWidth, frameHeight)];
-//            
-//        } else if (orientation == UIInterfaceOrientationLandscapeLeft | orientation == UIInterfaceOrientationLandscapeRight){ // very wierd case where it doesn't take the correct values for landscape mode.
-//            self.loadingOverlayView = [[PCFLoadingOverlayView alloc] initWithFrame:CGRectMake(0, 0, frameHeight, frameWidth)];
-//        }
-//    }
-//    [self.tableView addSubview:self.loadingOverlayView];
+    self.savedStopsAndRouteObject[@"items"] = jsonString;
+    [self.savedStopsAndRouteObject saveOnSuccess:^(MSSDataObject *object) {
+        NSLog(@"saving to datasync successful: %@", [object allKeys]);
+    } failure:^(NSError *error) {
+        NSLog(@"saving to datasync failed: %@", error);
+    }];
 }
 
 #pragma mark - Delegate
@@ -417,7 +379,7 @@
 {
     NSLog(@"Authentication succeeded.");
     self.savedStopsAndRouteObject = [MSSDataObject objectWithClassName:@"notifications"];
-    [self.savedStopsAndRouteObject setObjectID:@"savedStopsAndRouteObjectID"];
+    [self.savedStopsAndRouteObject setObjectID:@"my-notifications"];
     [self fetchRoutesAndStops];
 }
 

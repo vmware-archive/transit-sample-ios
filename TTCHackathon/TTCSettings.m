@@ -6,7 +6,7 @@
 
 #define PWS // <-- comment this line for demo.vchs
 #ifdef PWS
-/* Data Synch Parameters */
+/* Data Sync Parameters */
 NSString *const kOAuthServerURL = @"http://transit-authz.cfapps.io";
 NSString *const kDataServiceURL = @"http://transit-ds.cfapps.io";
 NSString *const kDataClientID = @"ios-client";
@@ -25,7 +25,7 @@ NSString *const kPushProductionVariantSecret = @"3a02ec0e-85e3-47c6-8d5b-27ef3a0
 NSString *const kPushDeviceAlias = @"TransitApp";
 
 #else
-/* Data Synch Parameters */
+/* Data Sync Parameters */
 NSString *const kOAuthServerURL = @"http://datasync-authentication.demo.vchs.cfms-apps.com";
 NSString *const kDataServiceURL = @"http://datasync-datastore.demo.vchs.cfms-apps.com";
 NSString *const kDataClientID = @"aedc2fcf-d7bb-4e80-8505-0540afe17974";

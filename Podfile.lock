@@ -1,13 +1,13 @@
 PODS:
   - MSSData (1.0.3)
-  - MSSPush (1.0.2)
+  - PCFPush (1.0.4)
 
 DEPENDENCIES:
   - MSSData (~> 1.0.3)
-  - MSSPush (~> 1.0.2)
+  - PCFPush (~> 1.0.4)
 
 SPEC CHECKSUMS:
   MSSData: bd96f2dc8485bda1e5378f52ffc7cf5665d64862
-  MSSPush: 5e6638c723943b442212d75db5f98098ea69dff9
+  PCFPush: 64c348f2007bf816ed578420ed802870411d990a
 
-COCOAPODS: 0.34.4
+COCOAPODS: 0.35.0

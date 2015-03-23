@@ -6,9 +6,9 @@
 
 @implementation TTCStopAndRouteInfo
 
-- (void) createIdentifier
+- (void) generateTag
 {
-    self.identifier = [NSString stringWithFormat:@"%@_%@_%@", self.timeInUtc, self.routeTag, self.stopTag];
+    self.tag = [NSString stringWithFormat:@"%@_%@_%@", self.timeInUtc, self.routeTag, self.stopTag];
 }
 
 @end

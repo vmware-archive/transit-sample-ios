@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>pivotal.push.serviceUrl</key>
+	<string>http://transit-push.cfapps.io</string>
+	<key>pivotal.push.platformUuidDevelopment</key>
+	<string>15a001cd-f200-40a1-b052-763fbeee12a3</string>
+	<key>pivotal.push.platformSecretDevelopment</key>
+	<string>84def001-645b-4dfa-af5f-e2659dd27b0f</string>
+	<key>pivotal.push.platformUuidProduction</key>
+	<string>211ef0cb-acac-4816-ac46-a401f46ee463</string>
+	<key>pivotal.push.platformSecretProduction</key>
+	<string>3a02ec0e-85e3-47c6-8d5b-27ef3a0c386e</string>
+</dict>
+</plist>

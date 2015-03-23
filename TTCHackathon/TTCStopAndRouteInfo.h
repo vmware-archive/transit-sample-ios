@@ -12,10 +12,10 @@
 @property (nonatomic, strong) NSString* timeInUtc;
 @property (nonatomic, strong) NSString* routeTag;
 @property (nonatomic, strong) NSString* stopTag;
-@property (nonatomic, strong) NSString* identifier;
+@property (nonatomic, strong) NSString* tag;
 @property BOOL enabled;
 
-- (void) createIdentifier;
+- (void) generateTag;
 
 @end
 

@@ -73,7 +73,7 @@
         
         if (self.stopAndRouteInfo.route != nil  && self.stopAndRouteInfo.stop != nil) {
             self.stopAndRouteInfo.enabled = YES;
-            [self.stopAndRouteInfo createIdentifier];
+            [self.stopAndRouteInfo generateTag];
             [[segue destinationViewController] addToStopAndRoute:self.stopAndRouteInfo];
         }
     }
@@ -105,7 +105,7 @@
     
     //time format in UTC for identifier
     [formatter setDateFormat:@"HHmm"];
-    [self.stopAndRouteInfo setTimeInUtc: [formatter stringFromDate:self.timePick.date]];
+    [self.stopAndRouteInfo setTimeInUtc:[formatter stringFromDate:self.timePick.date]];
     
     NSLog(@"Time in UTC: %@", self.stopAndRouteInfo.timeInUtc);
     NSLog(@"Time in 12 hr: %@",self.stopAndRouteInfo.time);
