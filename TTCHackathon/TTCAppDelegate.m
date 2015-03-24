@@ -3,9 +3,11 @@
 //
 
 #import <PCFPush/PCFPush.h>
-#import <MSSData/MSSDataSignIn.h>
+#import <PCFData/PCFData.h>
+#import <PCFAuth/PCFAuth.h>
 #import "TTCAppDelegate.h"
 #import "TTCUserDefaults.h"
+#import "TTCPushRegistrationHelper.h"
 
 NSString *const kRemoteNotificationReceived = @"NOTIFICATION_RECEIVED";
 
@@ -13,33 +15,25 @@ NSString *const kRemoteNotificationReceived = @"NOTIFICATION_RECEIVED";
 
 - (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Register for push notifications with the Apple Push Notification Service (APNS).
-    //
-    // On iOS 8.0+ you need to provide your user notification settings by calling
-    // [UIApplication.sharedDelegate registerUserNotificationSettings:] and then
-    // [UIApplication.sharedDelegate registerForRemoteNotifications];
-    //
-    // On < iOS 8.0 you need to provide your remote notification settings by calling
-    // [UIApplication.sharedDelegate registerForRemoteNotificationTypes:].  There are no
-    // user notification settings on < iOS 8.0.
-    //
-    // If this line gives you a compiler error then you need to make sure you have updated
-    // your Xcode to at least Xcode 6.0:
-    //
-    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-        
-        // iOS 8.0 +
-        UIUserNotificationType notificationTypes = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
-        [application registerUserNotificationSettings:settings];
-        [application registerForRemoteNotifications];
-        
-    } else {
-        
-        // < iOS 8.0
-        UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound;
-        [application registerForRemoteNotificationTypes:notificationTypes];
-    }
+    // Register with apns when app is launched
+    [TTCPushRegistrationHelper registerWithApns];
+    
+    [PCFData registerTokenProviderBlock:^() {
+        return [PCFAuth fetchToken].accessToken;
+    }];
+    
+    [PCFData registerTokenInvalidatorBlock:^() {
+        [PCFAuth invalidateToken];
+    }];
+    
+    [PCFAuth registerLoginObserverBlock:^{
+        // Re-register with apns when logging in
+        [TTCPushRegistrationHelper registerWithApns];
+    }];
+    
+    [PCFAuth registerLogoutObserverBlock:^{
+        [TTCPushRegistrationHelper unregister];
+    }];
     
     return YES;
 }
@@ -69,6 +63,12 @@ NSString *const kRemoteNotificationReceived = @"NOTIFICATION_RECEIVED";
     }];
 }
 
+// This method is called when APNS registration fails.
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"APNS registration failed: %@", error);
+}
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler
 {
     NSLog(@"Remote notification received: %@", userInfo);
@@ -87,14 +87,8 @@ NSString *const kRemoteNotificationReceived = @"NOTIFICATION_RECEIVED";
     }
 }
 
-- (BOOL) application:(UIApplication *)application
-             openURL:(NSURL *)url
-   sourceApplication:(NSString *)sourceApplication
-          annotation:(id)annotation
-{
-    return [[MSSDataSignIn sharedInstance] handleURL:url
-                                   sourceApplication:sourceApplication
-                                          annotation:annotation];
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    [PCFData performSyncWithCompletionHandler:completionHandler];
 }
 
 @end

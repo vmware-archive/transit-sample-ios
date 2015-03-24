@@ -11,6 +11,7 @@
 @interface TTCPushRegistrationHelper : NSObject
 
 + (void) updateTags:(NSSet*)pushTags;
++ (void) registerWithApns;
 + (void) unregister;
 
 @end

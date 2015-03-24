@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="khj-dt-lWG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="khj-dt-lWG">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -20,7 +20,7 @@
             </objects>
             <point key="canvasLocation" x="-224" y="198"/>
         </scene>
-        <!--Add Notification View Controller-->
+        <!--Transit++-->
         <scene sceneID="FAa-ZL-eBj">
             <objects>
                 <viewController storyboardIdentifier="PCFTimeAndStopViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ySk-zm-Kr5" customClass="TTCAddNotificationViewController" sceneMemberID="viewController">
@@ -102,7 +102,7 @@
                             <constraint firstAttribute="centerY" secondItem="8gg-vY-wvy" secondAttribute="centerY" id="mq3-Sd-dJ8"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="r5H-Yx-a61">
+                    <navigationItem key="navigationItem" title="Transit++" id="r5H-Yx-a61">
                         <barButtonItem key="backBarButtonItem" title=" " id="GWy-r1-anF"/>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="E11-U5-Dt3">
                             <connections>
@@ -129,94 +129,10 @@
             </objects>
             <point key="canvasLocation" x="754" y="203"/>
         </scene>
-        <!--Sign In View Controller-->
-        <scene sceneID="YJl-ui-bua">
-            <objects>
-                <viewController id="zqa-7g-eAL" customClass="TTCSignInViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Gb6-Oe-Jr9"/>
-                        <viewControllerLayoutGuide type="bottom" id="qN6-fO-Gca"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="irq-oZ-a1w">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4K-1z-nQT">
-                                <rect key="frame" x="85" y="319" width="150" height="30"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="CYw-o6-Upm"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="zPy-eU-TzU"/>
-                                </constraints>
-                                <state key="normal" title="Authenticate">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="signInClick:" destination="zqa-7g-eAL" eventType="touchUpInside" id="Myj-DX-Ufo"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sq9-yf-g7j">
-                                <rect key="frame" x="132" y="411" width="56" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="56" id="ELS-e8-dZ6"/>
-                                    <constraint firstAttribute="height" constant="30" id="c4V-LT-OxO"/>
-                                </constraints>
-                                <state key="normal" title="Log Out">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="signOutClicked:" destination="zqa-7g-eAL" eventType="touchUpInside" id="FEm-Uw-6Dc"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Transit++" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iHn-Cp-Gl1">
-                                <rect key="frame" x="109" y="154" width="102" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This application requires that you authenticate before proceeding." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="189" translatesAutoresizingMaskIntoConstraints="NO" id="NXv-Ja-XFx">
-                                <rect key="frame" x="66" y="270" width="189" height="29"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="uXM-yB-Kra">
-                                <rect key="frame" x="142" y="315" width="37" height="37"/>
-                            </activityIndicatorView>
-                        </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="uXM-yB-Kra" firstAttribute="top" secondItem="NXv-Ja-XFx" secondAttribute="bottom" constant="16" id="3p2-S8-mtB"/>
-                            <constraint firstAttribute="centerY" secondItem="NXv-Ja-XFx" secondAttribute="centerY" id="8V0-ma-1TT"/>
-                            <constraint firstItem="iHn-Cp-Gl1" firstAttribute="top" secondItem="Gb6-Oe-Jr9" secondAttribute="bottom" constant="90" id="BKe-hG-0st"/>
-                            <constraint firstAttribute="trailing" secondItem="uXM-yB-Kra" secondAttribute="trailing" constant="141" id="BWZ-18-lGR"/>
-                            <constraint firstAttribute="centerX" secondItem="L4K-1z-nQT" secondAttribute="centerX" id="Jda-qF-xLl"/>
-                            <constraint firstItem="L4K-1z-nQT" firstAttribute="top" secondItem="NXv-Ja-XFx" secondAttribute="bottom" constant="20" id="Kne-Al-Tyd"/>
-                            <constraint firstAttribute="centerX" secondItem="Sq9-yf-g7j" secondAttribute="centerX" id="RLI-64-h4I"/>
-                            <constraint firstAttribute="centerX" secondItem="iHn-Cp-Gl1" secondAttribute="centerX" id="Rbn-fa-1g7"/>
-                            <constraint firstAttribute="centerX" secondItem="NXv-Ja-XFx" secondAttribute="centerX" id="ce0-Hw-ExS"/>
-                            <constraint firstItem="Sq9-yf-g7j" firstAttribute="top" secondItem="L4K-1z-nQT" secondAttribute="bottom" constant="62" id="s22-tu-SPG"/>
-                            <constraint firstItem="uXM-yB-Kra" firstAttribute="leading" secondItem="irq-oZ-a1w" secondAttribute="leading" constant="142" id="zaO-oT-vbN"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="9tm-hA-WMc">
-                        <barButtonItem key="backBarButtonItem" title=" " id="INU-hh-xBp"/>
-                    </navigationItem>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                    <connections>
-                        <outlet property="activityIndicatorView" destination="uXM-yB-Kra" id="ezr-tt-TWU"/>
-                        <outlet property="signInButton" destination="L4K-1z-nQT" id="i5J-rX-4j7"/>
-                        <outlet property="signInLabel" destination="NXv-Ja-XFx" id="tRF-6j-ooA"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kil-T3-Cak" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="304" y="-587"/>
-        </scene>
-        <!--Data Services-->
+        <!--TTCRouteAndStopViewController-->
         <scene sceneID="Aln-E4-WbE">
             <objects>
-                <tableViewController storyboardIdentifier="PCFDataTableViewController" title="Data Services" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4Nf-dA-qhs" customClass="TTCRouteAndStopViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PCFDataTableViewController" title="Data Services" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4Nf-dA-qhs" userLabel="TTCRouteAndStopViewController" customClass="TTCRouteViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="47" sectionHeaderHeight="22" sectionFooterHeight="22" id="ylG-fC-1I5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -252,7 +168,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="7v0-Xv-Nn4">
+                    <navigationItem key="navigationItem" title="Transit++" id="7v0-Xv-Nn4">
                         <barButtonItem key="backBarButtonItem" title=" " id="mwc-Kl-eAL"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -263,10 +179,10 @@
             </objects>
             <point key="canvasLocation" x="1196" y="203"/>
         </scene>
-        <!--Data Services-->
+        <!--TTCNotificationsTableViewController-->
         <scene sceneID="k33-ka-sg5">
             <objects>
-                <tableViewController storyboardIdentifier="PCFSavedTableViewController" title="Data Services" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CQA-q5-WG8" customClass="TTCNotificationsTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PCFSavedTableViewController" title="Transit++" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CQA-q5-WG8" userLabel="TTCNotificationsTableViewController" customClass="TTCNotificationsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="127" sectionHeaderHeight="22" sectionFooterHeight="22" id="o0P-ly-fm2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -326,7 +242,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="Ol7-Yd-B2i">
+                    <navigationItem key="navigationItem" title="Transit++" id="Ol7-Yd-B2i">
                         <barButtonItem key="leftBarButtonItem" title="Log Out" id="Vkb-TS-DU0">
                             <connections>
                                 <action selector="logout" destination="CQA-q5-WG8" id="B9C-b3-gqP"/>
@@ -341,18 +257,15 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                    <connections>
-                        <segue destination="zqa-7g-eAL" kind="modal" identifier="modalSegueToSignIn" id="7nh-pq-9QI"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bdJ-UJ-tUH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="304" y="203"/>
         </scene>
-        <!--Data Services-->
+        <!--TTCStopViewController-->
         <scene sceneID="sJx-ds-pHT">
             <objects>
-                <tableViewController storyboardIdentifier="PCFDataTableViewController2" title="Data Services" useStoryboardIdentifierAsRestorationIdentifier="YES" id="b6K-xb-R1B" customClass="TTCRouteAndStopViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PCFDataTableViewController2" title="Data Services" useStoryboardIdentifierAsRestorationIdentifier="YES" id="b6K-xb-R1B" userLabel="TTCStopViewController" customClass="TTCStopViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="47" sectionHeaderHeight="22" sectionFooterHeight="22" id="VPw-h5-PS4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -380,7 +293,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="EcF-17-q56">
+                    <navigationItem key="navigationItem" title="Transit++" id="EcF-17-q56">
                         <barButtonItem key="backBarButtonItem" title=" " id="lOv-am-dzF"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

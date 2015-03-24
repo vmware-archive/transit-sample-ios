@@ -4,9 +4,8 @@
 
 #import <UIKit/UIKit.h>
 #import "TTCStopAndRouteInfo.h"
-#import "TTCSignInViewController.h"
 
-@interface TTCNotificationsTableViewController : UITableViewController <TTCSignInViewDelegate>
+@interface TTCNotificationsTableViewController : UITableViewController
 
 - (IBAction) logout;
 - (IBAction) unwindToSavedTableView:(UIStoryboardSegue *)sender;

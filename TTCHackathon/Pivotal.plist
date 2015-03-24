@@ -12,5 +12,19 @@
 	<string>211ef0cb-acac-4816-ac46-a401f46ee463</string>
 	<key>pivotal.push.platformSecretProduction</key>
 	<string>3a02ec0e-85e3-47c6-8d5b-27ef3a0c386e</string>
+	<key>pivotal.auth.tokenUrl</key>
+	<string>http://datasync-authentication.geyser.cf-app.com/token</string>
+	<key>pivotal.auth.authorizeUrl</key>
+	<string>http://datasync-authentication.geyser.cf-app.com/authorize</string>
+	<key>pivotal.auth.redirectUrl</key>
+	<string>io.pivotal.ios.data://oauth2callback</string>
+	<key>pivotal.auth.clientId</key>
+	<string>ios-client</string>
+	<key>pivotal.auth.clientSecret</key>
+	<string>006d0cea91f01a82cdc57afafbbc0d26c8328964029d5b5eae920e2fdc703169</string>
+	<key>pivotal.data.serviceUrl</key>
+	<string>http://datasync-datastore.geyser.cf-app.com/data/transit</string>
+	<key>pivotal.data.collisionStrategy</key>
+	<string>OptimisticLocking</string>
 </dict>
 </plist>

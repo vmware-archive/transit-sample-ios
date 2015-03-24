@@ -3,10 +3,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MSSData/MSSData.h>
-#import <MSSData/MSSAFNetworking.h>
+#import <PCFData/PCFData.h>
 #import "TTCStopAndRouteInfo.h"
-#import "TTCRouteAndStopViewController.h"
+#import "TTCRouteViewController.h"
 #import "TTCNotificationsTableViewController.h"
 
 @interface TTCAddNotificationViewController : UIViewController
@@ -17,8 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIView *routeStopContainer;
 
 @property (strong, nonatomic) TTCStopAndRouteInfo *stopAndRouteInfo;
-
-@property MSSDataObject *ttcObject;
 
 - (IBAction)routeStopContainerPressed:(id)sender;
 - (IBAction)unwindToTimeAndStopView:(UIStoryboardSegue *)sender;

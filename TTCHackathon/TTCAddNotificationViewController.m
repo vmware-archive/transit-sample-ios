@@ -31,7 +31,6 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
     [self.scrollView setScrollEnabled:NO];
-    self.navigationItem.title = @"Transit++";
     
     self.stopAndRouteInfo = [[TTCStopAndRouteInfo alloc] init];
     self.scheduleButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -66,7 +65,7 @@
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.destinationViewController isKindOfClass:[TTCRouteAndStopViewController class]]) {
+    if ([segue.destinationViewController isKindOfClass:[TTCRouteViewController class]]) {
         [[segue destinationViewController] setStopAndRouteInfo:self.stopAndRouteInfo];
         
     } else if ([segue.destinationViewController isKindOfClass:[TTCNotificationsTableViewController class]]) {

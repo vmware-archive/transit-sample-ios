@@ -1,33 +1,32 @@
 //
-//  Copyright (C) 2014 Pivotal Software, Inc. All rights reserved.
+//  TTCStopViewController.m
+//  TTCHackathon
+//
+//  Created by DX181-XL on 2015-03-24.
+//  Copyright (c) 2015 Pivotal. All rights reserved.
 //
 
-#import <MSSData/MSSData.h>
-#import <MSSData/MSSAFNetworking.h>
-#import "TTCRouteAndStopViewController.h"
-#import "TTCClient.h"
+#import <PCFData/PCFData.h>
+#import <PCFAuth/PCFAuth.h>
+#import <AFNetworking/AFNetworking.h>
+#import "TTCStopViewController.h"
 #import "TTCSettings.h"
 #import "TTCLoadingOverlayView.h"
 
-static NSString *const kRoute = @"route";
-
-@interface TTCRouteAndStopViewController ()
+@interface TTCStopViewController ()
 
 @property NSArray *transitValues;
-@property MSSDataObject *ttcObject;
 @property TTCLoadingOverlayView *loadingOverlayView;
 
 @end
 
-@implementation TTCRouteAndStopViewController
+@implementation TTCStopViewController
 
 - (void) viewDidLoad
 {
     [super viewDidLoad];
     
     self.tableView.alwaysBounceVertical = NO;
-    
-    self.navigationItem.title = @"Transit++";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateForOverlay) name:UIDeviceOrientationDidChangeNotification object:nil];
     [self didRotateForOverlay];
@@ -38,11 +37,6 @@ static NSString *const kRoute = @"route";
     [refreshControl addTarget:self action:@selector(refreshTable:) forControlEvents:UIControlEventValueChanged];
     
     [self refreshTable:refreshControl];
-    
-    if (!self.ttcObject) {
-        self.ttcObject = [MSSDataObject objectWithClassName:@"notifications"];
-        [self.ttcObject setObjectID:@"my-notifications"];
-    }
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -51,30 +45,19 @@ static NSString *const kRoute = @"route";
     self.navigationController.navigationBarHidden = NO;
 }
 
-- (void) viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    if (self.isMovingFromParentViewController && self.ttcObject[kRoute]) {
-        [self.ttcObject removeObjectForKey:kRoute];
-    }
-} 
-
 - (void) refreshTable:(UIRefreshControl *)sender
 {
-    NSString *path = (self.ttcObject[kRoute] ? [NSString stringWithFormat:kStopsPath, self.ttcObject[kRoute]]  : kRoutePath);
+    NSString *path = [NSString stringWithFormat:kStopsPath, self.stopAndRouteInfo.routeTag];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:path]];
-    
-    void (^successBlock)(NSURLRequest*, NSHTTPURLResponse*, id) = ^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        
         if (sender) {
             [sender endRefreshing];
         }
         
-        if ([JSON isKindOfClass:[NSDictionary class]]) {
-            JSON = JSON[@"stops"];
-        }
-        
-        self.transitValues = JSON;
+        self.transitValues = responseObject[@"stops"];
         
         [self.tableView reloadData];
         
@@ -82,18 +65,16 @@ static NSString *const kRoute = @"route";
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         [self.loadingOverlayView removeFromSuperview];
         self.tableView.alwaysBounceVertical = YES;
-    };
-    
-    void (^failureBlock)(NSURLRequest*, NSHTTPURLResponse*, NSError*, id) = ^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
         if (sender) {
             [sender endRefreshing];
         }
-    };
-    
-    MSSAFJSONRequestOperation *operation = [MSSAFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                                                              success:successBlock
-                                                                                              failure:failureBlock];
-    [[TTCClient sharedClient] enqueueHTTPRequestOperation:operation];
+        
+    }];
     
 }
 
@@ -101,7 +82,7 @@ static NSString *const kRoute = @"route";
 
 - (NSString*) transitValueForIndex:(NSIndexPath *)indexPath
 {
-    return  self.ttcObject[kRoute] ? self.transitValues[indexPath.row][@"stopId"] : self.transitValues[indexPath.row][@"tag"];
+    return self.transitValues[indexPath.row][@"tag"];
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -109,29 +90,12 @@ static NSString *const kRoute = @"route";
     NSString *value = [self transitValueForIndex:indexPath];
     
     if (value) {
+        [self.stopAndRouteInfo setStop:self.transitValues[indexPath.row][@"title"]];
+        [self.stopAndRouteInfo setStopTag:value];
+        NSLog(@"stop: %@", self.transitValues[indexPath.row][@"title"]);
+        NSLog(@"stopTag: %@", value);
         
-        if (self.ttcObject[kRoute]) {
-            
-            // stop and route object setting
-            self.ttcObject[@"stop"] = value;
-            [self.stopAndRouteInfo setStop:self.transitValues[indexPath.row][@"title"]];
-            [self.stopAndRouteInfo setStopTag:value];
-            NSLog(@"stop: %@", self.transitValues[indexPath.row][@"title"]);
-            NSLog(@"stopTag: %@", value);
-           
-        } else {
-            
-            self.ttcObject[@"route"] = value;
-            // stop and route object setting
-            [self.stopAndRouteInfo setRoute:self.transitValues[indexPath.row][@"title"]];
-            [self.stopAndRouteInfo setRouteTag:value];
-            NSLog(@"route: %@", self.transitValues[indexPath.row][@"title"]);
-            NSLog(@"routeTag: %@", value);
-        }
-        
-        if (self.ttcObject[@"route"] && self.ttcObject[@"stop"]) {
-            [self performSegueWithIdentifier:@"unwindToTimeAndStopView" sender:self];
-        }        
+        [self performSegueWithIdentifier:@"unwindToTimeAndStopView" sender:self];
     }
 }
 
@@ -160,7 +124,6 @@ static NSString *const kRoute = @"route";
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [[segue destinationViewController] setTtcObject:self.ttcObject];
     [[segue destinationViewController] setStopAndRouteInfo:self.stopAndRouteInfo];
 }
 

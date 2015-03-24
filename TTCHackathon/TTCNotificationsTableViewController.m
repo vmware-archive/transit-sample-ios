@@ -2,8 +2,8 @@
 //  Copyright (c) 2014 Pivotal. All rights reserved.
 //
 
-#import <MSSData/MSSData.h>
-#import <MSSData/MSSAFNetworking.h>
+#import <PCFData/PCFData.h>
+#import <PCFAuth/PCFAuth.h>
 #import "TTCPushRegistrationHelper.h"
 #import "TTCNotificationsTableViewController.h"
 #import "TTCLoadingOverlayView.h"
@@ -15,9 +15,9 @@
 
 @interface TTCNotificationsTableViewController ()
 
-@property MSSDataObject *savedStopsAndRouteObject;
+@property PCFKeyValueObject *savedStopsAndRouteObject;
 @property TTCLoadingOverlayView *loadingOverlayView;
-@property BOOL didReachAuthenticateScreen;
+
 @property (strong, nonatomic) NSMutableSet *savedPushEntries;    // keeps track of only all the enabled stops and routes.
 @property (strong, nonatomic) NSMutableArray *stopAndRouteArray; // keeps track of all stops and routes we saved (enabled AND disabled).
 @property TTCLastNotificationView *lastNotificationView;
@@ -26,16 +26,20 @@
 
 @implementation TTCNotificationsTableViewController
 
+static NSString* const PCFCollection = @"notifications";
+static NSString* const PCFKey = @"my-notifications";
+
 - (void) viewDidLoad
 {
     [super viewDidLoad];
-    self.didReachAuthenticateScreen = NO;
+    
+    self.savedStopsAndRouteObject = [PCFKeyValueObject objectWithCollection:PCFCollection key:PCFKey];
+
     self.tableView.alwaysBounceVertical = YES;
     [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setTranslucent:YES];
-    self.navigationItem.title = @"Transit++";
     
     self.stopAndRouteArray = [NSMutableArray array];
     self.savedPushEntries = [NSMutableSet set];
@@ -52,12 +56,11 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:NO];
-    if (self.didReachAuthenticateScreen == NO) {
-        [self performSegueWithIdentifier:@"modalSegueToSignIn" sender:self];
-    } else {
-        [self registerForNotifications];
-        [self showLastNotification];
-    }
+    [self registerForNotifications];
+    [self showLastNotification];
+    
+    
+    [self fetchRoutesAndStops];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -203,15 +206,6 @@
     }
 }
 
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"modalSegueToSignIn"]) {
-        TTCSignInViewController *signInVC = segue.destinationViewController;
-        signInVC.delegate = self;
-        self.didReachAuthenticateScreen = YES;
-    }
-}
-
 #pragma mark - Action events
 
 - (void) switchToggled:(UISwitch*)mySwitch
@@ -238,10 +232,8 @@
 {
     self.stopAndRouteArray = [NSMutableArray array];
     self.savedPushEntries = [NSMutableSet set];
-    [[MSSDataSignIn sharedInstance] disconnect];
-    [TTCPushRegistrationHelper unregister];
-    self.didReachAuthenticateScreen = NO;
-    [self performSegueWithIdentifier:@"modalSegueToSignIn" sender:self];
+    [PCFAuth invalidateToken];
+    [self fetchRoutesAndStops];    
 }
 
 #pragma mark - Array and dictionary functions
@@ -273,12 +265,14 @@
 {    
     NSLog(@"Fetching saved routes and stops...");
     
-    [self.savedStopsAndRouteObject fetchOnSuccess:^(MSSDataObject *fetchedObject) {
+    [self.savedStopsAndRouteObject getWithCompletionBlock:^(PCFDataResponse *response) {
         
-        if (fetchedObject) {
+        if (response.error == nil) {
+            PCFKeyValue *keyValue = (PCFKeyValue *)response.object;
             
-            NSData* data = [fetchedObject[@"items"] dataUsingEncoding:NSUTF8StringEncoding];
-            NSArray* jsonArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSData* data = [keyValue.value dataUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary* fetchedItems = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSArray *jsonArray = fetchedItems[@"items"];
             
             if (self.stopAndRouteArray) {
                 [self.stopAndRouteArray removeAllObjects];
@@ -314,27 +308,11 @@
             [TTCPushRegistrationHelper updateTags:self.savedPushEntries];
             
         } else {
-            NSLog(@"Note: fetched object was nil.");
+            NSLog(@"Error: could not fetch saved route and stops: %@", response.error);
+            [self.loadingOverlayView removeFromSuperview];
         }
         
-    } failure:^(NSError *error) {
-        
-        NSLog(@"Error: could not fetch saved route and stops: %@", error);
-        [self.loadingOverlayView removeFromSuperview];
-    }];
-}
-
-/* Serialize a string to JSON object */
-- (id) deserializeStringToObject:(NSString *)string
-{
-    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error = nil;
-    id result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-    if (!result) {
-        NSLog(@"%@", error.description);
-    }
-    
-    return result;
+    }] ;
 }
 
 /* Everytime we change anything in our ARRAY, we have to push it up to the server */
@@ -360,27 +338,21 @@
         [stopAndRouteListJSON addObject:dict];
     }
     
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:stopAndRouteListJSON options:NSJSONWritingPrettyPrinted error:nil];
+    NSDictionary *itemDictionary = @{@"items" : stopAndRouteListJSON};
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:itemDictionary options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
     NSLog(@"Saving routesAndStops: %@", jsonString);
     
-    self.savedStopsAndRouteObject[@"items"] = jsonString;
-    [self.savedStopsAndRouteObject saveOnSuccess:^(MSSDataObject *object) {
-        NSLog(@"saving to datasync successful: %@", [object allKeys]);
-    } failure:^(NSError *error) {
-        NSLog(@"saving to datasync failed: %@", error);
+    [self.savedStopsAndRouteObject putWithValue:jsonString completionBlock:^(PCFDataResponse *response) {
+        if (response.error != nil) {
+            NSLog(@"saving to datasync successful");
+        } else {
+            NSLog(@"saving to datasync failed: %@", response.error);
+        }
     }];
 }
 
-#pragma mark - Delegate
-
-- (void) authenticationSuccess
-{
-    NSLog(@"Authentication succeeded.");
-    self.savedStopsAndRouteObject = [MSSDataObject objectWithClassName:@"notifications"];
-    [self.savedStopsAndRouteObject setObjectID:@"my-notifications"];
-    [self fetchRoutesAndStops];
-}
 
 @end
