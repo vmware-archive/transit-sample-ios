@@ -230,8 +230,7 @@ static NSString* const PCFKey = @"my-notifications";
             PCFKeyValue *keyValue = (PCFKeyValue *)response.object;
             
             NSData* data = [keyValue.value dataUsingEncoding:NSUTF8StringEncoding];
-            NSDictionary* fetchedItems = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            NSArray *jsonArray = fetchedItems[@"items"];
+            NSArray* jsonArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             
             if (self.stopAndRouteArray) {
                 [self.stopAndRouteArray removeAllObjects];
@@ -277,9 +276,7 @@ static NSString* const PCFKey = @"my-notifications";
         [stopAndRouteListArray addObject:[stopAndRouteElement formattedDictionary]];
     }
     
-    NSDictionary *itemDictionary = @{@"items" : stopAndRouteListArray};
-    
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:itemDictionary options:NSJSONWritingPrettyPrinted error:nil];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:stopAndRouteListArray options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
     NSLog(@"Saving routesAndStops: %@", jsonString);
