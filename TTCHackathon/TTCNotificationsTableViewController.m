@@ -18,7 +18,6 @@
 @property PCFKeyValueObject *savedStopsAndRouteObject;
 @property TTCLoadingOverlayView *loadingOverlayView;
 
-@property (strong, nonatomic) NSMutableSet *savedPushEntries;    // keeps track of only all the enabled stops and routes.
 @property (strong, nonatomic) NSMutableArray *stopAndRouteArray; // keeps track of all stops and routes we saved (enabled AND disabled).
 @property TTCLastNotificationView *lastNotificationView;
 
@@ -42,7 +41,6 @@ static NSString* const PCFKey = @"my-notifications";
     [self.navigationController.navigationBar setTranslucent:YES];
     
     self.stopAndRouteArray = [NSMutableArray array];
-    self.savedPushEntries = [NSMutableSet set];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -162,13 +160,13 @@ static NSString* const PCFKey = @"my-notifications";
             TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
             if (!currentItem) return;
             
-            // delete from set
-            [self.savedPushEntries removeObject:currentItem.tag];
-            [TTCPushRegistrationHelper updateTags:self.savedPushEntries];
-            
             // delete from array
             [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
-            [self pushUpdateToServer];
+
+            // delete from set
+            [TTCPushRegistrationHelper updateTags:[self enabledTags]];
+            
+            [self persistDataToRemoteStore];
             
             // need to refresh the table to update the view
             [self.tableView reloadData];
@@ -183,27 +181,8 @@ static NSString* const PCFKey = @"my-notifications";
 // When we click the done button in the scheduler view we UNWIND back to here.
 - (IBAction) unwindToSavedTableView:(UIStoryboardSegue *)sender
 {
-    // base case - if nothing exists
-    if (self.stopAndRouteArray.count == 0) {
-        return;
-    }
-    
-    [self pushUpdateToServer];
-    
-    // check if the end of our array exists in our dictionary
-    TTCStopAndRouteInfo *lastItem = self.stopAndRouteArray.lastObject;
-    
-    // check if the item exists
-    if ([lastItem isEqual:nil]) {
-        return;
-    }
-    
-    // check if the recently added item is new
-    if (![self.savedPushEntries containsObject:lastItem.tag]) {
-        [self.savedPushEntries addObject:lastItem.tag];
-        NSLog(@"Adding stop to set: %@", lastItem.tag);
-        [TTCPushRegistrationHelper updateTags:self.savedPushEntries];
-    }
+    [self persistDataToRemoteStore];
+    [TTCPushRegistrationHelper updateTags:[self enabledTags]];
 }
 
 #pragma mark - Action events
@@ -211,27 +190,16 @@ static NSString* const PCFKey = @"my-notifications";
 - (void) switchToggled:(UISwitch*)mySwitch
 {
     TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:mySwitch.tag];
+    currentItem.enabled = [mySwitch isOn];
     
-    if ([mySwitch isOn]) {
-        currentItem.enabled = YES;
-        // adding to the dictionary
-        [self.savedPushEntries addObject:currentItem.tag];
-    } else {
-        currentItem.enabled = NO;
-        // have to delete from dictionary and request to not push anymore
-        [self.savedPushEntries removeObject:currentItem.tag];
-    }
-    
-    [TTCPushRegistrationHelper updateTags:self.savedPushEntries];
+    [TTCPushRegistrationHelper updateTags:[self enabledTags]];
 
-    NSLog(@"Number of enabled stops: %lu", (unsigned long) [self.savedPushEntries count]);
-    [self pushUpdateToServer];
+    [self persistDataToRemoteStore];
 }
 
 - (IBAction) logout
 {
     self.stopAndRouteArray = [NSMutableArray array];
-    self.savedPushEntries = [NSMutableSet set];
     [PCFAuth invalidateToken];
     [self fetchRoutesAndStops];    
 }
@@ -240,22 +208,13 @@ static NSString* const PCFKey = @"my-notifications";
 
 - (void) addToStopAndRoute:(TTCStopAndRouteInfo *)stopAndRouteObject // add to our array
 {
-    for (TTCStopAndRouteInfo* sar in self.stopAndRouteArray) {
-        if([sar.stop isEqualToString:stopAndRouteObject.stop] && [sar.time isEqualToString:stopAndRouteObject.time]) {
+    for (TTCStopAndRouteInfo* stopAndRouteInfo in self.stopAndRouteArray) {
+        if([stopAndRouteInfo.stop isEqualToString:stopAndRouteObject.stop] && [stopAndRouteInfo.time isEqualToString:stopAndRouteObject.time]) {
             NSLog(@"Not adding new stop since it's already in the list.");
             return;
         }
     }
     [self.stopAndRouteArray addObject:stopAndRouteObject];
-}
-
-- (void) populateSavedPushEntries // add to our dictionary if it is enabled
-{
-    for (TTCStopAndRouteInfo* obj in self.stopAndRouteArray) {
-        if (obj.enabled == YES) {
-            [self.savedPushEntries addObject:obj.tag];
-        }
-    }
 }
 
 #pragma mark - MSSDataObject server functions
@@ -279,21 +238,14 @@ static NSString* const PCFKey = @"my-notifications";
             }
             
             if (!jsonArray || jsonArray.count <= 0) {
-                
                 NSLog(@"Note: no routes and stops saved on server.");
-                
             } else {
             
                 for (int i = 0; i < jsonArray.count; ++i) {
-                    
                     NSDictionary *dictionary = [jsonArray objectAtIndex:i];
-                    TTCStopAndRouteInfo *obj = [[TTCStopAndRouteInfo alloc] init];
-                    [obj setEnabled:[dictionary[@"enabled"] boolValue]];
-                    [obj setRoute:dictionary[@"route"]];
-                    [obj setStop:dictionary[@"stop"]];
-                    [obj setTag: dictionary[@"tag"]];
-                    [obj setTime: dictionary[@"time"]];
-                    [self.stopAndRouteArray addObject:obj]; // add the entry into the dictionary
+                    TTCStopAndRouteInfo *obj = [[TTCStopAndRouteInfo alloc] initWithDictionary:dictionary];
+
+                    [self.stopAndRouteArray addObject:obj];
                     
                     NSLog(@"Loaded item: %@", dictionary);
                 }
@@ -301,11 +253,10 @@ static NSString* const PCFKey = @"my-notifications";
             
             [[NSNotificationCenter defaultCenter] removeObserver:self];
             [self.loadingOverlayView removeFromSuperview];
-            [self populateSavedPushEntries];            
             [self.tableView reloadData];
 
             // Update the push registration on the server
-            [TTCPushRegistrationHelper updateTags:self.savedPushEntries];
+            [TTCPushRegistrationHelper updateTags:[self enabledTags]];
             
         } else {
             NSLog(@"Error: could not fetch saved route and stops: %@", response.error);
@@ -316,29 +267,17 @@ static NSString* const PCFKey = @"my-notifications";
 }
 
 /* Everytime we change anything in our ARRAY, we have to push it up to the server */
-- (void) pushUpdateToServer
+- (void) persistDataToRemoteStore
 {
     NSLog(@"Pushing saved stops to server here...");
-    NSMutableArray *stopAndRouteListJSON = [[NSMutableArray alloc] init];
+    NSMutableArray *stopAndRouteListArray = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < self.stopAndRouteArray.count; i++) {
-        
         TTCStopAndRouteInfo *stopAndRouteElement = [self.stopAndRouteArray objectAtIndex:i];
-        NSString *enabled = (stopAndRouteElement.enabled) ? @"1" : @"0";
-        
-        NSDictionary *dict = @{
-                               @"enabled" :    enabled,
-                               @"route" :      stopAndRouteElement.route,
-                               @"stop" :       stopAndRouteElement.stop,
-                               @"tag" :        stopAndRouteElement.tag,
-                               @"time" :       stopAndRouteElement.time
-                               };
-
-        NSLog(@"Saving item: %@", dict);
-        [stopAndRouteListJSON addObject:dict];
+        [stopAndRouteListArray addObject:[stopAndRouteElement formattedDictionary]];
     }
     
-    NSDictionary *itemDictionary = @{@"items" : stopAndRouteListJSON};
+    NSDictionary *itemDictionary = @{@"items" : stopAndRouteListArray};
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:itemDictionary options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -354,5 +293,16 @@ static NSString* const PCFKey = @"my-notifications";
     }];
 }
 
+- (NSSet *) enabledTags {
+    NSMutableSet *mutableSet = [NSMutableSet set];
+    
+    for (TTCStopAndRouteInfo *stopAndRouteInfo in self.stopAndRouteArray) {
+        if (stopAndRouteInfo.enabled) {
+            [mutableSet addObject:stopAndRouteInfo.tag];
+        }
+    }
+    
+    return mutableSet;
+}
 
 @end

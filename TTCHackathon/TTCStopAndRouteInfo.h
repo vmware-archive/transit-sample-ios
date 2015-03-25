@@ -15,7 +15,9 @@
 @property (nonatomic, strong) NSString* tag;
 @property BOOL enabled;
 
+- (id) initWithDictionary: (NSDictionary *)dictionary;
 - (void) generateTag;
+- (NSDictionary *) formattedDictionary;
 
 @end
 
