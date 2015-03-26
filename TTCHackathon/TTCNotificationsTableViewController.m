@@ -20,6 +20,7 @@
 
 @property (strong, nonatomic) NSMutableArray *stopAndRouteArray; // keeps track of all stops and routes we saved (enabled AND disabled).
 @property TTCLastNotificationView *lastNotificationView;
+@property UIRefreshControl *refreshControl;
 
 @end
 
@@ -39,8 +40,19 @@ static NSString* const PCFKey = @"my-notifications";
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setTranslucent:YES];
-    
+
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.tableView addSubview:self.refreshControl];
+
+    [self.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+
     self.stopAndRouteArray = [NSMutableArray array];
+}
+
+- (void) refreshTable
+{
+    [self showLastNotification];
+    [self fetchRoutesAndStops];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -56,8 +68,7 @@ static NSString* const PCFKey = @"my-notifications";
     [super viewDidAppear:NO];
     [self registerForNotifications];
     [self showLastNotification];
-    
-    
+
     [self fetchRoutesAndStops];
 }
 
@@ -257,9 +268,17 @@ static NSString* const PCFKey = @"my-notifications";
             // Update the push registration on the server
             [TTCPushRegistrationHelper updateTags:[self enabledTags]];
             
+            if (self.refreshControl && [self.refreshControl isRefreshing]) {
+                [self.refreshControl endRefreshing];
+            }
+            
         } else {
             NSLog(@"Error: could not fetch saved route and stops: %@", response.error);
             [self.loadingOverlayView removeFromSuperview];
+
+            if (self.refreshControl && [self.refreshControl isRefreshing]) {
+                [self.refreshControl endRefreshing];
+            }
         }
         
     }] ;
