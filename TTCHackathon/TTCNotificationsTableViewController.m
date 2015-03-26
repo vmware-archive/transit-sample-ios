@@ -301,10 +301,12 @@ static NSString* const PCFKey = @"my-notifications";
     NSLog(@"Saving routesAndStops: %@", jsonString);
     
     [self.savedStopsAndRouteObject putWithValue:jsonString completionBlock:^(PCFDataResponse *response) {
-        if (response.error != nil) {
+        if (response.error == nil) {
             NSLog(@"saving to datasync successful");
         } else {
             NSLog(@"saving to datasync failed: %@", response.error);
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your data has been modified remotely. Please refresh and make your changes again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [alertView show];
         }
     }];
 }
