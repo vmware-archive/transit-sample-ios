@@ -10,6 +10,9 @@
 		117391111AC08D5E0060D6C8 /* Pivotal.plist in Resources */ = {isa = PBXBuildFile; fileRef = 117391101AC08D5E0060D6C8 /* Pivotal.plist */; };
 		117391191AC1B6240060D6C8 /* PCFLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 117391141AC1B59B0060D6C8 /* PCFLoginViewController.xib */; };
 		1173911E1AC1B9BB0060D6C8 /* TTCStopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1173911D1AC1B9BB0060D6C8 /* TTCStopViewController.m */; };
+		117391211AC5ADFE0060D6C8 /* TTCSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 117391201AC5ADFE0060D6C8 /* TTCSideMenuViewController.m */; };
+		117391241AC5B1AF0060D6C8 /* TTCRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 117391231AC5B1AF0060D6C8 /* TTCRootViewController.m */; };
+		117391271AC5B5C10060D6C8 /* TTCAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 117391261AC5B5C10060D6C8 /* TTCAboutViewController.m */; };
 		5746E58D195497C000CAADE9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5746E58C195497C000CAADE9 /* Foundation.framework */; };
 		5746E58F195497C000CAADE9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5746E58E195497C000CAADE9 /* CoreGraphics.framework */; };
 		5746E591195497C000CAADE9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5746E590195497C000CAADE9 /* UIKit.framework */; };
@@ -44,6 +47,12 @@
 		117391171AC1B5D60060D6C8 /* libPods-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-AFNetworking.a"; sourceTree = "<group>"; };
 		1173911C1AC1B9BB0060D6C8 /* TTCStopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCStopViewController.h; sourceTree = "<group>"; };
 		1173911D1AC1B9BB0060D6C8 /* TTCStopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCStopViewController.m; sourceTree = "<group>"; };
+		1173911F1AC5ADFE0060D6C8 /* TTCSideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCSideMenuViewController.h; sourceTree = "<group>"; };
+		117391201AC5ADFE0060D6C8 /* TTCSideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCSideMenuViewController.m; sourceTree = "<group>"; };
+		117391221AC5B1AF0060D6C8 /* TTCRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCRootViewController.h; sourceTree = "<group>"; };
+		117391231AC5B1AF0060D6C8 /* TTCRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCRootViewController.m; sourceTree = "<group>"; };
+		117391251AC5B5C10060D6C8 /* TTCAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCAboutViewController.h; sourceTree = "<group>"; };
+		117391261AC5B5C10060D6C8 /* TTCAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCAboutViewController.m; sourceTree = "<group>"; };
 		5746E58B195497C000CAADE9 /* TTCHackathon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TTCHackathon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5746E58C195497C000CAADE9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5746E58E195497C000CAADE9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -198,6 +207,12 @@
 				57F6332F1954A64800446130 /* TTCRouteViewController.m */,
 				1173911C1AC1B9BB0060D6C8 /* TTCStopViewController.h */,
 				1173911D1AC1B9BB0060D6C8 /* TTCStopViewController.m */,
+				1173911F1AC5ADFE0060D6C8 /* TTCSideMenuViewController.h */,
+				117391201AC5ADFE0060D6C8 /* TTCSideMenuViewController.m */,
+				117391221AC5B1AF0060D6C8 /* TTCRootViewController.h */,
+				117391231AC5B1AF0060D6C8 /* TTCRootViewController.m */,
+				117391251AC5B5C10060D6C8 /* TTCAboutViewController.h */,
+				117391261AC5B5C10060D6C8 /* TTCAboutViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -369,8 +384,11 @@
 				D45F20AB19CCCFA8004D7E79 /* TTCSettings.m in Sources */,
 				D4262D9D1A1511F1005C4A04 /* TTCUserDefaults.m in Sources */,
 				5746E59D195497C000CAADE9 /* TTCAppDelegate.m in Sources */,
+				117391271AC5B5C10060D6C8 /* TTCAboutViewController.m in Sources */,
+				117391211AC5ADFE0060D6C8 /* TTCSideMenuViewController.m in Sources */,
 				916215FC199279640019EF2B /* TTCNotificationsTableViewController.m in Sources */,
 				916215F319926A010019EF2B /* TTCAddNotificationViewController.m in Sources */,
+				117391241AC5B1AF0060D6C8 /* TTCRootViewController.m in Sources */,
 				91621600199507340019EF2B /* TTCStopAndRouteInfo.m in Sources */,
 				91DE589B199C032800232354 /* TTCLoadingOverlayView.m in Sources */,
 				5746E599195497C000CAADE9 /* main.m in Sources */,

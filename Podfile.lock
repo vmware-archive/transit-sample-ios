@@ -23,17 +23,20 @@ PODS:
   - PCFAuth (1.0.0)
   - PCFData (1.1.0)
   - PCFPush (1.0.4)
+  - RESideMenu (4.0.7)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
   - PCFAuth (~> 1.0.0)
   - PCFData (~> 1.1.0)
   - PCFPush (~> 1.0.4)
+  - RESideMenu (~> 4.0.7)
 
 SPEC CHECKSUMS:
   AFNetworking: 8bee59492a6ff15d69130efa4d0dc67e0094a52a
   PCFAuth: 9e810141d1de4d32c64e5ef662adf3479495dfc7
   PCFData: 36fba6dfd9aa934d736e7196e9ff91b80a78aa02
   PCFPush: 64c348f2007bf816ed578420ed802870411d990a
+  RESideMenu: a9c1cd2e64e60e1d3166ddac01a83e215a0e4d30
 
 COCOAPODS: 0.35.0

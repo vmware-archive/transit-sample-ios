@@ -12,3 +12,5 @@ pod 'PCFData', '~> 1.1.0'
 pod 'PCFAuth', '~> 1.0.0'
 
 pod 'AFNetworking', '~> 2.5'
+
+pod 'RESideMenu', '~> 4.0.7'

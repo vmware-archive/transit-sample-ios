@@ -13,6 +13,8 @@
 #import "TTCLastNotificationView.h"
 #import "TTCUserDefaults.h"
 
+#import "RESideMenu.h"
+
 @interface TTCNotificationsTableViewController ()
 
 @property PCFKeyValueObject *savedStopsAndRouteObject;
@@ -208,11 +210,8 @@ static NSString* const PCFKey = @"my-notifications";
     [self persistDataToRemoteStore];
 }
 
-- (IBAction) logout
-{
-    self.stopAndRouteArray = [NSMutableArray array];
-    [PCFAuth invalidateToken];
-    [self fetchRoutesAndStops];    
+- (IBAction)showMenu:(id)sender {
+    [self presentLeftMenuViewController:self];
 }
 
 #pragma mark - Array and dictionary functions

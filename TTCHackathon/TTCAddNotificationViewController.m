@@ -35,6 +35,9 @@
     self.stopAndRouteInfo = [[TTCStopAndRouteInfo alloc] init];
     self.scheduleButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.scheduleButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.scheduleButton.layer.borderWidth = 1.0f;
+    self.scheduleButton.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.scheduleButton.layer.cornerRadius = 3.0f;
 }
 
 - (void) viewDidLayoutSubviews
