@@ -12,6 +12,7 @@
 #import "TTCStopViewController.h"
 #import "TTCSettings.h"
 #import "TTCLoadingOverlayView.h"
+#import "TTCStopTableViewCell.h"
 
 @interface TTCStopViewController ()
 
@@ -115,8 +116,8 @@
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    cell.textLabel.text = self.transitValues[indexPath.row][@"title"];
+    TTCStopTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    cell.stopLabel.text = self.transitValues[indexPath.row][@"title"];
     return cell;
 }
 
