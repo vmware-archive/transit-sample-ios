@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface TTCAboutViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITextView *aboutTextView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end

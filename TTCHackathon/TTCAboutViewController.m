@@ -8,10 +8,12 @@
 
 #import "TTCAboutViewController.h"
 #import "RESideMenu.h"
+#import "TTCAboutTableViewCell.h"
 
-static const NSString *pushSdkVersion = @"PCFPush: 1.0.4";
-static const NSString *dataSdkVersion = @"PCFData: 1.1.0";
-static const NSString *authSdkVersion = @"PCFAuth: 1.0.0";
+@interface TTCAboutViewController ()
+@property (nonatomic, strong) NSArray *aboutTitlesArray;
+@property (nonatomic, strong) NSArray *aboutVersionsArray;
+@end
 
 @implementation TTCAboutViewController
 
@@ -23,28 +25,41 @@ static const NSString *authSdkVersion = @"PCFAuth: 1.0.0";
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setTranslucent:YES];
     
-    NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    
-    NSString *aboutString = [NSString stringWithFormat:@"Application version: %@ \n\nPivotal CF Mobile Services component versions:\n\n  %@ \n  %@ \n  %@", appVersionString, pushSdkVersion, dataSdkVersion, authSdkVersion];
-    
-    
-    /*
-     sb.append("Application version: ");
-     sb.append(BuildConfig.VERSION_NAME);
-     sb.append("\n\nPivotal CF Mobile Services\ncomponent versions:\n\n  ");
-     sb.append(BuildConfig.AUTH_SDK_VERSION);
-     sb.append("\n  ");
-     sb.append(BuildConfig.DATA_SDK_VERSION);
-     sb.append("\n  ");
-     sb.append(BuildConfig.PUSH_SDK_VERSION);*/
-    
-    
-    [self.aboutTextView setText:aboutString];
-    
+    self.aboutTitlesArray = @[@"PCFPush", @"PCFData", @"PCFAuth"];
+    self.aboutVersionsArray = @[@"1.0.4", @"1.1.0", @"1.0.0"];
 }
 
 - (IBAction)showSideMenu:(id)sender {
     [self presentLeftMenuViewController:sender];
 }
+
+#pragma mark - Table view data source
+
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+        return 1;
+    } else {
+        return 3;
+    }
+}
+
+- (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    TTCAboutTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"aboutCell" forIndexPath:indexPath];
+    
+    if (indexPath.section == 0) {
+        cell.titleLabel.text = @"Application Version";
+        cell.descriptionLabel.text = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    } else {
+        cell.titleLabel.text = self.aboutTitlesArray[indexPath.row];
+        cell.descriptionLabel.text = self.aboutVersionsArray[indexPath.row];
+    }
+    
+    return cell;
+}
+
 
 @end
