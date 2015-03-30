@@ -3,12 +3,23 @@
 //
 
 #import "TTCNotificationTableViewCell.h"
+#import "TTCRouteUtil.h"
+#import "TTCRouteTitleModel.h"
 
 @implementation TTCNotificationTableViewCell
 
 - (void) populateViews:(TTCStopAndRouteInfo *)currentItem tag:(NSInteger)tag
 {
-    [self.routeLabel setText:currentItem.route];
+    TTCRouteTitleModel *routeTitleModel = [TTCRouteUtil routeTitleModelFromRouteTitle:currentItem.route];
+    
+    [self.routeLabel setText:routeTitleModel.routeName];
+    [self.routeNumberLabel setText:routeTitleModel.routeNumber];
+    
+    if (tag % 2 == 0) {
+        self.routeNumberLabel.backgroundColor = [UIColor redColor];
+    } else {
+        self.routeNumberLabel.backgroundColor = [UIColor colorWithRed:0 green:152/255.0 blue:240/255.0 alpha:1];
+    }
     
     [self.stopLabel setText:currentItem.stop];
     

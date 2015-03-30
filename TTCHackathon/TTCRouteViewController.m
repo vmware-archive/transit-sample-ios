@@ -9,6 +9,7 @@
 #import "TTCSettings.h"
 #import "TTCLoadingOverlayView.h"
 #import "TTCRouteTableViewCell.h"
+#import "TTCRouteUtil.h"
 
 static NSString *const kRoute = @"route";
 
@@ -110,23 +111,16 @@ static NSString *const kRoute = @"route";
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TTCRouteTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+
+    TTCRouteTitleModel* routeTitleModel = [TTCRouteUtil routeTitleModelFromRouteTitle:self.transitValues[indexPath.row][@"title"]];
     
-    NSString *routeTitle = self.transitValues[indexPath.row][@"title"];
-    NSUInteger delimiterIndex = [routeTitle rangeOfString:@"-"].location;
-    NSString *routeNumber;
-    NSString *routeName;
-    if (delimiterIndex != -1) {
-        routeNumber = [routeTitle substringToIndex:delimiterIndex];
-        routeName = [routeTitle substringFromIndex:delimiterIndex + 1];
-    }
-    
-    cell.circleView.text = routeNumber;
+    cell.circleView.text = routeTitleModel.routeNumber;
     if (indexPath.row % 2 == 0) {
         cell.circleView.backgroundColor = [UIColor redColor];
     } else {
         cell.circleView.backgroundColor = [UIColor colorWithRed:0 green:152/255.0 blue:240/255.0 alpha:1];
     }
-    cell.routeNameLabel.text = routeName;
+    cell.routeNameLabel.text = routeTitleModel.routeName;
     
     return cell;
 }

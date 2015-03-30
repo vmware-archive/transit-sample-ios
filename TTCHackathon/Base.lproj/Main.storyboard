@@ -215,7 +215,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Route" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="207" translatesAutoresizingMaskIntoConstraints="NO" id="hme-fQ-HeL">
-                                            <rect key="frame" x="20" y="9" width="207" height="29"/>
+                                            <rect key="frame" x="55" y="12" width="207" height="29"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -232,11 +232,18 @@
                                         <switch opaque="NO" tag="104" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xUO-sh-68h">
                                             <rect key="frame" x="251" y="48" width="51" height="31"/>
                                         </switch>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="501" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7m3-pS-gg8">
+                                            <rect key="frame" x="15" y="13" width="30" height="30"/>
+                                            <color key="backgroundColor" red="0.0" green="0.59607843137254901" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="vHg-7a-YKK" secondAttribute="centerY" id="3ji-Kf-gZ4"/>
                                         <constraint firstItem="0jK-vy-CTh" firstAttribute="leading" secondItem="hvE-7J-Obj" secondAttribute="leading" constant="20" id="Aor-8M-bT1"/>
-                                        <constraint firstItem="hme-fQ-HeL" firstAttribute="leading" secondItem="hvE-7J-Obj" secondAttribute="leading" constant="20" id="M3k-07-guH"/>
+                                        <constraint firstItem="hme-fQ-HeL" firstAttribute="leading" secondItem="hvE-7J-Obj" secondAttribute="leading" constant="55" id="M3k-07-guH"/>
                                         <constraint firstAttribute="bottom" secondItem="0jK-vy-CTh" secondAttribute="bottom" constant="20" id="UBz-NT-a97"/>
                                         <constraint firstItem="hme-fQ-HeL" firstAttribute="width" secondItem="0jK-vy-CTh" secondAttribute="width" id="ZEp-6N-qNf"/>
                                         <constraint firstItem="vHg-7a-YKK" firstAttribute="leading" secondItem="hvE-7J-Obj" secondAttribute="leading" constant="20" id="eku-4h-o88"/>
@@ -248,6 +255,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="routeLabel" destination="hme-fQ-HeL" id="6rN-gr-mib"/>
+                                    <outlet property="routeNumberLabel" destination="7m3-pS-gg8" id="1rG-Sw-tF4"/>
                                     <outlet property="stopLabel" destination="vHg-7a-YKK" id="k7b-lo-DBb"/>
                                     <outlet property="timeLabel" destination="0jK-vy-CTh" id="7NA-Ob-UcS"/>
                                     <outlet property="toggleSwitch" destination="xUO-sh-68h" id="JYU-5g-Tok"/>

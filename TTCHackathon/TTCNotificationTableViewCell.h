@@ -11,6 +11,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *stopLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *toggleSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *routeNumberLabel;
 
 - (void) populateViews:(TTCStopAndRouteInfo *)currentItem tag:(NSInteger)tag;
 
