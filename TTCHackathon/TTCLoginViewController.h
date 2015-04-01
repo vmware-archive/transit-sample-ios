@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <PCFAuth/PCFAuth.h>
 
-@interface TTCLoginViewController : UIViewController
+@interface TTCLoginViewController : PCFLoginViewController
 
 
 

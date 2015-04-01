@@ -227,7 +227,7 @@ static NSString* const PCFKey = @"my-notifications";
     [self.stopAndRouteArray addObject:stopAndRouteObject];
 }
 
-#pragma mark - MSSDataObject server functions
+#pragma mark - PCFData server functions
 
 /* When we authenticate we have to fetch our routes and stop from the server */
 - (void) fetchRoutesAndStops

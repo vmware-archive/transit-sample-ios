@@ -25,8 +25,12 @@
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setTranslucent:YES];
     
-    self.aboutTitlesArray = @[@"PCFPush", @"PCFData", @"PCFAuth"];
-    self.aboutVersionsArray = @[@"1.0.4", @"1.1.0", @"1.0.0"];
+    NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Pivotal" ofType:@"plist"];
+    NSDictionary* contentArray = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    
+    self.aboutTitlesArray = @[@"PCFPush", @"", @"PCFData", @"", @"PCFAuth", @""];
+    self.aboutVersionsArray = @[@"1.0.4", contentArray[@"pivotal.push.serviceUrl"], @"1.1.0", contentArray[@"pivotal.auth.authorizeUrl"], @"1.0.0", contentArray[@"pivotal.data.serviceUrl"]];
+
 }
 
 - (IBAction)showSideMenu:(id)sender {
@@ -43,7 +47,7 @@
     if (section == 0) {
         return 1;
     } else {
-        return 3;
+        return self.aboutTitlesArray.count;
     }
 }
 

@@ -7,7 +7,6 @@
 
 @interface TTCNotificationsTableViewController : UITableViewController
 
-- (IBAction) logout;
 - (IBAction) unwindToSavedTableView:(UIStoryboardSegue *)sender;
 - (void) addToStopAndRoute:(TTCStopAndRouteInfo *)stopAndRouteObject;
 
