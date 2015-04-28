@@ -3,6 +3,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TTCNotificationStore.h"
 
 extern NSString *const kRemoteNotificationReceived;
 

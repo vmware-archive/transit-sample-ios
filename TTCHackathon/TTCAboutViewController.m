@@ -28,7 +28,7 @@
     NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Pivotal" ofType:@"plist"];
     NSDictionary* contentArray = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     
-    self.aboutTitlesArray = @[@"PCFPush", @"", @"PCFData", @"", @"PCFAuth", @""];
+    self.aboutTitlesArray = @[@"PCFPush", @"", @"PCFAuth", @"", @"PCFData", @""];
     self.aboutVersionsArray = @[@"1.0.4", contentArray[@"pivotal.push.serviceUrl"], @"1.1.0", contentArray[@"pivotal.auth.authorizeUrl"], @"1.0.0", contentArray[@"pivotal.data.serviceUrl"]];
 
 }

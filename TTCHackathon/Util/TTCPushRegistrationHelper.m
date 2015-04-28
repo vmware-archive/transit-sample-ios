@@ -12,7 +12,7 @@
 
 @implementation TTCPushRegistrationHelper
 
-/* Registering for notifications with the Push Service */
+
 + (void) updateTags:(NSSet*)pushTags
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -20,7 +20,7 @@
     NSLog(@"Subscribing to tags: %@", pushTags);
     
     [PCFPush subscribeToTags:pushTags success:^{
-        NSLog(@"CF tags update succeeded!");
+        NSLog(@"CF tags update succeeded.");
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     } failure:^(NSError *error) {
         NSLog(@"CF tags update failed: %@", error);
@@ -31,20 +31,7 @@
 + (void) registerWithApns
 {
     UIApplication *application = [UIApplication sharedApplication];
-    
-    // Register for push notifications with the Apple Push Notification Service (APNS).
-    //
-    // On iOS 8.0+ you need to provide your user notification settings by calling
-    // [UIApplication.sharedDelegate registerUserNotificationSettings:] and then
-    // [UIApplication.sharedDelegate registerForRemoteNotifications];
-    //
-    // On < iOS 8.0 you need to provide your remote notification settings by calling
-    // [UIApplication.sharedDelegate registerForRemoteNotificationTypes:].  There are no
-    // user notification settings on < iOS 8.0.
-    //
-    // If this line gives you a compiler error then you need to make sure you have updated
-    // your Xcode to at least Xcode 6.0:
-    //
+
     if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         
         // iOS 8.0 +
@@ -59,7 +46,6 @@
         UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound;
         [application registerForRemoteNotificationTypes:notificationTypes];
     }
-
 }
 
 + (void) unregister

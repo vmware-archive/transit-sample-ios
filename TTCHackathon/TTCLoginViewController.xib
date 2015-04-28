@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -17,15 +17,6 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5yM-JG-uyO">
-                    <rect key="frame" x="50" y="215" width="500" height="30"/>
-                    <state key="normal" title="Submit Password">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="grantTypePassword:" destination="-1" eventType="touchUpInside" id="GlF-Ul-50n"/>
-                    </connections>
-                </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gpx-94-Nb0">
                     <rect key="frame" x="50" y="100" width="500" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -34,15 +25,6 @@
                         <outlet property="delegate" destination="-1" id="5IT-K4-sTB"/>
                     </connections>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VIz-R6-GS2">
-                    <rect key="frame" x="50" y="265" width="500" height="30"/>
-                    <state key="normal" title="Auth Code Flow">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="grantTypeAuthCode:" destination="-1" eventType="touchUpInside" id="T6i-7Y-9kl"/>
-                    </connections>
-                </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4md-R0-nMh">
                     <rect key="frame" x="50" y="155" width="500" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -51,21 +33,27 @@
                         <outlet property="delegate" destination="-1" id="K5L-wO-Gsj"/>
                     </connections>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5yM-JG-uyO">
+                    <rect key="frame" x="50" y="215" width="500" height="30"/>
+                    <state key="normal" title="Submit">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="grantTypePassword:" destination="-1" eventType="touchUpInside" id="GlF-Ul-50n"/>
+                    </connections>
+                </button>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
             <constraints>
                 <constraint firstItem="5yM-JG-uyO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="2hm-7H-ehA"/>
                 <constraint firstItem="4md-R0-nMh" firstAttribute="top" secondItem="gpx-94-Nb0" secondAttribute="bottom" constant="25" id="5US-Is-qiP"/>
                 <constraint firstAttribute="trailing" secondItem="5yM-JG-uyO" secondAttribute="trailing" constant="50" id="6RH-lJ-ROD"/>
                 <constraint firstAttribute="trailing" secondItem="gpx-94-Nb0" secondAttribute="trailing" constant="50" id="CMc-WS-anB"/>
                 <constraint firstItem="4md-R0-nMh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="IPs-16-RSU"/>
-                <constraint firstItem="VIz-R6-GS2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="d2K-r4-d7O"/>
                 <constraint firstItem="gpx-94-Nb0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="gcp-b7-9WV"/>
                 <constraint firstAttribute="trailing" secondItem="4md-R0-nMh" secondAttribute="trailing" constant="50" id="iNg-Dx-dar"/>
                 <constraint firstItem="gpx-94-Nb0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="mey-Br-f19"/>
-                <constraint firstAttribute="trailing" secondItem="VIz-R6-GS2" secondAttribute="trailing" constant="50" id="s2U-Y5-TUd"/>
                 <constraint firstItem="5yM-JG-uyO" firstAttribute="top" secondItem="4md-R0-nMh" secondAttribute="bottom" constant="30" id="urG-Kx-HEy"/>
-                <constraint firstItem="VIz-R6-GS2" firstAttribute="top" secondItem="5yM-JG-uyO" secondAttribute="bottom" constant="20" id="wx1-lm-5AY"/>
             </constraints>
             <point key="canvasLocation" x="473" y="241"/>
         </view>
