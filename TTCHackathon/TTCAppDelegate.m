@@ -6,7 +6,6 @@
 #import <PCFData/PCFData.h>
 #import <PCFAuth/PCFAuth.h>
 #import "TTCAppDelegate.h"
-#import "TTCUserDefaults.h"
 #import "TTCPushRegistrationHelper.h"
 
 @interface TTCAppDelegate ()

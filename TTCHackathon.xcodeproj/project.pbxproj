@@ -39,7 +39,6 @@
 		91DE58D0199EC24C00232354 /* ic_ttc_launcher-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58CE199EC24C00232354 /* ic_ttc_launcher-80.png */; };
 		91DE58DF19A29A4100232354 /* ic_ttc_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58DE19A29A4100232354 /* ic_ttc_logo.png */; };
 		D4262D981A150191005C4A04 /* TTCLastNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = D4262D971A150191005C4A04 /* TTCLastNotificationView.m */; };
-		D4262D9D1A1511F1005C4A04 /* TTCUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D4262D9C1A1511F1005C4A04 /* TTCUserDefaults.m */; };
 		D4262D9F1A1542FE005C4A04 /* TTCLastNotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4262D9E1A1542FE005C4A04 /* TTCLastNotificationView.xib */; };
 		D45F20AB19CCCFA8004D7E79 /* TTCSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = D45F20AA19CCCFA8004D7E79 /* TTCSettings.m */; };
 		D49ABDA619D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D49ABDA519D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m */; };
@@ -109,8 +108,6 @@
 		BB9ABB57785F52FFAC15D1EC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D4262D961A150191005C4A04 /* TTCLastNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCLastNotificationView.h; sourceTree = "<group>"; };
 		D4262D971A150191005C4A04 /* TTCLastNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCLastNotificationView.m; sourceTree = "<group>"; };
-		D4262D9B1A1511F1005C4A04 /* TTCUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCUserDefaults.h; sourceTree = "<group>"; };
-		D4262D9C1A1511F1005C4A04 /* TTCUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCUserDefaults.m; sourceTree = "<group>"; };
 		D4262D9E1A1542FE005C4A04 /* TTCLastNotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTCLastNotificationView.xib; sourceTree = "<group>"; };
 		D45F20A919CCCF6B004D7E79 /* TTCSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCSettings.h; sourceTree = "<group>"; };
 		D45F20AA19CCCFA8004D7E79 /* TTCSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCSettings.m; sourceTree = "<group>"; };
@@ -268,8 +265,6 @@
 				5746E59C195497C000CAADE9 /* TTCAppDelegate.m */,
 				D45F20A919CCCF6B004D7E79 /* TTCSettings.h */,
 				D45F20AA19CCCFA8004D7E79 /* TTCSettings.m */,
-				D4262D9B1A1511F1005C4A04 /* TTCUserDefaults.h */,
-				D4262D9C1A1511F1005C4A04 /* TTCUserDefaults.m */,
 				E18AEC511AEFD4C600F99716 /* TTCNotificationStore.h */,
 				E18AEC521AEFD4C600F99716 /* TTCNotificationStore.m */,
 			);
@@ -434,7 +429,6 @@
 				11F37BD61AC9D408001011C9 /* TTCRouteUtil.m in Sources */,
 				D45F20AB19CCCFA8004D7E79 /* TTCSettings.m in Sources */,
 				E18AEC591AF0001000F99716 /* TTCNotification.m in Sources */,
-				D4262D9D1A1511F1005C4A04 /* TTCUserDefaults.m in Sources */,
 				5746E59D195497C000CAADE9 /* TTCAppDelegate.m in Sources */,
 				117391271AC5B5C10060D6C8 /* TTCAboutViewController.m in Sources */,
 				117391211AC5ADFE0060D6C8 /* TTCSideMenuViewController.m in Sources */,
