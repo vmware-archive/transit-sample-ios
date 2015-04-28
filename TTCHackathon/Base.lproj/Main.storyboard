@@ -39,8 +39,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wXY-Ch-FIi">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xqR-pa-tGz">
-                                                <rect key="frame" x="25" y="287" width="270" height="150"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xqR-pa-tGz">
+                                                <rect key="frame" x="25" y="290" width="270" height="100"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" red="0.0" green="0.59607843140000005" blue="0.94117647059999998" alpha="1" colorSpace="deviceRGB"/>
                                                 <size key="titleShadowOffset" width="1" height="1"/>
@@ -51,15 +51,15 @@
                                                     <action selector="routeStopContainerPressed:" destination="ySk-zm-Kr5" eventType="touchUpInside" id="wTX-LP-yXH"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="275" translatesAutoresizingMaskIntoConstraints="NO" id="jAz-2Z-krD">
-                                                <rect key="frame" x="25" y="475" width="275" height="73"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="275" translatesAutoresizingMaskIntoConstraints="NO" id="jAz-2Z-krD">
+                                                <rect key="frame" x="26" y="410" width="270" height="43"/>
                                                 <string key="text">Note: You will receive push notifications alerting you about upcoming transit times within a 15 minute window of the time you select.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <datePicker contentMode="scaleToFill" horizontalHuggingPriority="240" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="g82-Cz-V02">
-                                                <rect key="frame" x="25" y="105" width="270" height="162"/>
+                                            <datePicker contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="g82-Cz-V02">
+                                                <rect key="frame" x="25" y="89" width="270" height="162"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="100" id="9st-3X-hdR"/>
                                                 </constraints>
@@ -77,6 +77,7 @@
                                             <constraint firstAttribute="height" constant="568" id="CTy-vN-f6U"/>
                                             <constraint firstItem="g82-Cz-V02" firstAttribute="width" secondItem="xqR-pa-tGz" secondAttribute="width" id="MpA-Lu-Mmf"/>
                                             <constraint firstItem="xqR-pa-tGz" firstAttribute="top" secondItem="g82-Cz-V02" secondAttribute="bottom" constant="70" id="apq-aF-8TD"/>
+                                            <constraint firstItem="g82-Cz-V02" firstAttribute="top" secondItem="wXY-Ch-FIi" secondAttribute="top" constant="120" id="c8U-xf-pxe"/>
                                             <constraint firstItem="xqR-pa-tGz" firstAttribute="leading" secondItem="wXY-Ch-FIi" secondAttribute="leading" constant="25" id="rGH-eJ-JqP"/>
                                             <constraint firstAttribute="trailing" secondItem="g82-Cz-V02" secondAttribute="trailing" constant="25" id="wKC-mf-PTM"/>
                                         </constraints>
@@ -236,6 +237,11 @@
                                 <action selector="showSideMenu:" destination="eXh-Fr-4rJ" id="UYu-44-xkv"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Clear" id="9e2-PP-SLp">
+                            <connections>
+                                <action selector="clearNotifications:" destination="eXh-Fr-4rJ" id="yj1-Yb-kdI"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
@@ -263,23 +269,23 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="126"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Route" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="207" translatesAutoresizingMaskIntoConstraints="NO" id="hme-fQ-HeL">
-                                            <rect key="frame" x="55" y="12" width="207" height="29"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="207" translatesAutoresizingMaskIntoConstraints="NO" id="hme-fQ-HeL">
+                                            <rect key="frame" x="55" y="20" width="45" height="20"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Stop" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="228" translatesAutoresizingMaskIntoConstraints="NO" id="vHg-7a-YKK">
-                                            <rect key="frame" x="15" y="46" width="228" height="36"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="228" translatesAutoresizingMaskIntoConstraints="NO" id="vHg-7a-YKK">
+                                            <rect key="frame" x="20" y="56" width="45" height="14"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jK-vy-CTh">
-                                            <rect key="frame" x="20" y="90" width="207" height="33"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jK-vy-CTh">
+                                            <rect key="frame" x="20" y="92" width="45" height="14"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <switch opaque="NO" tag="104" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xUO-sh-68h">
-                                            <rect key="frame" x="251" y="48" width="51" height="31"/>
+                                        <switch opaque="NO" tag="104" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xUO-sh-68h">
+                                            <rect key="frame" x="256" y="48" width="51" height="31"/>
                                         </switch>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="501" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7m3-pS-gg8">
                                             <rect key="frame" x="15" y="13" width="30" height="30"/>
@@ -354,8 +360,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="46"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="nxF-0K-QJG">
-                                            <rect key="frame" x="20" y="3" width="275" height="40"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="nxF-0K-QJG">
+                                            <rect key="frame" x="20" y="4" width="275" height="38"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="38" id="kba-2f-JpF"/>
                                                 <constraint firstAttribute="width" constant="275" id="ql3-eN-dXk"/>

@@ -8,13 +8,14 @@
 
 #import "TTCNotificationStoreTableViewController.h"
 #import "TTCNotificationStore.h"
+#import "TTCNotification.h"
 #import "RESideMenu.h"
 
 @interface TTCNotificationStoreTableViewController ()
 
 @property (strong) TTCNotificationStore *notificationStore;
 @property (strong) NSArray *notifications;
-@property (strong) NSDateFormatter *dateFormatter;
+
 @end
 
 @implementation TTCNotificationStoreTableViewController
@@ -26,12 +27,6 @@
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setTranslucent:YES];
-
-    self.dateFormatter = [[NSDateFormatter alloc] init];
-    self.dateFormatter.locale = [NSLocale currentLocale];
-    self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
-    self.dateFormatter.timeStyle = NSDateFormatterMediumStyle;
-    self.dateFormatter.timeZone = [NSTimeZone defaultTimeZone];
     
     self.notificationStore = [[TTCNotificationStore alloc] init];
     self.notifications = self.notificationStore.notifications;
@@ -68,6 +63,10 @@
     [self presentLeftMenuViewController:sender];
 }
 
+- (IBAction)clearNotifications:(id)sender {
+    [self.notificationStore clearNotifications];
+}
+
 
 #pragma mark - Table view data source
 
@@ -91,12 +90,11 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 
-    NSDictionary *notification = [self.notifications objectAtIndex:indexPath.row];
+    NSDictionary *dictionary = [self.notifications objectAtIndex:indexPath.row];
+    TTCNotification *notification = [[TTCNotification alloc] initWithDictionary:dictionary];
     
-    cell.textLabel.text = [notification valueForKeyPath:@"aps.alert"];
-    
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[notification valueForKeyPath:@"aps.timestamp"] doubleValue]];
-    cell.detailTextLabel.text = [self.dateFormatter stringFromDate:date];
+    cell.textLabel.text = notification.message;
+    cell.detailTextLabel.text = notification.formattedDate;
 
     return cell;
 }

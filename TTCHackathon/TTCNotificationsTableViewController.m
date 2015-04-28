@@ -11,7 +11,7 @@
 #import "TTCAppDelegate.h"
 #import "TTCSettings.h"
 #import "TTCLastNotificationView.h"
-#import "TTCUserDefaults.h"
+#import "TTCNotification.h"
 
 #import "RESideMenu.h"
 
@@ -23,6 +23,8 @@
 @property (strong, nonatomic) NSMutableArray *stopAndRouteArray; // keeps track of all stops and routes we saved (enabled AND disabled).
 @property TTCLastNotificationView *lastNotificationView;
 @property UIRefreshControl *refreshControl;
+
+@property (strong) TTCNotificationStore *notificationStore;
 
 @end
 
@@ -49,6 +51,8 @@ static NSString* const PCFKey = @"my-notifications";
     [self.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
 
     self.stopAndRouteArray = [NSMutableArray array];
+    
+    self.notificationStore = [[TTCNotificationStore alloc] init];
 }
 
 - (void) refreshTable
@@ -60,48 +64,54 @@ static NSString* const PCFKey = @"my-notifications";
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:NO];
+    
     [self.tableView reloadData];
+    
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults addObserver:self forKeyPath:TTCNotificationsKey options:NSKeyValueObservingOptionNew context:0];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:NO];
-    [self registerForNotifications];
+    
     [self showLastNotification];
 
     [self fetchRoutesAndStops];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kRemoteNotificationReceived object:nil];
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObserver:self forKeyPath:TTCNotificationsKey];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([object isKindOfClass:[NSUserDefaults class]]) {
+        if ([keyPath isEqualToString:TTCNotificationsKey]) {
+            
+            [self showLastNotification];
+            
+            [self.lastNotificationView flash];
+        }
+    }
 }
 
 #pragma mark - Notification handling
 
-- (void) registerForNotifications {
-    void (^block)(NSNotification*) = ^(NSNotification* notification) {
-        [self showLastNotification];
-        [self.lastNotificationView flash];
-    };
-    [[NSNotificationCenter defaultCenter] addObserverForName:kRemoteNotificationReceived
-                                                      object:nil
-                                                       queue:[NSOperationQueue mainQueue]
-                                                  usingBlock:block];
-}
-
 - (void) showLastNotification {
-    NSString *lastNotificationText = [TTCUserDefaults getLastNotificationText];
-    NSDate *lastNotificationDate = [TTCUserDefaults getLastNotificationTime];
-    if (lastNotificationText) {
-        
+    NSDictionary *dictionary = [self.notificationStore.notifications firstObject];
+    if (dictionary) {
+        TTCNotification *notification = [[TTCNotification alloc] initWithDictionary:dictionary];
         NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"TTCLastNotificationView" owner:self options:nil];
         for (id i in objects) {
             if([i isKindOfClass:[TTCLastNotificationView class]]) {
                 self.lastNotificationView = (TTCLastNotificationView*) i;
-                [self.lastNotificationView showNotification:lastNotificationText date:lastNotificationDate];
+                [self.lastNotificationView showNotification:notification.message date:notification.date];
                 [self.tableView reloadData];
             }
         }
@@ -157,35 +167,27 @@ static NSString* const PCFKey = @"my-notifications";
 
 - (BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return YES;
+    return indexPath.section > 0;
 }
 
 - (void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        if (editingStyle == UITableViewCellEditingStyleDelete) {
-            [TTCUserDefaults setLastNotificationText:nil];
-            [TTCUserDefaults setLastNotificationTime:nil];
-            [self showLastNotification];
-        }
-    } else {
-        if (editingStyle == UITableViewCellEditingStyleDelete) {
-            TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
-            if (!currentItem) return;
-            
-            // delete from array
-            [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
+        if (!currentItem) return;
+        
+        // delete from array
+        [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
+        
+        // delete from set
+        [TTCPushRegistrationHelper updateTags:[self enabledTags]];
+        
+        [self persistDataToRemoteStore];
+        
+        // need to refresh the table to update the view
+        [self.tableView reloadData];
 
-            // delete from set
-            [TTCPushRegistrationHelper updateTags:[self enabledTags]];
-            
-            [self persistDataToRemoteStore];
-            
-            // need to refresh the table to update the view
-            [self.tableView reloadData];
-            NSLog(@"Deleted row.");
-            self.tableView.alwaysBounceVertical = YES;
-        }
+        self.tableView.alwaysBounceVertical = YES;
     }
 }
 

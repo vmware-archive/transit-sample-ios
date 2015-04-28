@@ -46,6 +46,7 @@
 		DE6B3CA656AE421799946EE4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E013236D742EE9FAA500B /* libPods.a */; };
 		E18AEC531AEFD4C600F99716 /* TTCNotificationStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E18AEC521AEFD4C600F99716 /* TTCNotificationStore.m */; };
 		E18AEC561AEFD9B000F99716 /* TTCNotificationStoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18AEC551AEFD9B000F99716 /* TTCNotificationStoreTableViewController.m */; };
+		E18AEC591AF0001000F99716 /* TTCNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = E18AEC581AF0001000F99716 /* TTCNotification.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -119,6 +120,8 @@
 		E18AEC521AEFD4C600F99716 /* TTCNotificationStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCNotificationStore.m; sourceTree = "<group>"; };
 		E18AEC541AEFD9B000F99716 /* TTCNotificationStoreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCNotificationStoreTableViewController.h; sourceTree = "<group>"; };
 		E18AEC551AEFD9B000F99716 /* TTCNotificationStoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCNotificationStoreTableViewController.m; sourceTree = "<group>"; };
+		E18AEC571AF0001000F99716 /* TTCNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCNotification.h; sourceTree = "<group>"; };
+		E18AEC581AF0001000F99716 /* TTCNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCNotification.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +187,8 @@
 				916215FF199507340019EF2B /* TTCStopAndRouteInfo.m */,
 				11F37BD71AC9D43E001011C9 /* TTCRouteTitleModel.h */,
 				11F37BD81AC9D43E001011C9 /* TTCRouteTitleModel.m */,
+				E18AEC571AF0001000F99716 /* TTCNotification.h */,
+				E18AEC581AF0001000F99716 /* TTCNotification.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -428,6 +433,7 @@
 				11F37BDC1AC9E4E3001011C9 /* TTCAboutTableViewCell.m in Sources */,
 				11F37BD61AC9D408001011C9 /* TTCRouteUtil.m in Sources */,
 				D45F20AB19CCCFA8004D7E79 /* TTCSettings.m in Sources */,
+				E18AEC591AF0001000F99716 /* TTCNotification.m in Sources */,
 				D4262D9D1A1511F1005C4A04 /* TTCUserDefaults.m in Sources */,
 				5746E59D195497C000CAADE9 /* TTCAppDelegate.m in Sources */,
 				117391271AC5B5C10060D6C8 /* TTCAboutViewController.m in Sources */,

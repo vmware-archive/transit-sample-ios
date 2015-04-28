@@ -9,8 +9,6 @@
 #import "TTCUserDefaults.h"
 #import "TTCPushRegistrationHelper.h"
 
-NSString *const kRemoteNotificationReceived = @"NOTIFICATION_RECEIVED";
-
 @interface TTCAppDelegate ()
 
 @property (strong) TTCNotificationStore *notificationStore;
@@ -66,19 +64,9 @@ NSString *const kRemoteNotificationReceived = @"NOTIFICATION_RECEIVED";
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler
 {
-    
-    [self.notificationStore didReceiveRemoteNotification:userInfo];
-    
     NSLog(@"Remote notification received: %@", userInfo);
-    
-    if (userInfo[@"aps"][@"alert"]) {
-        [TTCUserDefaults setLastNotificationText:userInfo[@"aps"][@"alert"]];
-    } else {
-        [TTCUserDefaults setLastNotificationText:@"NO MESSAGE"];
-    }
-    
-    [TTCUserDefaults setLastNotificationTime:[NSDate date]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kRemoteNotificationReceived object:self userInfo:userInfo];
+
+    [self.notificationStore didReceiveRemoteNotification:userInfo];
 
     if (handler) {
         handler(UIBackgroundFetchResultNewData);
