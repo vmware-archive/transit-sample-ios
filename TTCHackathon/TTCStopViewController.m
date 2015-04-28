@@ -83,7 +83,7 @@
 
 - (NSString*) transitValueForIndex:(NSIndexPath *)indexPath
 {
-    return self.transitValues[indexPath.row][@"tag"];
+    return self.transitValues[indexPath.row][@"stopId"];
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -92,7 +92,7 @@
     
     if (value) {
         [self.stopAndRouteInfo setStop:self.transitValues[indexPath.row][@"title"]];
-        [self.stopAndRouteInfo setStopTag:value];
+        [self.stopAndRouteInfo setStopId:value];
         NSLog(@"stop: %@", self.transitValues[indexPath.row][@"title"]);
         NSLog(@"stopTag: %@", value);
         

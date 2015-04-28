@@ -157,6 +157,8 @@ static NSString* const PCFKey = @"my-notifications";
     TTCNotificationTableViewCell *cell = (TTCNotificationTableViewCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
     
+    NSLog(@"item : %@", [currentItem formattedDictionary]);
+    
     if (currentItem) {
         [cell populateViews:currentItem tag:indexPath.row];
         [cell.toggleSwitch addTarget:self action:@selector(switchToggled:) forControlEvents:UIControlEventTouchUpInside];

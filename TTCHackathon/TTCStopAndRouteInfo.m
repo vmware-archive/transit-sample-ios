@@ -22,7 +22,7 @@
 
 - (void) generateTag
 {
-    self.tag = [NSString stringWithFormat:@"%@_%@_%@", self.timeInUtc, self.routeTag, self.stopTag];
+    self.tag = [NSString stringWithFormat:@"%@_%@_%@", self.timeInUtc, self.routeTag, self.stopId];
 }
 
 - (NSDictionary *)formattedDictionary {
