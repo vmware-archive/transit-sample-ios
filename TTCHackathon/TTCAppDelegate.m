@@ -30,6 +30,7 @@
     
     [PCFAuth registerLogoutObserverBlock:^{
         [TTCPushRegistrationHelper unregister];
+        [PCFData clearCachedData];
     }];
     
     [PCFData registerTokenProviderBlock:^() {

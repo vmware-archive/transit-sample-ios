@@ -308,7 +308,8 @@ static NSString* const PCFKey = @"my-notifications";
             NSLog(@"saving to datasync successful");
         } else {
             NSLog(@"saving to datasync failed: %@", response.error);
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your data has been modified remotely. Please refresh and make your changes again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            NSString *errorMessage = [NSString stringWithFormat:@"Failed to update routes. Try refreshing your data. \n\n[%@]", response.error];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [alertView show];
         }
     }];
