@@ -104,21 +104,21 @@ static NSString* const PCFKey = @"my-notifications";
 #pragma mark - Notification handling
 
 - (void) showLastNotification {
-    NSDictionary *dictionary = [self.notificationStore.notifications firstObject];
-    if (dictionary) {
-        TTCNotification *notification = [[TTCNotification alloc] initWithDictionary:dictionary];
-        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"TTCLastNotificationView" owner:self options:nil];
-        for (id i in objects) {
-            if([i isKindOfClass:[TTCLastNotificationView class]]) {
-                self.lastNotificationView = (TTCLastNotificationView*) i;
-                [self.lastNotificationView showNotification:notification.message date:notification.date];
-                [self.tableView reloadData];
-            }
-        }
-    } else {
-        self.lastNotificationView = nil;
-        [self.tableView reloadData];
-    }
+//    NSDictionary *dictionary = [self.notificationStore.notifications firstObject];
+//    if (dictionary) {
+//        TTCNotification *notification = [[TTCNotification alloc] initWithDictionary:dictionary];
+//        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"TTCLastNotificationView" owner:self options:nil];
+//        for (id i in objects) {
+//            if([i isKindOfClass:[TTCLastNotificationView class]]) {
+//                self.lastNotificationView = (TTCLastNotificationView*) i;
+//                [self.lastNotificationView showNotification:notification.message date:notification.date];
+//                [self.tableView reloadData];
+//            }
+//        }
+//    } else {
+//        self.lastNotificationView = nil;
+//        [self.tableView reloadData];
+//    }
 }
 
 #pragma mark - Table view data source

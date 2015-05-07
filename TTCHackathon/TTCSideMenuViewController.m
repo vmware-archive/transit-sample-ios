@@ -52,7 +52,7 @@
 - (void)routeToIndex:(long)index {
     switch (index) {
         case 0:
-            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCNotificationStoreTableViewController"]] animated:YES];
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCInboxTableViewController"]] animated:YES];
             [self.sideMenuViewController hideMenuViewController];
             break;
         case 1:
@@ -106,7 +106,7 @@
         cell.selectedBackgroundView = [[UIView alloc] init];
     }
     
-    NSArray *titles = @[@"Inbox", @"Notifications", @"About", @"Log Out"];
+    NSArray *titles = @[@"Notifications", @"Preferences", @"About", @"Log Out"];
     cell.textLabel.text = titles[indexPath.row];
     
     return cell;

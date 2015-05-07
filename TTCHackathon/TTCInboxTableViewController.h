@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TTCInboxTableViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@interface TTCInboxTableViewController : UITableViewController
+
 @end
