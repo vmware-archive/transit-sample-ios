@@ -20,8 +20,7 @@
 @property PCFKeyValueObject *savedStopsAndRouteObject;
 @property TTCLoadingOverlayView *loadingOverlayView;
 
-@property (strong, nonatomic) NSMutableArray *stopAndRouteArray; // keeps track of all stops and routes we saved (enabled AND disabled).
-@property TTCLastNotificationView *lastNotificationView;
+@property (strong, nonatomic) NSMutableArray *stopAndRouteArray;
 @property UIRefreshControl *refreshControl;
 
 @property (strong) TTCNotificationStore *notificationStore;
@@ -57,7 +56,6 @@ static NSString* const PCFKey = @"my-notifications";
 
 - (void) refreshTable
 {
-    [self showLastNotification];
     [self fetchRoutesAndStops];
 }
 
@@ -70,89 +68,34 @@ static NSString* const PCFKey = @"my-notifications";
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults addObserver:self forKeyPath:TTCNotificationsKey options:NSKeyValueObservingOptionNew context:0];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:NO];
-    
-    [self showLastNotification];
 
     [self fetchRoutesAndStops];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObserver:self forKeyPath:TTCNotificationsKey];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([object isKindOfClass:[NSUserDefaults class]]) {
-        if ([keyPath isEqualToString:TTCNotificationsKey]) {
-            
-            [self showLastNotification];
-            
-            [self.lastNotificationView flash];
-        }
-    }
-}
-
-#pragma mark - Notification handling
-
-- (void) showLastNotification {
-//    NSDictionary *dictionary = [self.notificationStore.notifications firstObject];
-//    if (dictionary) {
-//        TTCNotification *notification = [[TTCNotification alloc] initWithDictionary:dictionary];
-//        NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"TTCLastNotificationView" owner:self options:nil];
-//        for (id i in objects) {
-//            if([i isKindOfClass:[TTCLastNotificationView class]]) {
-//                self.lastNotificationView = (TTCLastNotificationView*) i;
-//                [self.lastNotificationView showNotification:notification.message date:notification.date];
-//                [self.tableView reloadData];
-//            }
-//        }
-//    } else {
-//        self.lastNotificationView = nil;
-//        [self.tableView reloadData];
-//    }
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return self.lastNotificationView != nil ? 1 : 0;
-    } else {
-        return self.stopAndRouteArray.count;
-    }
+    return self.stopAndRouteArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        return 96;
-    } else {
-        return 127;
-    }
+    return 127;
 }
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"keyValueCell";
- 
-    if (indexPath.section == 0) {
-        return self.lastNotificationView;
-    }
     
     TTCNotificationTableViewCell *cell = (TTCNotificationTableViewCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:indexPath.row];
@@ -169,7 +112,7 @@ static NSString* const PCFKey = @"my-notifications";
 
 - (BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.section > 0;
+    return true;
 }
 
 - (void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
