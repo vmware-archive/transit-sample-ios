@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TTCNotificationStoreTableViewController : UIViewController
+@interface TTCInboxTableViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end

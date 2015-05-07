@@ -6,19 +6,21 @@
 //  Copyright (c) 2015 Pivotal. All rights reserved.
 //
 
-#import "TTCNotificationStoreTableViewController.h"
+#import "TTCInboxTableViewController.h"
+#import "TTCInboxItemViewController.h"
+#import "TTCInboxTableViewCell.h"
 #import "TTCNotificationStore.h"
 #import "TTCNotification.h"
 #import "RESideMenu.h"
 
-@interface TTCNotificationStoreTableViewController ()
+@interface TTCInboxTableViewController ()
 
 @property (strong) TTCNotificationStore *notificationStore;
 @property (strong) NSArray *notifications;
 
 @end
 
-@implementation TTCNotificationStoreTableViewController
+@implementation TTCInboxTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,8 +32,6 @@
     
     self.notificationStore = [[TTCNotificationStore alloc] init];
     self.notifications = self.notificationStore.notifications;
-    
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -67,6 +67,13 @@
     [self.notificationStore clearNotifications];
 }
 
+#pragma mark - Seque 
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    TTCInboxItemViewController *destViewController = segue.destinationViewController;
+    destViewController.notification = [self notificationForIndexPath:indexPath];
+}
 
 #pragma mark - Table view data source
 
@@ -78,25 +85,23 @@
     return self.notifications.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 96;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class])];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:NSStringFromClass([UITableViewCell class])];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
+    TTCInboxTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"inboxCell"];
 
-    NSDictionary *dictionary = [self.notifications objectAtIndex:indexPath.row];
-    TTCNotification *notification = [[TTCNotification alloc] initWithDictionary:dictionary];
+    TTCNotification *notification = [self notificationForIndexPath:indexPath];
     
-    cell.textLabel.text = notification.message;
-    cell.detailTextLabel.text = notification.formattedDate;
+    cell.messageLabel.text = notification.message;
+    cell.timestampLabel.text = notification.formattedDate;
 
     return cell;
 }
 
+#pragma mark - util 
+
+- (TTCNotification *)notificationForIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *dictionary = [self.notifications objectAtIndex:indexPath.row];
+    TTCNotification *notification = [[TTCNotification alloc] initWithDictionary:dictionary];
+    
+    return notification;
+}
 @end

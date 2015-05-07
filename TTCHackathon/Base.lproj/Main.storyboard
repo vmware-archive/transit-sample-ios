@@ -51,13 +51,6 @@
                                                     <action selector="routeStopContainerPressed:" destination="ySk-zm-Kr5" eventType="touchUpInside" id="wTX-LP-yXH"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="275" translatesAutoresizingMaskIntoConstraints="NO" id="jAz-2Z-krD">
-                                                <rect key="frame" x="26" y="410" width="270" height="43"/>
-                                                <string key="text">Note: You will receive push notifications alerting you about upcoming transit times within a 15 minute window of the time you select.</string>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <datePicker contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="g82-Cz-V02">
                                                 <rect key="frame" x="25" y="89" width="270" height="162"/>
                                                 <constraints>
@@ -67,6 +60,13 @@
                                                     <!--2014-08-06 14:10:26 +0000-->
                                                 </date>
                                             </datePicker>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="275" translatesAutoresizingMaskIntoConstraints="NO" id="jAz-2Z-krD">
+                                                <rect key="frame" x="24" y="410" width="273" height="43"/>
+                                                <string key="text">Note: You will receive push notifications alerting you about upcoming transit times for a period of 15 minutes up to the time you select.</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <constraints>
@@ -202,7 +202,7 @@
         <!--Transit++-->
         <scene sceneID="f06-x2-K66">
             <objects>
-                <viewController storyboardIdentifier="TTCNotificationStoreTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eXh-Fr-4rJ" customClass="TTCNotificationStoreTableViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TTCNotificationStoreTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eXh-Fr-4rJ" customClass="TTCInboxTableViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8F6-6B-cNO"/>
                         <viewControllerLayoutGuide type="bottom" id="aqj-M1-HQ0"/>
@@ -211,16 +211,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ZLK-zp-anb">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ZLK-zp-anb">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="47d-vv-vz2">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="inboxCell" rowHeight="85" id="47d-vv-vz2" customClass="TTCInboxTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="47d-vv-vz2" id="NH8-b1-rBN">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AfZ-gX-TX3" userLabel="messageLabel">
+                                                    <rect key="frame" x="28" y="18" width="231" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timestamp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lE-ff-cjV" userLabel="timeLabel">
+                                                    <rect key="frame" x="28" y="49" width="231" height="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="5lE-ff-cjV" firstAttribute="leading" secondItem="NH8-b1-rBN" secondAttribute="leadingMargin" constant="20" id="Q4H-3Z-UTV"/>
+                                                <constraint firstItem="AfZ-gX-TX3" firstAttribute="leading" secondItem="NH8-b1-rBN" secondAttribute="leadingMargin" constant="20" id="fwt-QQ-DgP"/>
+                                                <constraint firstItem="5lE-ff-cjV" firstAttribute="top" secondItem="AfZ-gX-TX3" secondAttribute="bottom" constant="10" id="hyX-bS-J6M"/>
+                                                <constraint firstItem="AfZ-gX-TX3" firstAttribute="top" secondItem="NH8-b1-rBN" secondAttribute="topMargin" constant="10" id="pdN-r0-OV3"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="5lE-ff-cjV" secondAttribute="trailing" constant="20" id="sHW-iP-ZlS"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="AfZ-gX-TX3" secondAttribute="trailing" constant="20" id="wqG-m5-GjT"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="messageLabel" destination="AfZ-gX-TX3" id="eVW-iY-sHw"/>
+                                            <outlet property="timestampLabel" destination="5lE-ff-cjV" id="uXB-Ym-Odj"/>
+                                            <segue destination="arO-u6-vsn" kind="push" id="qly-K6-xsL"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -252,6 +279,52 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rsZ-gH-vxo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1196" y="835"/>
+        </scene>
+        <!--Transit++-->
+        <scene sceneID="HYj-3g-lRz">
+            <objects>
+                <viewController id="arO-u6-vsn" customClass="TTCInboxItemViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5jw-Jb-Tw3"/>
+                        <viewControllerLayoutGuide type="bottom" id="JbI-6z-BU9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qfu-3a-ga0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timestamp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ceV-Cr-UTp">
+                                <rect key="frame" x="36" y="84" width="248" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tse-4r-bEk">
+                                <rect key="frame" x="36" y="119" width="248" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tse-4r-bEk" firstAttribute="leading" secondItem="qfu-3a-ga0" secondAttribute="leadingMargin" constant="20" id="GGU-BI-lVL"/>
+                            <constraint firstItem="ceV-Cr-UTp" firstAttribute="top" secondItem="5jw-Jb-Tw3" secondAttribute="bottom" constant="20" id="PXz-EE-uA7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tse-4r-bEk" secondAttribute="trailing" constant="20" id="TF3-Bm-bvO"/>
+                            <constraint firstItem="ceV-Cr-UTp" firstAttribute="leading" secondItem="qfu-3a-ga0" secondAttribute="leadingMargin" constant="20" id="d0c-kJ-Mt4"/>
+                            <constraint firstItem="tse-4r-bEk" firstAttribute="top" secondItem="ceV-Cr-UTp" secondAttribute="bottom" constant="20" id="fnR-BU-RNn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ceV-Cr-UTp" secondAttribute="trailing" constant="20" id="nw6-uj-ZlH"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Transit++" id="nda-wp-OQu" userLabel="Message"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="messageLabel" destination="tse-4r-bEk" id="rNy-fr-kjj"/>
+                        <outlet property="timestampLabel" destination="ceV-Cr-UTp" id="LcN-xW-G9n"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mCI-9C-n5c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1622" y="839"/>
         </scene>
         <!--TTCNotificationsTableViewController-->
         <scene sceneID="k33-ka-sg5">

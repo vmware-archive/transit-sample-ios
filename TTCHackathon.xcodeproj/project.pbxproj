@@ -44,8 +44,10 @@
 		D49ABDA619D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D49ABDA519D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m */; };
 		DE6B3CA656AE421799946EE4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E013236D742EE9FAA500B /* libPods.a */; };
 		E18AEC531AEFD4C600F99716 /* TTCNotificationStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E18AEC521AEFD4C600F99716 /* TTCNotificationStore.m */; };
-		E18AEC561AEFD9B000F99716 /* TTCNotificationStoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18AEC551AEFD9B000F99716 /* TTCNotificationStoreTableViewController.m */; };
+		E18AEC561AEFD9B000F99716 /* TTCInboxTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18AEC551AEFD9B000F99716 /* TTCInboxTableViewController.m */; };
 		E18AEC591AF0001000F99716 /* TTCNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = E18AEC581AF0001000F99716 /* TTCNotification.m */; };
+		E1CF8D781AFBB00F0047F058 /* TTCInboxTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CF8D771AFBB00F0047F058 /* TTCInboxTableViewCell.m */; };
+		E1CF8D7B1AFBB48B0047F058 /* TTCInboxItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CF8D7A1AFBB48B0047F058 /* TTCInboxItemViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -115,10 +117,14 @@
 		D49ABDA519D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTCPushRegistrationHelper.m; path = Util/TTCPushRegistrationHelper.m; sourceTree = "<group>"; };
 		E18AEC511AEFD4C600F99716 /* TTCNotificationStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCNotificationStore.h; sourceTree = "<group>"; };
 		E18AEC521AEFD4C600F99716 /* TTCNotificationStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCNotificationStore.m; sourceTree = "<group>"; };
-		E18AEC541AEFD9B000F99716 /* TTCNotificationStoreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCNotificationStoreTableViewController.h; sourceTree = "<group>"; };
-		E18AEC551AEFD9B000F99716 /* TTCNotificationStoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCNotificationStoreTableViewController.m; sourceTree = "<group>"; };
+		E18AEC541AEFD9B000F99716 /* TTCInboxTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCInboxTableViewController.h; sourceTree = "<group>"; };
+		E18AEC551AEFD9B000F99716 /* TTCInboxTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCInboxTableViewController.m; sourceTree = "<group>"; };
 		E18AEC571AF0001000F99716 /* TTCNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCNotification.h; sourceTree = "<group>"; };
 		E18AEC581AF0001000F99716 /* TTCNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCNotification.m; sourceTree = "<group>"; };
+		E1CF8D761AFBB00F0047F058 /* TTCInboxTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCInboxTableViewCell.h; sourceTree = "<group>"; };
+		E1CF8D771AFBB00F0047F058 /* TTCInboxTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCInboxTableViewCell.m; sourceTree = "<group>"; };
+		E1CF8D791AFBB48B0047F058 /* TTCInboxItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCInboxItemViewController.h; sourceTree = "<group>"; };
+		E1CF8D7A1AFBB48B0047F058 /* TTCInboxItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCInboxItemViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +225,8 @@
 				11F37BD21AC9A90A001011C9 /* TTCStopTableViewCell.m */,
 				11F37BDA1AC9E4E3001011C9 /* TTCAboutTableViewCell.h */,
 				11F37BDB1AC9E4E3001011C9 /* TTCAboutTableViewCell.m */,
+				E1CF8D761AFBB00F0047F058 /* TTCInboxTableViewCell.h */,
+				E1CF8D771AFBB00F0047F058 /* TTCInboxTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -235,8 +243,10 @@
 		D478F75419D07B1D004027CF /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E18AEC541AEFD9B000F99716 /* TTCNotificationStoreTableViewController.h */,
-				E18AEC551AEFD9B000F99716 /* TTCNotificationStoreTableViewController.m */,
+				E18AEC541AEFD9B000F99716 /* TTCInboxTableViewController.h */,
+				E18AEC551AEFD9B000F99716 /* TTCInboxTableViewController.m */,
+				E1CF8D791AFBB48B0047F058 /* TTCInboxItemViewController.h */,
+				E1CF8D7A1AFBB48B0047F058 /* TTCInboxItemViewController.m */,
 				916215F119926A010019EF2B /* TTCAddNotificationViewController.h */,
 				916215F219926A010019EF2B /* TTCAddNotificationViewController.m */,
 				916215FA199279640019EF2B /* TTCNotificationsTableViewController.h */,
@@ -427,6 +437,7 @@
 				1173911E1AC1B9BB0060D6C8 /* TTCStopViewController.m in Sources */,
 				11F37BDC1AC9E4E3001011C9 /* TTCAboutTableViewCell.m in Sources */,
 				11F37BD61AC9D408001011C9 /* TTCRouteUtil.m in Sources */,
+				E1CF8D781AFBB00F0047F058 /* TTCInboxTableViewCell.m in Sources */,
 				D45F20AB19CCCFA8004D7E79 /* TTCSettings.m in Sources */,
 				E18AEC591AF0001000F99716 /* TTCNotification.m in Sources */,
 				5746E59D195497C000CAADE9 /* TTCAppDelegate.m in Sources */,
@@ -438,9 +449,10 @@
 				11F37BD31AC9A90A001011C9 /* TTCStopTableViewCell.m in Sources */,
 				91621600199507340019EF2B /* TTCStopAndRouteInfo.m in Sources */,
 				91DE589B199C032800232354 /* TTCLoadingOverlayView.m in Sources */,
-				E18AEC561AEFD9B000F99716 /* TTCNotificationStoreTableViewController.m in Sources */,
+				E18AEC561AEFD9B000F99716 /* TTCInboxTableViewController.m in Sources */,
 				11F37BD01AC99C28001011C9 /* TTCRouteTableViewCell.m in Sources */,
 				11F37BD91AC9D43E001011C9 /* TTCRouteTitleModel.m in Sources */,
+				E1CF8D7B1AFBB48B0047F058 /* TTCInboxItemViewController.m in Sources */,
 				11F37BCD1AC98D83001011C9 /* TTCLoginViewController.m in Sources */,
 				E18AEC531AEFD4C600F99716 /* TTCNotificationStore.m in Sources */,
 				5746E599195497C000CAADE9 /* main.m in Sources */,
@@ -541,7 +553,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Pivotal Labs, Inc.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Robert Szumlakowski (TAAP59C578)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Pivotal Labs, Inc.";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -560,7 +572,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "7b065aad-c995-483a-ba84-a5f65e665d81";
+				PROVISIONING_PROFILE = "fc6c187c-64b8-436a-8fa6-b19133ee6ec9";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -581,7 +593,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Pivotal Labs, Inc.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Robert Szumlakowski (TAAP59C578)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Pivotal Labs, Inc.";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -593,7 +605,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PROVISIONING_PROFILE = "7b065aad-c995-483a-ba84-a5f65e665d81";
+				PROVISIONING_PROFILE = "fc6c187c-64b8-436a-8fa6-b19133ee6ec9";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
