@@ -6,7 +6,7 @@
 #import <PCFData/PCFData.h>
 #import "TTCStopAndRouteInfo.h"
 #import "TTCRouteViewController.h"
-#import "TTCNotificationsTableViewController.h"
+#import "TTCPreferencesTableViewController.h"
 
 @interface TTCAddNotificationViewController : UIViewController
 

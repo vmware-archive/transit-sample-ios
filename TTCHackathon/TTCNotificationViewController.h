@@ -10,7 +10,7 @@
 
 @class TTCNotification;
 
-@interface TTCInboxItemViewController : UIViewController
+@interface TTCNotificationViewController : UIViewController
 
 @property (strong, nonatomic) TTCNotification *notification;
 

@@ -1,13 +1,13 @@
 //
-//  Copyright (c) 2014 Pivotal. All rights reserved.
+//  TTCNotificationStoreTableViewController.h
+//  TTCHackathon
+//
+//  Created by DX122-XL on 2015-04-28.
+//  Copyright (c) 2015 Pivotal. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "TTCStopAndRouteInfo.h"
 
 @interface TTCNotificationsTableViewController : UITableViewController
-
-- (IBAction) unwindToSavedTableView:(UIStoryboardSegue *)sender;
-- (void) addToStopAndRoute:(TTCStopAndRouteInfo *)stopAndRouteObject;
 
 @end

@@ -71,7 +71,7 @@
     if ([segue.destinationViewController isKindOfClass:[TTCRouteViewController class]]) {
         [[segue destinationViewController] setStopAndRouteInfo:self.stopAndRouteInfo];
         
-    } else if ([segue.destinationViewController isKindOfClass:[TTCNotificationsTableViewController class]]) {
+    } else if ([segue.destinationViewController isKindOfClass:[TTCPreferencesTableViewController class]]) {
         
         if (self.stopAndRouteInfo.route != nil  && self.stopAndRouteInfo.stop != nil) {
             self.stopAndRouteInfo.enabled = YES;

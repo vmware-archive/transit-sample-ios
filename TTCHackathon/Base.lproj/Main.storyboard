@@ -202,13 +202,13 @@
         <!--Inbox-->
         <scene sceneID="6KD-T8-lmb">
             <objects>
-                <tableViewController storyboardIdentifier="TTCInboxTableViewController" title="Inbox" useStoryboardIdentifierAsRestorationIdentifier="YES" id="u2p-qg-Nl3" customClass="TTCInboxTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TTCNotificationsTableViewController" title="Inbox" useStoryboardIdentifierAsRestorationIdentifier="YES" id="u2p-qg-Nl3" customClass="TTCNotificationsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="85" sectionHeaderHeight="22" sectionFooterHeight="22" id="ViJ-ZG-Bwu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="inboxCell" rowHeight="85" id="47d-vv-vz2" customClass="TTCInboxTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="inboxCell" rowHeight="85" id="47d-vv-vz2" customClass="TTCNotificationsTableViewCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="47d-vv-vz2" id="NH8-b1-rBN">
@@ -270,7 +270,7 @@
         <!--Notification-->
         <scene sceneID="HYj-3g-lRz">
             <objects>
-                <viewController id="arO-u6-vsn" customClass="TTCInboxItemViewController" sceneMemberID="viewController">
+                <viewController id="arO-u6-vsn" customClass="TTCNotificationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5jw-Jb-Tw3"/>
                         <viewControllerLayoutGuide type="bottom" id="JbI-6z-BU9"/>
@@ -315,16 +315,16 @@
             </objects>
             <point key="canvasLocation" x="266" y="41"/>
         </scene>
-        <!--TTCNotificationsTableViewController-->
+        <!--TTCPreferencesTableViewController-->
         <scene sceneID="k33-ka-sg5">
             <objects>
-                <tableViewController restorationIdentifier="TTCNotificationsTableViewController" storyboardIdentifier="TTCNotificationsTableViewController" title="Transit++" id="CQA-q5-WG8" userLabel="TTCNotificationsTableViewController" customClass="TTCNotificationsTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TTCPreferencesTableViewController" title="Transit++" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CQA-q5-WG8" userLabel="TTCPreferencesTableViewController" customClass="TTCPreferencesTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="127" sectionHeaderHeight="22" sectionFooterHeight="22" id="o0P-ly-fm2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="keyValueCell" editingAccessoryType="checkmark" rowHeight="127" id="E4Y-gJ-6qK" customClass="TTCNotificationTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="keyValueCell" editingAccessoryType="checkmark" rowHeight="127" id="E4Y-gJ-6qK" customClass="TTCPreferencesTableViewCell">
                                 <rect key="frame" x="0.0" y="86" width="320" height="127"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E4Y-gJ-6qK" id="hvE-7J-Obj">

@@ -6,14 +6,14 @@
 //  Copyright (c) 2015 Pivotal. All rights reserved.
 //
 
-#import "TTCInboxItemViewController.h"
+#import "TTCNotificationViewController.h"
 #import "TTCNotification.h"
 
-@interface TTCInboxItemViewController ()
+@interface TTCNotificationViewController ()
 
 @end
 
-@implementation TTCInboxItemViewController
+@implementation TTCNotificationViewController
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];

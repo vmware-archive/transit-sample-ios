@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TTCInboxTableViewCell : UITableViewCell
+@interface TTCNotificationsTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;

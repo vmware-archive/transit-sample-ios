@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Pivotal. All rights reserved.
 //
 
-#import "TTCInboxTableViewCell.h"
+#import "TTCNotificationsTableViewCell.h"
 
-@implementation TTCInboxTableViewCell
+@implementation TTCNotificationsTableViewCell
 
 @end

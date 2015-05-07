@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 #import "TTCStopAndRouteInfo.h"
 
-@interface TTCNotificationTableViewCell : UITableViewCell
+@interface TTCPreferencesTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *routeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *stopLabel;

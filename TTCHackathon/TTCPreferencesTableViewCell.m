@@ -2,11 +2,11 @@
 //  Copyright (c) 2014 Pivotal. All rights reserved.
 //
 
-#import "TTCNotificationTableViewCell.h"
+#import "TTCPreferencesTableViewCell.h"
 #import "TTCRouteUtil.h"
 #import "TTCRouteTitleModel.h"
 
-@implementation TTCNotificationTableViewCell
+@implementation TTCPreferencesTableViewCell
 
 - (void) populateViews:(TTCStopAndRouteInfo *)currentItem tag:(NSInteger)tag
 {
