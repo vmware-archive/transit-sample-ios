@@ -10,6 +10,7 @@
 #import "UIViewController+RESideMenu.h"
 #import <PCFAuth/PCFAuth.h>
 
+
 @interface TTCSideMenuViewController ()
 
 @property (strong, readwrite, nonatomic) UITableView *tableView;
@@ -21,6 +22,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     self.tableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height - 54 * 5) / 2.0f, self.view.frame.size.width, 54 * 5) style:UITableViewStylePlain];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
@@ -34,6 +36,7 @@
         tableView.scrollsToTop = NO;
         tableView;
     });
+    
     [self.view addSubview:self.tableView];
 }
 
@@ -43,27 +46,27 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch (indexPath.row) {
+    [self routeToIndex:indexPath.row];
+}
+
+- (void)routeToIndex:(long)index {
+    switch (index) {
         case 0:
-            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCNotificationStoreTableViewController"]]
-                                                         animated:YES];
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCNotificationStoreTableViewController"]] animated:YES];
             [self.sideMenuViewController hideMenuViewController];
             break;
         case 1:
-            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCNotificationsTableViewController"]]
-                                                         animated:YES];
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCNotificationsTableViewController"]] animated:YES];
             [self.sideMenuViewController hideMenuViewController];
             break;
         case 2:
-            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCAboutViewController"]]
-                                                         animated:YES];
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCAboutViewController"]] animated:YES];
             [self.sideMenuViewController hideMenuViewController];
             break;
         case 3:
-            [PCFAuth logout];
-            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCNotificationsTableViewController"]]
-                                                         animated:YES];
+            [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCNotificationsTableViewController"]] animated:YES];
             [self.sideMenuViewController hideMenuViewController];
+            [PCFAuth logout];
             break;
         default:
             break;

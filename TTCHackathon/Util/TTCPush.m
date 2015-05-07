@@ -7,10 +7,10 @@
 //
 
 #import <PCFPush/PCFPush.h>
-#import "TTCPushRegistrationHelper.h"
+#import "TTCPush.h"
 #import "TTCSettings.h"
 
-@implementation TTCPushRegistrationHelper
+@implementation TTCPush
 
 
 + (void) updateTags:(NSSet*)pushTags
@@ -46,6 +46,19 @@
         UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound;
         [application registerForRemoteNotificationTypes:notificationTypes];
     }
+}
+
++ (void)registerWithDeviceToken:(NSData *)deviceToken
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    [PCFPush registerForPCFPushNotificationsWithDeviceToken:deviceToken tags:nil deviceAlias:UIDevice.currentDevice.name success:^{
+        NSLog(@"CF registration succeeded!");
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    } failure:^(NSError *error) {
+        NSLog(@"CF registration failed: %@", error);
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }];
 }
 
 + (void) unregister

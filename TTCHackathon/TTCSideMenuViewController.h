@@ -11,5 +11,6 @@
 
 @interface TTCSideMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, RESideMenuDelegate>
 
+- (void)routeToIndex:(long)index;
 
 @end

@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TTCPushRegistrationHelper : NSObject
+@interface TTCPush : NSObject
 
 + (void) updateTags:(NSSet*)pushTags;
 + (void) registerWithApns;
 + (void) unregister;
++ (void) registerWithDeviceToken:(NSData *)deviceToken;
 
 @end

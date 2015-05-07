@@ -6,7 +6,9 @@
 #import <PCFData/PCFData.h>
 #import <PCFAuth/PCFAuth.h>
 #import "TTCAppDelegate.h"
-#import "TTCPushRegistrationHelper.h"
+#import "TTCPush.h"
+#import "TTCRootViewController.h"
+#import "TTCSideMenuViewController.h"
 
 @interface TTCAppDelegate ()
 
@@ -16,20 +18,17 @@
 
 @implementation TTCAppDelegate
 
-- (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.notificationStore = [[TTCNotificationStore alloc] init];
     
-    // Register with apns when app is launched
-    [TTCPushRegistrationHelper registerWithApns];
+    [TTCPush registerWithApns];
     
-    // Re-register with apns when logged in
     [PCFAuth registerLoginObserverBlock:^{
-        [TTCPushRegistrationHelper registerWithApns];
+        [TTCPush registerWithApns];
     }];
     
     [PCFAuth registerLogoutObserverBlock:^{
-        [TTCPushRegistrationHelper unregister];
+        [TTCPush unregister];
         [PCFData clearCachedData];
     }];
     
@@ -41,29 +40,25 @@
         [PCFAuth invalidateToken];
     }];
     
+    NSDictionary *pushNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (pushNotification) {
+        [self pushInboxViewController];
+    }
+    
     return YES;
 }
 
-// This method is called when APNS registration succeeds.
-- (void) application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"APNS registration succeeded!");
 
-    [PCFPush registerForPCFPushNotificationsWithDeviceToken:deviceToken tags:nil deviceAlias:UIDevice.currentDevice.name success:^{
-        NSLog(@"CF registration succeeded!");
-    } failure:^(NSError *error) {
-        NSLog(@"CF registration failed: %@", error);
-    }];
+    [TTCPush registerWithDeviceToken:deviceToken];
 }
 
-// This method is called when APNS registration fails.
-- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
-{
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"APNS registration failed: %@", error);
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler
-{
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler {
     NSLog(@"Remote notification received: %@", userInfo);
 
     [self.notificationStore didReceiveRemoteNotification:userInfo];
@@ -71,10 +66,20 @@
     if (handler) {
         handler(UIBackgroundFetchResultNewData);
     }
+    
+    if (application.applicationState != UIApplicationStateActive) {
+        [self pushInboxViewController];
+    }
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [PCFData performSyncWithCompletionHandler:completionHandler];
+}
+
+- (void)pushInboxViewController {
+    TTCRootViewController *vc = (TTCRootViewController *) self.window.rootViewController;
+    TTCSideMenuViewController *svc = (TTCSideMenuViewController *) vc.leftMenuViewController;
+    [svc routeToIndex:0];
 }
 
 @end

@@ -4,7 +4,7 @@
 
 #import <PCFData/PCFData.h>
 #import <PCFAuth/PCFAuth.h>
-#import "TTCPushRegistrationHelper.h"
+#import "TTCPush.h"
 #import "TTCNotificationsTableViewController.h"
 #import "TTCLoadingOverlayView.h"
 #import "TTCNotificationTableViewCell.h"
@@ -182,7 +182,7 @@ static NSString* const PCFKey = @"my-notifications";
         [self.stopAndRouteArray removeObjectAtIndex:indexPath.row];
         
         // delete from set
-        [TTCPushRegistrationHelper updateTags:[self enabledTags]];
+        [TTCPush updateTags:[self enabledTags]];
         
         [self persistDataToRemoteStore];
         
@@ -199,7 +199,7 @@ static NSString* const PCFKey = @"my-notifications";
 - (IBAction) unwindToSavedTableView:(UIStoryboardSegue *)sender
 {
     [self persistDataToRemoteStore];
-    [TTCPushRegistrationHelper updateTags:[self enabledTags]];
+    [TTCPush updateTags:[self enabledTags]];
 }
 
 #pragma mark - Action events
@@ -209,7 +209,7 @@ static NSString* const PCFKey = @"my-notifications";
     TTCStopAndRouteInfo* currentItem = [self.stopAndRouteArray objectAtIndex:mySwitch.tag];
     currentItem.enabled = [mySwitch isOn];
     
-    [TTCPushRegistrationHelper updateTags:[self enabledTags]];
+    [TTCPush updateTags:[self enabledTags]];
 
     [self persistDataToRemoteStore];
 }
@@ -269,7 +269,7 @@ static NSString* const PCFKey = @"my-notifications";
             [self.tableView reloadData];
 
             // Update the push registration on the server
-            [TTCPushRegistrationHelper updateTags:[self enabledTags]];
+            [TTCPush updateTags:[self enabledTags]];
             
             if (self.refreshControl && [self.refreshControl isRefreshing]) {
                 [self.refreshControl endRefreshing];

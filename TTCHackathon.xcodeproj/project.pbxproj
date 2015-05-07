@@ -41,7 +41,7 @@
 		D4262D981A150191005C4A04 /* TTCLastNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = D4262D971A150191005C4A04 /* TTCLastNotificationView.m */; };
 		D4262D9F1A1542FE005C4A04 /* TTCLastNotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4262D9E1A1542FE005C4A04 /* TTCLastNotificationView.xib */; };
 		D45F20AB19CCCFA8004D7E79 /* TTCSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = D45F20AA19CCCFA8004D7E79 /* TTCSettings.m */; };
-		D49ABDA619D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D49ABDA519D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m */; };
+		D49ABDA619D1E1FD0092BFB7 /* TTCPush.m in Sources */ = {isa = PBXBuildFile; fileRef = D49ABDA519D1E1FD0092BFB7 /* TTCPush.m */; };
 		DE6B3CA656AE421799946EE4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E013236D742EE9FAA500B /* libPods.a */; };
 		E18AEC531AEFD4C600F99716 /* TTCNotificationStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E18AEC521AEFD4C600F99716 /* TTCNotificationStore.m */; };
 		E18AEC561AEFD9B000F99716 /* TTCInboxTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18AEC551AEFD9B000F99716 /* TTCInboxTableViewController.m */; };
@@ -113,8 +113,8 @@
 		D4262D9E1A1542FE005C4A04 /* TTCLastNotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTCLastNotificationView.xib; sourceTree = "<group>"; };
 		D45F20A919CCCF6B004D7E79 /* TTCSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCSettings.h; sourceTree = "<group>"; };
 		D45F20AA19CCCFA8004D7E79 /* TTCSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCSettings.m; sourceTree = "<group>"; };
-		D49ABDA419D1E1FD0092BFB7 /* TTCPushRegistrationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTCPushRegistrationHelper.h; path = Util/TTCPushRegistrationHelper.h; sourceTree = "<group>"; };
-		D49ABDA519D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTCPushRegistrationHelper.m; path = Util/TTCPushRegistrationHelper.m; sourceTree = "<group>"; };
+		D49ABDA419D1E1FD0092BFB7 /* TTCPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTCPush.h; path = Util/TTCPush.h; sourceTree = "<group>"; };
+		D49ABDA519D1E1FD0092BFB7 /* TTCPush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTCPush.m; path = Util/TTCPush.m; sourceTree = "<group>"; };
 		E18AEC511AEFD4C600F99716 /* TTCNotificationStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCNotificationStore.h; sourceTree = "<group>"; };
 		E18AEC521AEFD4C600F99716 /* TTCNotificationStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCNotificationStore.m; sourceTree = "<group>"; };
 		E18AEC541AEFD9B000F99716 /* TTCInboxTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCInboxTableViewController.h; sourceTree = "<group>"; };
@@ -284,8 +284,8 @@
 		D49ABDA319D1E1C80092BFB7 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				D49ABDA419D1E1FD0092BFB7 /* TTCPushRegistrationHelper.h */,
-				D49ABDA519D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m */,
+				D49ABDA419D1E1FD0092BFB7 /* TTCPush.h */,
+				D49ABDA519D1E1FD0092BFB7 /* TTCPush.m */,
 				11F37BD41AC9D408001011C9 /* TTCRouteUtil.h */,
 				11F37BD51AC9D408001011C9 /* TTCRouteUtil.m */,
 			);
@@ -430,7 +430,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D49ABDA619D1E1FD0092BFB7 /* TTCPushRegistrationHelper.m in Sources */,
+				D49ABDA619D1E1FD0092BFB7 /* TTCPush.m in Sources */,
 				57F633341954A64800446130 /* TTCRouteViewController.m in Sources */,
 				91DE58AE199D569800232354 /* TTCNotificationTableViewCell.m in Sources */,
 				D4262D981A150191005C4A04 /* TTCLastNotificationView.m in Sources */,
@@ -553,7 +553,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Robert Szumlakowski (TAAP59C578)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Pivotal Labs, Inc.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Pivotal Labs, Inc.";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -572,7 +572,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "fc6c187c-64b8-436a-8fa6-b19133ee6ec9";
+				PROVISIONING_PROFILE = "7b065aad-c995-483a-ba84-a5f65e665d81";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -593,7 +593,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Robert Szumlakowski (TAAP59C578)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Pivotal Labs, Inc.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Pivotal Labs, Inc.";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -605,7 +605,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PROVISIONING_PROFILE = "fc6c187c-64b8-436a-8fa6-b19133ee6ec9";
+				PROVISIONING_PROFILE = "7b065aad-c995-483a-ba84-a5f65e665d81";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
