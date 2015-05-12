@@ -8,10 +8,11 @@
 
 #import "TTCNotificationStore.h"
 #import "TTCAppDelegate.h"
+#import <PCFData/PCFData.h>
 
 @interface TTCNotificationStore ()
 
-@property (strong, readonly) NSUserDefaults *defaults;
+@property (strong, readonly) PCFKeyValueObject *remoteObject;
 
 @end
 
@@ -19,45 +20,36 @@
 
 NSString* const TTCNotificationsKey = @"TTC:Notifications:Key";
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
-    _defaults = [NSUserDefaults standardUserDefaults];
+    _remoteObject = [PCFKeyValueObject objectWithCollection:@"notifications" key:@"messages"];
     return self;
 }
 
-- (void)didReceiveRemoteNotification:(NSDictionary *)notification
-{
+- (void)didReceiveRemoteNotification:(NSDictionary *)notification {
     [self addNotification:notification];
 }
 
-- (void)addNotification:(NSDictionary *)notification
-{
-    NSMutableDictionary *formattedNotification = [self formatNotificationWithTimestamp:notification];
+- (void)addNotification:(NSDictionary *)notification {
+    NSMutableDictionary *formatted = [self formatNotificationWithTimestamp:notification];
     
-    @synchronized(self) {
-        NSString *serialized = [self.defaults objectForKey:TTCNotificationsKey];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        PCFDataResponse *getResponse = [self.remoteObject get];
+        PCFKeyValue *keyValue = (PCFKeyValue *) getResponse.object;
         
-        NSMutableArray *array;
+        NSString *newSerialized = [self serializeDictionary:formatted previous:keyValue.value];
         
-        if (!serialized) {
-            array = [NSMutableArray arrayWithObject:formattedNotification];
+        PCFDataResponse *putResponse = [self.remoteObject putWithValue:newSerialized];
+
+        if (!putResponse.error) {
+            NSLog(@"Success saving messages");
         } else {
-            NSData *data = [serialized dataUsingEncoding:NSUTF8StringEncoding];
-            array = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil] mutableCopy];
-            
-            [array insertObject:formattedNotification atIndex:0];
+            NSLog(@"Error saving messages: %@", putResponse.error);
         }
-        
-        NSData *newData = [NSJSONSerialization dataWithJSONObject:array options:0 error:nil];
-        NSString *newSerialized = [[NSString alloc] initWithData:newData encoding:NSUTF8StringEncoding];
-        
-        [self.defaults setObject:newSerialized forKey:TTCNotificationsKey];
-    }
+    });
 }
 
-- (NSMutableDictionary *)formatNotificationWithTimestamp:(NSDictionary *)notification
-{
+- (NSMutableDictionary *)formatNotificationWithTimestamp:(NSDictionary *)notification {
     NSMutableDictionary *formattedNotification = [notification mutableCopy];
     NSMutableDictionary *apsDictionary = [[formattedNotification objectForKey:@"aps"] mutableCopy];
     [apsDictionary setObject:[NSNumber numberWithLong:[[NSDate date] timeIntervalSince1970]] forKey:@"timestamp"];
@@ -65,25 +57,49 @@ NSString* const TTCNotificationsKey = @"TTC:Notifications:Key";
     return formattedNotification;
 }
 
-- (NSArray *)notifications
-{
-    NSString *serialized;
-    
-    @synchronized(self) {
-        serialized = [self.defaults objectForKey:TTCNotificationsKey];
-    }
-    
-    NSData *data = [serialized dataUsingEncoding:NSUTF8StringEncoding];
+- (NSString *)serializeDictionary:(NSMutableDictionary *)notification previous:(NSString *)previous {
+    NSArray *array = [self addNotificationToExistingArray:notification previous:previous];
+    NSData *newData = [NSJSONSerialization dataWithJSONObject:array options:0 error:nil];
+    NSString *newSerialized = [[NSString alloc] initWithData:newData encoding:NSUTF8StringEncoding];
+    return newSerialized;
+}
 
-    if (data) {
-        return [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+- (NSArray *)addNotificationToExistingArray:(NSMutableDictionary *)notification previous:(NSString *)previous {
+    if (previous) {
+        NSData *data = [previous dataUsingEncoding:NSUTF8StringEncoding];
+        NSMutableArray *array = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil] mutableCopy];
+        [array insertObject:notification atIndex:0];
+        return array;
     } else {
-        return nil;
+        return [NSMutableArray arrayWithObject:notification];
     }
 }
 
-- (void)clearNotifications {
-    [self.defaults removeObjectForKey:TTCNotificationsKey];
+- (void)notificationsWithBlock:(void(^)(NSArray *messages))block {
+    [self.remoteObject getWithCompletionBlock:^(PCFDataResponse *response) {
+        if (!response.error) {
+            PCFKeyValue *keyValue = (PCFKeyValue *) response.object;
+            NSData *data = [keyValue.value dataUsingEncoding:NSUTF8StringEncoding];
+            
+            if (data && block) {
+                block([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            }
+        } else {
+            NSLog(@"Error retrieving messages: %@", response.error);
+            
+            if (block) {
+                block([NSArray array]);
+            }
+        }
+    }];
+}
+
+- (void)clearNotificationsWithBlock:(void(^)())block {
+    [self.remoteObject deleteWithCompletionBlock:^(PCFDataResponse *response) {
+        if (block) {
+            block();
+        }
+    }];
 }
 
 @end

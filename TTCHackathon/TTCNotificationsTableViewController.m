@@ -17,10 +17,13 @@
 
 @property (strong) TTCNotificationStore *notificationStore;
 @property (strong) NSArray *notifications;
+@property UIRefreshControl *refreshControl;
 
 @end
 
 @implementation TTCNotificationsTableViewController
+
+NSString * const TTCMessagesKey = @"notifications:messages";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,42 +32,55 @@
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setTranslucent:YES];
-    
+
     self.notificationStore = [[TTCNotificationStore alloc] init];
-    self.notifications = self.notificationStore.notifications;
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchNotifications) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self fetchNotifications];
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults addObserver:self forKeyPath:TTCNotificationsKey options:NSKeyValueObservingOptionNew context:0];
+    [defaults addObserver:self forKeyPath:TTCMessagesKey options:NSKeyValueObservingOptionNew context:0];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObserver:self forKeyPath:TTCNotificationsKey];
+    [defaults removeObserver:self forKeyPath:TTCMessagesKey];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([object isKindOfClass:[NSUserDefaults class]]) {
-        if ([keyPath isEqualToString:TTCNotificationsKey]) {
-            
-            self.notifications = self.notificationStore.notifications;
-            
-            [self.tableView reloadData];
+        if ([keyPath isEqualToString:TTCMessagesKey]) {
+            [self fetchNotifications];
         }
     }
 }
 
-- (IBAction)showSideMenu:(id)sender {
-    [self presentLeftMenuViewController:sender];
+- (void)fetchNotifications {
+    [self.notificationStore notificationsWithBlock:^(NSArray *messages) {
+        [self.refreshControl endRefreshing];
+        self.notifications = messages;
+        [self.tableView reloadData];
+    }];
 }
 
 - (IBAction)clearNotifications:(id)sender {
-    [self.notificationStore clearNotifications];
+    [self.notificationStore clearNotificationsWithBlock:^{
+        self.notifications = [NSArray new];
+        [self.tableView reloadData];
+    }];
+}
+
+- (IBAction)showSideMenu:(id)sender {
+    [self presentLeftMenuViewController:sender];
 }
 
 #pragma mark - Seque 

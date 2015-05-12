@@ -14,8 +14,8 @@ extern NSString *const TTCNotificationsKey;
 
 - (void)didReceiveRemoteNotification:(NSDictionary *)notification;
 
-- (NSArray *)notifications;
+- (void)notificationsWithBlock:(void(^)(NSArray *messages))block;
 
-- (void)clearNotifications;
+- (void)clearNotificationsWithBlock:(void(^)())block;
 
 @end

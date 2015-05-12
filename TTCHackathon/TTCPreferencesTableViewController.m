@@ -23,8 +23,6 @@
 @property (strong, nonatomic) NSMutableArray *stopAndRouteArray;
 @property UIRefreshControl *refreshControl;
 
-@property (strong) TTCNotificationStore *notificationStore;
-
 @end
 
 @implementation TTCPreferencesTableViewController
@@ -35,8 +33,7 @@ static NSString* const PCFKey = @"my-notifications";
 - (void) viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.notificationStore = [[TTCNotificationStore alloc] init];
+
     self.savedStopsAndRouteObject = [PCFKeyValueObject objectWithCollection:PCFCollection key:PCFKey];
     self.stopAndRouteArray = [NSMutableArray array];
 
