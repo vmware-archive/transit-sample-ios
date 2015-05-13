@@ -56,7 +56,7 @@
     
     if (indexPath.section == 0) {
         cell.titleLabel.text = @"Application Version";
-        cell.descriptionLabel.text = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+        cell.descriptionLabel.text = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
     } else {
         cell.titleLabel.text = self.aboutTitlesArray[indexPath.row];
         cell.descriptionLabel.text = self.aboutVersionsArray[indexPath.row];
