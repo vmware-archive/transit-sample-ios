@@ -29,27 +29,25 @@ NSString* const TTCNotificationsKey = @"TTC:Notifications:Key";
 - (void)addNotification:(NSDictionary *)notification {
     NSMutableDictionary *formatted = [self formatNotificationWithReadStateAndTimestamp:notification];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        PCFDataResponse *getResponse = [self.remoteObject get];
-        
-        if (getResponse.error) {
-            NSLog(@"Error saving messages: %@", getResponse.error);
-            return;
-        }
-        
-        PCFKeyValue *keyValue = (PCFKeyValue *) getResponse.object;
-        
-        NSString *newSerialized = [self serializeNotification:formatted previous:keyValue.value];
-
-        PCFDataResponse *putResponse = [self.remoteObject putWithValue:newSerialized];
-
-        if (putResponse.error) {
-            NSLog(@"Error saving messages: %@", putResponse.error);
-            return;
-        }
-        
-        NSLog(@"Successfully saved messages");
-    });
+    PCFDataResponse *getResponse = [self.remoteObject get];
+    
+    if (getResponse.error) {
+        NSLog(@"Error saving messages: %@", getResponse.error);
+        return;
+    }
+    
+    PCFKeyValue *keyValue = (PCFKeyValue *) getResponse.object;
+    
+    NSString *newSerialized = [self serializeNotification:formatted previous:keyValue.value];
+    
+    PCFDataResponse *putResponse = [self.remoteObject putWithValue:newSerialized];
+    
+    if (putResponse.error) {
+        NSLog(@"Error saving messages: %@", putResponse.error);
+        return;
+    }
+    
+    NSLog(@"Successfully saved messages");
 }
 
 - (void)fetchNotificationsWithBlock:(void(^)(NSArray *notifications, NSError *error))block {
