@@ -26,80 +26,102 @@ NSString* const TTCNotificationsKey = @"TTC:Notifications:Key";
     return self;
 }
 
-- (void)didReceiveRemoteNotification:(NSDictionary *)notification {
-    [self addNotification:notification];
-}
-
 - (void)addNotification:(NSDictionary *)notification {
-    NSMutableDictionary *formatted = [self formatNotificationWithTimestamp:notification];
+    NSMutableDictionary *formatted = [self formatNotificationWithReadStateAndTimestamp:notification];
     
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         PCFDataResponse *getResponse = [self.remoteObject get];
+        
+        if (getResponse.error) {
+            NSLog(@"Error saving messages: %@", getResponse.error);
+            return;
+        }
+        
         PCFKeyValue *keyValue = (PCFKeyValue *) getResponse.object;
         
-        NSString *newSerialized = [self serializeDictionary:formatted previous:keyValue.value];
-        
+        NSString *newSerialized = [self serializeNotification:formatted previous:keyValue.value];
+
         PCFDataResponse *putResponse = [self.remoteObject putWithValue:newSerialized];
 
-        if (!putResponse.error) {
-            NSLog(@"Success saving messages");
-        } else {
+        if (putResponse.error) {
             NSLog(@"Error saving messages: %@", putResponse.error);
+            return;
         }
+        
+        NSLog(@"Successfully saved messages");
     });
 }
 
-- (NSMutableDictionary *)formatNotificationWithTimestamp:(NSDictionary *)notification {
+- (void)fetchNotificationsWithBlock:(void(^)(NSArray *notifications, NSError *error))block {
+    [self.remoteObject getWithCompletionBlock:^(PCFDataResponse *response) {
+        if (block) {
+            if (!response.error) {
+                PCFKeyValue *keyValue = (PCFKeyValue *) response.object;
+                NSArray *notifications = [self deserializeNotifications:keyValue.value];
+                block(notifications, nil);
+            } else {
+                block([NSArray array], response.error);
+            }
+        }
+    }];
+}
+
+- (void)updateNotifications:(NSArray *)notifications withBlock:(void(^)(NSArray *notifications, NSError *error))block {
+    
+    NSString *serialized = [self serializeNotifications:notifications];
+    
+    [self.remoteObject putWithValue:serialized completionBlock:^(PCFDataResponse *response) {
+        if (block) {
+            if (!response.error) {
+                block(notifications, nil);
+            } else {
+                block([NSArray array], response.error);
+            }
+        }
+    }];
+}
+
+- (void)clearNotificationsWithBlock:(void(^)(NSError *error))block {
+    [self.remoteObject putWithValue:@"" completionBlock:^(PCFDataResponse *response) {
+        if (block) {
+            block(response.error);
+        }
+    }];
+}
+
+
+- (NSMutableDictionary *)formatNotificationWithReadStateAndTimestamp:(NSDictionary *)notification {
     NSMutableDictionary *formattedNotification = [notification mutableCopy];
-    NSMutableDictionary *apsDictionary = [[formattedNotification objectForKey:@"aps"] mutableCopy];
-    [apsDictionary setObject:[NSNumber numberWithLong:[[NSDate date] timeIntervalSince1970]] forKey:@"timestamp"];
-    [formattedNotification setObject:apsDictionary forKey:@"aps"];
+    [formattedNotification setObject:[NSNumber numberWithLong:[[NSDate date] timeIntervalSince1970]] forKey:@"timestamp"];
+    [formattedNotification setObject:[NSNumber numberWithBool:false] forKey:@"read"];
     return formattedNotification;
 }
 
-- (NSString *)serializeDictionary:(NSMutableDictionary *)notification previous:(NSString *)previous {
-    NSArray *array = [self addNotificationToExistingArray:notification previous:previous];
-    NSData *newData = [NSJSONSerialization dataWithJSONObject:array options:0 error:nil];
-    NSString *newSerialized = [[NSString alloc] initWithData:newData encoding:NSUTF8StringEncoding];
-    return newSerialized;
+- (NSString *)serializeNotification:(NSMutableDictionary *)notification previous:(NSString *)previous {
+    NSArray *array = [self insertNotificationIntoExistingArray:notification previous:previous];
+    NSArray *unique = [[NSOrderedSet orderedSetWithArray:array] array];
+    return [self serializeNotifications:unique];
 }
 
-- (NSArray *)addNotificationToExistingArray:(NSMutableDictionary *)notification previous:(NSString *)previous {
-    if (previous) {
-        NSData *data = [previous dataUsingEncoding:NSUTF8StringEncoding];
-        NSMutableArray *array = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil] mutableCopy];
+- (NSArray *)insertNotificationIntoExistingArray:(NSMutableDictionary *)notification previous:(NSString *)previous {
+    if (previous.length > 0) {
+        NSMutableArray *array = [[self deserializeNotifications:previous] mutableCopy];
         [array insertObject:notification atIndex:0];
         return array;
     } else {
-        return [NSMutableArray arrayWithObject:notification];
+        return [NSArray arrayWithObject:notification];
     }
 }
 
-- (void)notificationsWithBlock:(void(^)(NSArray *messages))block {
-    [self.remoteObject getWithCompletionBlock:^(PCFDataResponse *response) {
-        if (!response.error) {
-            PCFKeyValue *keyValue = (PCFKeyValue *) response.object;
-            NSData *data = [keyValue.value dataUsingEncoding:NSUTF8StringEncoding];
-            
-            if (data && block) {
-                block([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-            }
-        } else {
-            NSLog(@"Error retrieving messages: %@", response.error);
-            
-            if (block) {
-                block([NSArray array]);
-            }
-        }
-    }];
+- (NSArray *)deserializeNotifications:(NSString *)notifications {
+    NSData *data = [notifications dataUsingEncoding:NSUTF8StringEncoding];
+    return data ? [NSJSONSerialization JSONObjectWithData:data options:0 error:nil] : nil;
 }
 
-- (void)clearNotificationsWithBlock:(void(^)())block {
-    [self.remoteObject deleteWithCompletionBlock:^(PCFDataResponse *response) {
-        if (block) {
-            block();
-        }
-    }];
+- (NSString *)serializeNotifications:(NSArray *)notifications {
+    NSData *data = [NSJSONSerialization dataWithJSONObject:notifications options:0 error:nil];
+    return data ? [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] : nil;
 }
+
 
 @end

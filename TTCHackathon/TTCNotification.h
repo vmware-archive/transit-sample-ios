@@ -12,6 +12,7 @@
 
 @property (strong) NSString *message;
 @property (strong) NSDate *date;
+@property BOOL read;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

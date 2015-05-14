@@ -15,7 +15,8 @@
     self = [super init];
     if (self) {
         _message = [dictionary valueForKeyPath:@"aps.alert"];
-        _date = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKeyPath:@"aps.timestamp"] doubleValue]];
+        _date = [NSDate dateWithTimeIntervalSince1970:[[dictionary valueForKeyPath:@"timestamp"] doubleValue]];
+        _read = [[dictionary valueForKeyPath:@"read"] boolValue];
     }
     return self;
 }

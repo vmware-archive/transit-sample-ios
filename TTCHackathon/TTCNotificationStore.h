@@ -12,10 +12,12 @@ extern NSString *const TTCNotificationsKey;
 
 @interface TTCNotificationStore : NSObject
 
-- (void)didReceiveRemoteNotification:(NSDictionary *)notification;
+- (void)addNotification:(NSDictionary *)notification;
 
-- (void)notificationsWithBlock:(void(^)(NSArray *messages))block;
+- (void)fetchNotificationsWithBlock:(void(^)(NSArray *notifications, NSError *error))block;
 
-- (void)clearNotificationsWithBlock:(void(^)())block;
+- (void)updateNotifications:(NSArray *)notifications withBlock:(void(^)(NSArray *notifications, NSError *error))block;
+
+- (void)clearNotificationsWithBlock:(void(^)(NSError *error))block;
 
 @end

@@ -61,14 +61,14 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler {
     NSLog(@"Remote notification received: %@", userInfo);
 
-    [self.notificationStore didReceiveRemoteNotification:userInfo];
+    [self.notificationStore addNotification:userInfo];
 
-    if (handler) {
-        handler(UIBackgroundFetchResultNewData);
-    }
-    
     if (application.applicationState != UIApplicationStateActive) {
         [self pushInboxViewController];
+    }
+    
+    if (handler) {
+        handler(UIBackgroundFetchResultNewData);
     }
 }
 
