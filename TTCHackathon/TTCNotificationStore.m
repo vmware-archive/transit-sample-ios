@@ -27,6 +27,7 @@ NSString* const TTCNotificationsKey = @"TTC:Notifications:Key";
 }
 
 - (void)addNotification:(NSDictionary *)notification {
+    
     NSMutableDictionary *formatted = [self formatNotificationWithReadStateAndTimestamp:notification];
     
     PCFDataResponse *getResponse = [self.remoteObject get];

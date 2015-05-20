@@ -62,7 +62,9 @@
     NSLog(@"Remote notification received: %@", userInfo);
 
     [self.notificationStore addNotification:userInfo];
-
+    
+    [self displayLocalNotificationForNotification:userInfo];
+    
     if (application.applicationState != UIApplicationStateActive) {
         [self pushInboxViewController];
     }
@@ -80,6 +82,17 @@
     TTCRootViewController *vc = (TTCRootViewController *) self.window.rootViewController;
     TTCSideMenuViewController *svc = (TTCSideMenuViewController *) vc.leftMenuViewController;
     [svc routeToIndex:0];
+}
+
+- (void)displayLocalNotificationForNotification:(NSDictionary *)userInfo {
+    BOOL contentAvailable = [[userInfo valueForKeyPath:@"aps.content-available"] boolValue];
+    if (contentAvailable) {
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.alertBody = [userInfo valueForKeyPath:@"aps.alert"];
+        localNotification.timeZone = [NSTimeZone defaultTimeZone];
+        localNotification.fireDate = [NSDate date];
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    }
 }
 
 @end
