@@ -38,6 +38,7 @@
 		91DE58CF199EC24C00232354 /* ic_ttc_launcher-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58CD199EC24C00232354 /* ic_ttc_launcher-58.png */; };
 		91DE58D0199EC24C00232354 /* ic_ttc_launcher-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58CE199EC24C00232354 /* ic_ttc_launcher-80.png */; };
 		91DE58DF19A29A4100232354 /* ic_ttc_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 91DE58DE19A29A4100232354 /* ic_ttc_logo.png */; };
+		A6D38EAFC3F3D087D9BD8053 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57E013236D742EE9FAA500B /* libPods.a */; };
 		D4262D981A150191005C4A04 /* TTCLastNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = D4262D971A150191005C4A04 /* TTCLastNotificationView.m */; };
 		D4262D9F1A1542FE005C4A04 /* TTCLastNotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4262D9E1A1542FE005C4A04 /* TTCLastNotificationView.xib */; };
 		D45F20AB19CCCFA8004D7E79 /* TTCSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = D45F20AA19CCCFA8004D7E79 /* TTCSettings.m */; };
@@ -48,7 +49,19 @@
 		E18AEC591AF0001000F99716 /* TTCNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = E18AEC581AF0001000F99716 /* TTCNotification.m */; };
 		E1CF8D781AFBB00F0047F058 /* TTCNotificationsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CF8D771AFBB00F0047F058 /* TTCNotificationsTableViewCell.m */; };
 		E1CF8D7B1AFBB48B0047F058 /* TTCNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CF8D7A1AFBB48B0047F058 /* TTCNotificationViewController.m */; };
+		E1CF8D911B0D2DA00047F058 /* TTCPerformanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CF8D901B0D2DA00047F058 /* TTCPerformanceTest.m */; };
+		E1FDA3C51B0E3A5900E24BE8 /* TTCNotificationStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E18AEC521AEFD4C600F99716 /* TTCNotificationStore.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E1CF8D8B1B0D2D770047F058 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1B601AF1925257200B65371 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5746E58A195497C000CAADE9;
+			remoteInfo = TTCHackathon;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		00EC60BDE423A46E08C13C85 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +138,9 @@
 		E1CF8D771AFBB00F0047F058 /* TTCNotificationsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCNotificationsTableViewCell.m; sourceTree = "<group>"; };
 		E1CF8D791AFBB48B0047F058 /* TTCNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCNotificationViewController.h; sourceTree = "<group>"; };
 		E1CF8D7A1AFBB48B0047F058 /* TTCNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCNotificationViewController.m; sourceTree = "<group>"; };
+		E1CF8D851B0D2D770047F058 /* TTCHackathonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TTCHackathonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1CF8D881B0D2D770047F058 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1CF8D901B0D2DA00047F058 /* TTCPerformanceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCPerformanceTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +152,14 @@
 				5746E591195497C000CAADE9 /* UIKit.framework in Frameworks */,
 				5746E58D195497C000CAADE9 /* Foundation.framework in Frameworks */,
 				DE6B3CA656AE421799946EE4 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1CF8D821B0D2D770047F058 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6D38EAFC3F3D087D9BD8053 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,11 +316,29 @@
 			name = Util;
 			sourceTree = "<group>";
 		};
+		E1CF8D861B0D2D770047F058 /* TTCHackathonTests */ = {
+			isa = PBXGroup;
+			children = (
+				E1CF8D871B0D2D770047F058 /* Supporting Files */,
+				E1CF8D901B0D2DA00047F058 /* TTCPerformanceTest.m */,
+			);
+			path = TTCHackathonTests;
+			sourceTree = "<group>";
+		};
+		E1CF8D871B0D2D770047F058 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E1CF8D881B0D2D770047F058 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		F1B601AE1925257200B65371 = {
 			isa = PBXGroup;
 			children = (
 				117391141AC1B59B0060D6C8 /* PCFLoginViewController.xib */,
 				5746E592195497C000CAADE9 /* TTCHackathon */,
+				E1CF8D861B0D2D770047F058 /* TTCHackathonTests */,
 				F1B601B81925257200B65371 /* Products */,
 				3DFBFBA335484D039ADA1160 /* Frameworks */,
 				9BA5D15A5EDE7A34BDB7F788 /* Pods */,
@@ -307,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				5746E58B195497C000CAADE9 /* TTCHackathon.app */,
+				E1CF8D851B0D2D770047F058 /* TTCHackathonTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -333,6 +376,26 @@
 			productReference = 5746E58B195497C000CAADE9 /* TTCHackathon.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E1CF8D841B0D2D770047F058 /* TTCHackathonTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1CF8D8D1B0D2D770047F058 /* Build configuration list for PBXNativeTarget "TTCHackathonTests" */;
+			buildPhases = (
+				82B1CCF73C1D2DD99FE339BE /* Check Pods Manifest.lock */,
+				E1CF8D811B0D2D770047F058 /* Sources */,
+				E1CF8D821B0D2D770047F058 /* Frameworks */,
+				E1CF8D831B0D2D770047F058 /* Resources */,
+				E54B7CD5A4E16BC399D6E407 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E1CF8D8C1B0D2D770047F058 /* PBXTargetDependency */,
+			);
+			name = TTCHackathonTests;
+			productName = TTCHackathonTests;
+			productReference = E1CF8D851B0D2D770047F058 /* TTCHackathonTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -351,6 +414,10 @@
 							};
 						};
 					};
+					E1CF8D841B0D2D770047F058 = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 5746E58A195497C000CAADE9;
+					};
 				};
 			};
 			buildConfigurationList = F1B601B21925257200B65371 /* Build configuration list for PBXProject "TTCHackathon" */;
@@ -367,6 +434,7 @@
 			projectRoot = "";
 			targets = (
 				5746E58A195497C000CAADE9 /* TTCHackathon */,
+				E1CF8D841B0D2D770047F058 /* TTCHackathonTests */,
 			);
 		};
 /* End PBXProject section */
@@ -390,6 +458,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1CF8D831B0D2D770047F058 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -408,7 +483,37 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		82B1CCF73C1D2DD99FE339BE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		B65D6960E2B84C9E91C45677 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E54B7CD5A4E16BC399D6E407 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -459,7 +564,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1CF8D811B0D2D770047F058 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1FDA3C51B0E3A5900E24BE8 /* TTCNotificationStore.m in Sources */,
+				E1CF8D911B0D2DA00047F058 /* TTCPerformanceTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E1CF8D8C1B0D2D770047F058 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5746E58A195497C000CAADE9 /* TTCHackathon */;
+			targetProxy = E1CF8D8B1B0D2D770047F058 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5746E595195497C000CAADE9 /* InfoPlist.strings */ = {
@@ -534,6 +656,50 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		E1CF8D8E1B0D2D770047F058 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 00EC60BDE423A46E08C13C85 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TTCHackathonTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TTCHackathon.app/TTCHackathon";
+			};
+			name = Debug;
+		};
+		E1CF8D8F1B0D2D770047F058 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB9ABB57785F52FFAC15D1EC /* Pods.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TTCHackathonTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TTCHackathon.app/TTCHackathon";
 			};
 			name = Release;
 		};
@@ -619,6 +785,15 @@
 			buildConfigurations = (
 				5746E5B4195497C000CAADE9 /* Debug */,
 				5746E5B5195497C000CAADE9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1CF8D8D1B0D2D770047F058 /* Build configuration list for PBXNativeTarget "TTCHackathonTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1CF8D8E1B0D2D770047F058 /* Debug */,
+				E1CF8D8F1B0D2D770047F058 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

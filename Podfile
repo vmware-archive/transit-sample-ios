@@ -3,6 +3,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '7.0'
 
+link_with 'TTCHackathon', 'TTCHackathonTests'
+
 # pod 'PCFPush', :path => '../push-ios' # Useful while actively developing this library
 pod 'PCFPush', '~> 1.0.4'
 

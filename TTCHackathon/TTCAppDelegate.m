@@ -32,11 +32,11 @@
         [PCFData clearCachedData];
     }];
     
-    [PCFData registerTokenProviderBlock:^() {
+    [PCFData registerTokenProviderBlock:^{
         return [PCFAuth fetchToken].accessToken;
     }];
     
-    [PCFData registerTokenInvalidatorBlock:^() {
+    [PCFData registerTokenInvalidatorBlock:^{
         [PCFAuth invalidateToken];
     }];
     
