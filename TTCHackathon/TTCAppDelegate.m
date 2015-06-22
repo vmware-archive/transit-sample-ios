@@ -21,6 +21,7 @@
 - (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.notificationStore = [[TTCNotificationStore alloc] init];
     
+    
     [TTCPush registerWithApns];
     
     [PCFAuth registerLoginObserverBlock:^{
@@ -44,6 +45,12 @@
     if (pushNotification) {
         [self pushInboxViewController];
     }
+    
+    #if SHOW_TOUCHES
+        // For demo purposes, show the touches even when not mirroring to an external display.
+        QTouchposeApplication *touchposeApplication = (QTouchposeApplication *)application;
+        touchposeApplication.alwaysShowTouches = YES;
+    #endif
     
     return YES;
 }

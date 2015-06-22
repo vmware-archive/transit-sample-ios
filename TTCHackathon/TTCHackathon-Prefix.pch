@@ -12,6 +12,9 @@
 #warning "This project uses features only available in iOS SDK 3.0 and later."
 #endif
 
+// Set to 1 when presenting
+#define SHOW_TOUCHES 0
+
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>

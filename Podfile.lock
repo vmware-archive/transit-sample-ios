@@ -24,6 +24,7 @@ PODS:
   - PCFData (1.1.0)
   - PCFPush (1.0.4)
   - RESideMenu (4.0.7)
+  - Touchpose (1.2.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
@@ -31,6 +32,7 @@ DEPENDENCIES:
   - PCFData (~> 1.1.0)
   - PCFPush (~> 1.0.4)
   - RESideMenu (~> 4.0.7)
+  - Touchpose
 
 SPEC CHECKSUMS:
   AFNetworking: e1d86c2a96bb5d2e7408da36149806706ee122fe
@@ -38,5 +40,6 @@ SPEC CHECKSUMS:
   PCFData: 7d460e540377713069c508e8a7e35c486570227e
   PCFPush: 64c348f2007bf816ed578420ed802870411d990a
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
+  Touchpose: 219ef3dc3d1932b384ea502ec6df2f003667129b
 
-COCOAPODS: 0.36.4
+COCOAPODS: 0.37.2

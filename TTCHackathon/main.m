@@ -6,9 +6,18 @@
 
 #import "TTCAppDelegate.h"
 
-int main(int argc, char * argv[])
+#if SHOW_TOUCHES
+#import "QTouchposeApplication.h"
+#endif
+
+int main(int argc, char *argv[])
 {
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([TTCAppDelegate class]));
+    @autoreleasepool
+    {
+        #if SHOW_TOUCHES
+            return UIApplicationMain(argc, argv, NSStringFromClass([QTouchposeApplication class]), NSStringFromClass([TTCAppDelegate class]));
+        #else
+            return UIApplicationMain(argc, argv, nil, NSStringFromClass([TTCAppDelegate class]));
+        #endif
     }
 }

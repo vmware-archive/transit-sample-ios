@@ -5,6 +5,10 @@
 #import <UIKit/UIKit.h>
 #import "TTCNotificationStore.h"
 
+#if SHOW_TOUCHES
+#import "QTouchposeApplication.h"
+#endif
+
 extern NSString *const kRemoteNotificationReceived;
 
 @interface TTCAppDelegate : UIResponder <UIApplicationDelegate>

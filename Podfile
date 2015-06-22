@@ -16,3 +16,5 @@ pod 'PCFAuth', '~> 1.0.1'
 pod 'AFNetworking', '~> 2.5'
 
 pod 'RESideMenu', '~> 4.0.7'
+
+pod 'Touchpose'
