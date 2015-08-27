@@ -1,0 +1,6 @@
+framework module PCFAppAnalytics {
+  umbrella header "PCFAppAnalytics.h"
+
+  export *
+  module * { export * }
+}
