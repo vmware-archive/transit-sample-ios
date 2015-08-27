@@ -72,6 +72,8 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler {
     NSLog(@"Remote notification received: %@", userInfo);
 
+    [[PCFAppAnalytics shared] eventWithName:@"notificationReceived"];
+
     [self.notificationStore addNotification:userInfo];
     
     [self displayLocalNotificationForNotification:userInfo];

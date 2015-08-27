@@ -15,6 +15,8 @@
 
 #import "RESideMenu.h"
 
+@import PCFAppAnalytics;
+
 @interface TTCPreferencesTableViewController ()
 
 @property PCFKeyValueObject *savedStopsAndRouteObject;
@@ -159,6 +161,7 @@ static NSString* const PCFKey = @"my-notifications";
 
 - (void) addToStopAndRoute:(TTCStopAndRouteInfo *)stopAndRouteObject // add to our array
 {
+    [[PCFAppAnalytics shared] eventWithName:@"stopAdded"];
     for (TTCStopAndRouteInfo* stopAndRouteInfo in self.stopAndRouteArray) {
         if([stopAndRouteInfo.stop isEqualToString:stopAndRouteObject.stop] && [stopAndRouteInfo.time isEqualToString:stopAndRouteObject.time]) {
             NSLog(@"Not adding new stop since it's already in the list.");
