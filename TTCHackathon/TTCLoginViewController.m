@@ -8,6 +8,8 @@
 
 #import "TTCLoginViewController.h"
 
+@import PCFAppAnalytics;
+
 @implementation TTCLoginViewController
 
 - (instancetype)init {
@@ -26,6 +28,21 @@
         [self grantTypePassword:textField];
     }
     return YES;
+}
+
+
+- (IBAction)grantTypePassword:(id)sender {
+    // Once we have segmentation support I would report events like this
+    // [[PCFAppAnalytics shared] eventWithName:@"loginAttempt" properties:@{ @"grantType" : @"password" }];
+    [[PCFAppAnalytics shared] eventWithName:@"loginPassword"];
+    [super grantTypePassword:sender];
+}
+
+- (IBAction)grantTypeAuthCode:(id)sender {
+    // Once we have segmentation support I would report events like this
+    // [[PCFAppAnalytics shared] eventWithName:@"loginAttempt" properties:@{ @"grantType" : @"authcode" }];
+    [[PCFAppAnalytics shared] eventWithName:@"loginAuthCode"];
+    [super grantTypeAuthCode:sender];
 }
 
 @end

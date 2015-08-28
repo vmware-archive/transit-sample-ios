@@ -8,6 +8,8 @@
 
 #import "TTCRootViewController.h"
 
+@import PCFAppAnalytics;
+
 @implementation TTCRootViewController
 
 - (void)awakeFromNib
@@ -34,6 +36,7 @@
 
 - (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController
 {
+    [[PCFAppAnalytics shared] eventWithName:@"menuOpened"];
     // NSLog(@"didShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
 

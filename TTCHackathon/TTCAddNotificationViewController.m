@@ -4,6 +4,8 @@
 
 #import "TTCAddNotificationViewController.h"
 
+@import PCFAppAnalytics;
+
 @interface TTCAddNotificationViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *scheduleButton;
@@ -38,6 +40,8 @@
     self.scheduleButton.layer.borderWidth = 1.0f;
     self.scheduleButton.layer.borderColor = [UIColor darkGrayColor].CGColor;
     self.scheduleButton.layer.cornerRadius = 3.0f;
+
+    [[PCFAppAnalytics shared] eventWithName:@"viewAddNotification"];
 }
 
 - (void) viewDidLayoutSubviews
@@ -83,6 +87,7 @@
 
 - (IBAction) unwindToTimeAndStopView:(UIStoryboardSegue *)sender
 {
+    [[PCFAppAnalytics shared] eventWithName:@"routeSelected"];
     self.route.text = self.stopAndRouteInfo.route;
     self.stop.text = self.stopAndRouteInfo.stop;
     NSString* str = [NSString stringWithFormat:@"%@\n\n%@", self.stopAndRouteInfo.route, self.stopAndRouteInfo.stop];

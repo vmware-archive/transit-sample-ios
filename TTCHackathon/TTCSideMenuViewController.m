@@ -10,6 +10,7 @@
 #import "UIViewController+RESideMenu.h"
 #import <PCFAuth/PCFAuth.h>
 
+@import PCFAppAnalytics;
 
 @interface TTCSideMenuViewController ()
 
@@ -54,18 +55,22 @@
         case 0:
             [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCNotificationsTableViewController"]] animated:YES];
             [self.sideMenuViewController hideMenuViewController];
+            [[PCFAppAnalytics shared] eventWithName:@"menuNotifications"];
             break;
         case 1:
             [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCPreferencesTableViewController"]] animated:YES];
             [self.sideMenuViewController hideMenuViewController];
+            [[PCFAppAnalytics shared] eventWithName:@"menuPreferences"];
             break;
         case 2:
             [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCAboutViewController"]] animated:YES];
             [self.sideMenuViewController hideMenuViewController];
+            [[PCFAppAnalytics shared] eventWithName:@"menuAbout"];
             break;
         case 3:
             [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TTCPreferencesTableViewController"]] animated:YES];
             [self.sideMenuViewController hideMenuViewController];
+            [[PCFAppAnalytics shared] eventWithName:@"logout"];
             [PCFAuth logout];
             break;
         default:

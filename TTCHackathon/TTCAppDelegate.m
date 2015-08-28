@@ -10,6 +10,8 @@
 #import "TTCRootViewController.h"
 #import "TTCSideMenuViewController.h"
 
+@import PCFAppAnalytics;
+
 @interface TTCAppDelegate ()
 
 @property (strong) TTCNotificationStore *notificationStore;
@@ -19,8 +21,10 @@
 @implementation TTCAppDelegate
 
 - (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    PCFAppAnalytics *analytics = [PCFAppAnalytics initWithLaunchOptions:launchOptions];
+    analytics.acceptSelfSignedCertificates = YES;
+
     self.notificationStore = [[TTCNotificationStore alloc] init];
-    
     
     [TTCPush registerWithApns];
     
@@ -67,6 +71,8 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler {
     NSLog(@"Remote notification received: %@", userInfo);
+
+    [[PCFAppAnalytics shared] eventWithName:@"notificationReceived"];
 
     [self.notificationStore addNotification:userInfo];
     

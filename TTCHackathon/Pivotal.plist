@@ -28,5 +28,9 @@
 	<string>https://datasync-datastore.borg.vchs.cfms-apps.com/data/transit</string>
 	<key>pivotal.data.collisionStrategy</key>
 	<string>OptimisticLocking</string>
+	<key>pivotal.appanalytics.domain</key>
+	<string>https://app-analytics-receiver.borg.vchs.cfms-apps.com</string>
+	<key>pivotal.appanalytics.apiKey</key>
+	<string>46d02a0d-619e-4d3e-919f-cccc3c437499</string>
 </dict>
 </plist>

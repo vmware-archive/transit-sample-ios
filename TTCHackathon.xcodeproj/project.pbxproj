@@ -20,6 +20,8 @@
 		11F37BD91AC9D43E001011C9 /* TTCRouteTitleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11F37BD81AC9D43E001011C9 /* TTCRouteTitleModel.m */; };
 		11F37BDC1AC9E4E3001011C9 /* TTCAboutTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 11F37BDB1AC9E4E3001011C9 /* TTCAboutTableViewCell.m */; };
 		11F37BDE1ACC4553001011C9 /* TTCLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11F37BDD1ACC4553001011C9 /* TTCLoginViewController.xib */; };
+		430D47001B8F61110009AE3A /* PCFAppAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D46FE1B8F60F50009AE3A /* PCFAppAnalytics.framework */; };
+		430D47011B8F61110009AE3A /* PCFAppAnalytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 430D46FE1B8F60F50009AE3A /* PCFAppAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5746E58D195497C000CAADE9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5746E58C195497C000CAADE9 /* Foundation.framework */; };
 		5746E58F195497C000CAADE9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5746E58E195497C000CAADE9 /* CoreGraphics.framework */; };
 		5746E591195497C000CAADE9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5746E590195497C000CAADE9 /* UIKit.framework */; };
@@ -63,6 +65,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		430D47021B8F61110009AE3A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				430D47011B8F61110009AE3A /* PCFAppAnalytics.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		00EC60BDE423A46E08C13C85 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		117391101AC08D5E0060D6C8 /* Pivotal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Pivotal.plist; sourceTree = "<group>"; };
@@ -90,6 +106,7 @@
 		11F37BDA1AC9E4E3001011C9 /* TTCAboutTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCAboutTableViewCell.h; sourceTree = "<group>"; };
 		11F37BDB1AC9E4E3001011C9 /* TTCAboutTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCAboutTableViewCell.m; sourceTree = "<group>"; };
 		11F37BDD1ACC4553001011C9 /* TTCLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTCLoginViewController.xib; sourceTree = "<group>"; };
+		430D46FE1B8F60F50009AE3A /* PCFAppAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PCFAppAnalytics.framework; sourceTree = "<group>"; };
 		5746E58B195497C000CAADE9 /* TTCHackathon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TTCHackathon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5746E58C195497C000CAADE9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5746E58E195497C000CAADE9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -148,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				430D47001B8F61110009AE3A /* PCFAppAnalytics.framework in Frameworks */,
 				5746E58F195497C000CAADE9 /* CoreGraphics.framework in Frameworks */,
 				5746E591195497C000CAADE9 /* UIKit.framework in Frameworks */,
 				5746E58D195497C000CAADE9 /* Foundation.framework in Frameworks */,
@@ -169,6 +187,7 @@
 		3DFBFBA335484D039ADA1160 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				430D46FE1B8F60F50009AE3A /* PCFAppAnalytics.framework */,
 				117391171AC1B5D60060D6C8 /* libPods-AFNetworking.a */,
 				117391121AC1B1BF0060D6C8 /* libPods-PCFAuth.a */,
 				5746E58C195497C000CAADE9 /* Foundation.framework */,
@@ -366,6 +385,7 @@
 				5746E588195497C000CAADE9 /* Frameworks */,
 				5746E589195497C000CAADE9 /* Resources */,
 				B65D6960E2B84C9E91C45677 /* Copy Pods Resources */,
+				430D47021B8F61110009AE3A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -623,6 +643,7 @@
 				);
 				INFOPLIST_FILE = "TTCHackathon/TTCHackathon-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
@@ -648,6 +669,7 @@
 				GCC_PREFIX_HEADER = "TTCHackathon/TTCHackathon-Prefix.pch";
 				INFOPLIST_FILE = "TTCHackathon/TTCHackathon-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
