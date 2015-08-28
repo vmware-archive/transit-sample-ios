@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>pivotal.push.serviceUrl</key>
-	<string>http://push-notifications.borg.vchs.cfms-apps.com</string>
+	<string>https://push-api.borg.vchs.cfms-apps.com</string>
 	<key>pivotal.push.platformUuidDevelopment</key>
 	<string>.</string>
 	<key>pivotal.push.platformSecretDevelopment</key>
@@ -13,9 +13,9 @@
 	<key>pivotal.push.platformSecretProduction</key>
 	<string>cd791d8c-840a-4a9d-af04-e6bc83580795</string>
 	<key>pivotal.auth.tokenUrl</key>
-	<string>http://datasync-authentication.borg.vchs.cfms-apps.com/token</string>
+	<string>https://datasync-authentication.borg.vchs.cfms-apps.com/token</string>
 	<key>pivotal.auth.authorizeUrl</key>
-	<string>http://datasync-authentication.borg.vchs.cfms-apps.com/authorize</string>
+	<string>https://datasync-authentication.borg.vchs.cfms-apps.com/authorize</string>
 	<key>pivotal.auth.redirectUrl</key>
 	<string>io.pivotal.ios.data://oauth2callback</string>
 	<key>pivotal.auth.clientId</key>
@@ -25,7 +25,7 @@
 	<key>pivotal.auth.scopes</key>
 	<string>openid offline_access</string>
 	<key>pivotal.data.serviceUrl</key>
-	<string>http://datasync-datastore.borg.vchs.cfms-apps.com/data/transit</string>
+	<string>https://datasync-datastore.borg.vchs.cfms-apps.com/data/transit</string>
 	<key>pivotal.data.collisionStrategy</key>
 	<string>OptimisticLocking</string>
 </dict>
